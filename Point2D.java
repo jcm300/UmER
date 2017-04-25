@@ -13,6 +13,7 @@ public class Point2D {
 		this.x = cx; 
 		this.y = cy; 
 	}
+
 	public Point2D () { this (0.0 , 0.0); }
 	public Point2D ( Point2D p ) {
 		this.x = p.getX(); 
