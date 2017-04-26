@@ -1,3 +1,5 @@
+ 
+
 public class Travel {
 	
 	//instance variavels
