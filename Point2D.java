@@ -1,5 +1,5 @@
 /* *
-* 2D point
+ * 2D point
 */
 
 import static java . lang . Math . abs ;
