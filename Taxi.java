@@ -38,8 +38,8 @@ public class Taxi {
 		this.averageSpeed = t.getAverageSpeed();
 		this.pricePerKm = t.getPricePerKm();
 		this.reliability = t.getReliability();
-		this.location = t.getLocation().clone();
-		this.driver = t.getDriver().clone();
+		this.location = t.getLocation();
+		this.driver = t.getDriver();
 	}
 
 	//gets and sets
@@ -60,11 +60,11 @@ public class Taxi {
 	}
 
 	public Point2D getLocation(){
-		return this.location;
+		return this.location.clone();
 	}
 
 	public Driver getDriver(){
-		return this.driver;
+		return this.driver.clone();
 	}
 	
 	public void setTaxiType(String tt){
@@ -84,11 +84,11 @@ public class Taxi {
 	}
 
 	public void setLocation(Point2D l){
-		this.location = l;
+		this.location = l.clone();
 	}
 
 	public void setDriver(Driver d){
-		this.driver = d;
+		this.driver = d.clone();
 	}
 
 	public Taxi clone(){
