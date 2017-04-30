@@ -8,113 +8,113 @@ public class Account {
 	private String birthday;
 
 
-// contrutores
-public Account(){
-	this.email = null;
-	this.name = null;
-	this.password = null;
-	this.homeAddress = null;
-	this.birthday = null;
-}
+    // contrutores
+    public Account(){
+	   this.email = null;
+	   this.name = null;
+	   this.password = null;
+	   this.homeAddress = null;
+	   this.birthday = null;
+    }
 
-public Account( String email, String name, String password, String homeAddress, String birthday){
-    this.email = email;
-    this.name = name;
-    this.password = password;
-    this.homeAddress = homeAddress;
-    this.birthday = birthday;
-}
+    public Account( String email, String name, String password, String homeAddress, String birthday){
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.homeAddress = homeAddress;
+        this.birthday = birthday;
+    }
 
-public Account (Account a){
-    this.email = a.getEmail();
-    this.name = a.getName();
-    this.password = a.getPassword();
-    this.homeAddress = a.getHomeAddress();
-    this.birthday =a.getBirthday();
-}
+    public Account (Account a){
+        this.email = a.getEmail();
+        this.name = a.getName();
+        this.password = a.getPassword();
+        this.homeAddress = a.getHomeAddress();
+        this.birthday =a.getBirthday();
+    }
 
-//gets 
+    //gets 
 
-public String getEmail(){
-    return this.email;
-}
+    public String getEmail(){
+            return this.email;
+    }
 
-public String getName(){
-    return this.name;
-}
+    public String getName(){
+            return this.name;
+    }
 
-public String getPassword(){
-    return this.password;
-}
+    public String getPassword(){
+            return this.password;
+    }
 
-public String getHomeAddress(){
-    return this.homeAddress;
-}
+    public String getHomeAddress(){
+            return this.homeAddress;
+    }
 
-public String getBirthday(){
-    return this.birthday;
-}
+    public String getBirthday(){
+            return this.birthday;
+    }
 
-//sets 
+    //sets 
 
-public void setEmail (String e){
-    this.email = e;
-}
+    public void setEmail (String e){
+        this.email = e;
+    }
 
-public void setName (String n){
-    this.name = n;
-}
+    public void setName (String n){
+        this.name = n;
+    }
 
-public void setPassword (String pw){
-    this.password = pw;
-}
+    public void setPassword (String pw){
+        this.password = pw;
+    }
 
-public void setHomeAddress (String ha){
-    this.homeAddress = ha;
-}
+    public void setHomeAddress (String ha){
+        this.homeAddress = ha;
+    }
 
-public void setBirthday (String b){
-    this.birthday = b;
-}
+    public void setBirthday (String b){
+        this.birthday = b;
+    }   
 
-//clone, equals, toString, hashcode, compareTo
+    //clone, equals, toString, hashcode, compareTo
 
-public Account clone(){
-	    return new Account(this);
-}
+    public Account clone(){
+	       return new Account(this);
+    }
 
-public boolean equals(Object o){
-    if (o==this) return true;
-    if (o==null) || (o.getClass()!=this.getClass())) return false;
-    Account a = (Account)o;
-        return (this.email.equals(a.getEmail()) && this.name == a.getName() && this.password == a.getPassword() && this.homeAddress == a.getHomeAddress() && this.birthday.equals(a.getBirthday()));
-}
+    public boolean equals(Object o){
+        if (o==this) return true;
+        if (o==null) || (o.getClass()!=this.getClass())) return false;
+        Account a = (Account)o;
+            return (this.email.equals(a.getEmail()) && this.name == a.getName() && this.password == a.getPassword() && this.homeAddress == a.getHomeAddress() && this.birthday.equals(a.getBirthday()));
+    }
 
-public String toString(){
-     StringBuilder r = new StringBuilder();
-     r.append("Email: ").append(this.email).append("\n");
-     r.append("Name: ").append(this.name).append("\n");
-     r.append("Password: ").append(this.password).append("\n");
-     r.append("HomeAddress: ").append(this.homeAddress).append("\n");
-     r.append("Birthday: ").append(this.birthday).append("\n");
-	    return r.toString();
-}
+    public String toString(){
+        StringBuilder r = new StringBuilder();
+        r.append("Email: ").append(this.email).append("\n");
+        r.append("Name: ").append(this.name).append("\n");
+        r.append("Password: ").append(this.password).append("\n");
+        r.append("HomeAddress: ").append(this.homeAddress).append("\n");
+        r.append("Birthday: ").append(this.birthday).append("\n");
+	       return r.toString();
+    }
 
-public int hashCode{
-    int r=7;
+    public int hashCode{
+        int r=7;
                
-    r = r*11 + this.email.hashCode();
-    r = r*11 + this.name.hashcode();
-    r = r*11 + this.password.hashcode();
-    r = r*11 + this.homeAddress.hashcode();
-    r = r*11 + this.birthday.hashcode();
-        return r;
+        r = r*11 + this.email.hashCode();
+        r = r*11 + this.name.hashcode();
+        r = r*11 + this.password.hashcode();
+        r = r*11 + this.homeAddress.hashcode();
+        r = r*11 + this.birthday.hashcode();
+          return r;
+    }
+
+    public int compareTo (Account a){
+         return this.name.compareTo(a.getName());
+
+    }   
 }
-
-public int compareTo (Account a){
-        return this.name.compareTo(a.getName());
-
-}
-
 
 
