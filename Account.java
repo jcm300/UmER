@@ -85,9 +85,9 @@ public class Account {
 
     public boolean equals(Object o){
         if (o==this) return true;
-        if (o==null) || (o.getClass()!=this.getClass())) return false;
+        if ((o==null) || (o.getClass()!=this.getClass())) return false;
         Account a = (Account)o;
-            return (this.email.equals(a.getEmail()) && this.name == a.getName() && this.password == a.getPassword() && this.homeAddress == a.getHomeAddress() && this.birthday.equals(a.getBirthday()));
+            return (this.email.equals(a.getEmail()) && this.name.equals(a.getName()) && this.password.equals(a.getPassword()) && this.homeAddress.equals(a.getHomeAddress()) && this.birthday.equals(a.getBirthday()));
     }
 
     public String toString(){
@@ -96,19 +96,19 @@ public class Account {
         r.append("Name: ").append(this.name).append("\n");
         r.append("Password: ").append(this.password).append("\n");
         r.append("HomeAddress: ").append(this.homeAddress).append("\n");
-        r.append("Birthday: ").append(this.birthday).append("\n");
-	       return r.toString();
+        r.append("Birthday: ").append(this.birthday);
+	return r.toString();
     }
 
-    public int hashCode{
+    public int hashCode(){
         int r=7;
                
         r = r*11 + this.email.hashCode();
-        r = r*11 + this.name.hashcode();
-        r = r*11 + this.password.hashcode();
-        r = r*11 + this.homeAddress.hashcode();
-        r = r*11 + this.birthday.hashcode();
-          return r;
+        r = r*11 + this.name.hashCode();
+        r = r*11 + this.password.hashCode();
+        r = r*11 + this.homeAddress.hashCode();
+        r = r*11 + this.birthday.hashCode();
+        return r;
     }
 
     public int compareTo (Account a){
