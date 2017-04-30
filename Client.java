@@ -9,19 +9,17 @@ public class Client extends Account {
 
 // contrutores
 public Client(){
-	this.location = (0,0);
-	this.travels = null;
-	
+	this.location = new Point2D();
+	this.travels = new ArrayList<Travel>();
 }
 
 public Client( Point2D location, ArrayList<Travel> travels){
-    this.location = location;
-    this.travels = travels;
+    this.location = location.clone();
+    this.travels = travels.clone();
 }
 
 public Client (Client c){
     this.location = c.getLocation();
     this.travels = c.getTravels();
-   
 }
 
