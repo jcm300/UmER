@@ -1,6 +1,8 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDate;
+import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 public class Driver extends Account {
 	 
@@ -26,7 +28,9 @@ public class Driver extends Account {
 		super(email, nome, password, address, bday);
 		this.status = av;
 		this.rating = ratng;
-		this.travels = tvl.stream().map(Travel::clone).collect(Collectors.toCollection(ArrayList::new));
+		this.travels = tvl.stream()
+				  .map(Travel::clone)
+				  .collect(Collectors.toCollection(ArrayList::new));
 		this.kmsTraveled = kms;
 		this.punctuality = pc;
 	}
@@ -66,13 +70,17 @@ public class Driver extends Account {
 
 	public List<Travel> getTravels(){
 
-		return this.travels.stream().map(t->t.clone()).collect(Collectors.toList());
+		return this.travels.stream()
+				   .map(t->t.clone())
+				   .collect(Collectors.toList());
 
 	}
 
 	public void setTravels(List<Travel> nTL){
 
-		this.travels = nTL.stream().map(Travel::clone).collect(Collectors.toCollection(ArrayList::new));
+		this.travels = nTL.stream()
+				  .map(Travel::clone)
+				  .collect(Collectors.toCollection(ArrayList::new));
 
 	}
 
@@ -100,9 +108,11 @@ public class Driver extends Account {
 	}
 
 	//all the travels between two given dates
-	public List<Travvel> getTravelsBetween(LocalDate init, LocalDate end){
+	public List<Travel> getTravelsBetween(LocalDate init, LocalDate end){
 
-		return this.travels.stream().filter(t->t.getDate().isAfter(init) && t.getDate().isBefore(end)).collect(Collectors.toList());
+		return this.travels.stream()
+				   .filter(t->t.getDate().isAfter(init) && t.getDate().isBefore(end))
+				   .collect(Collectors.toList());
 
 	}
 
@@ -115,16 +125,15 @@ public class Driver extends Account {
 	public boolean equals(Object o){
 
 		if(this == o) return true;
-
 		else if(o == null || this.getClass() != o.getClass()) return false;
 
 		Driver aux = (Driver)o;
-
-		return super.equals(aux) && this.status == aux.getStatus() && this.rating == aux.getRating() && this.kmsTraveled == aux.getKmsTraveled()
-			   										&& this.punctuality == aux.getPunctuality()
-													&& aux.getTravels().stream().filter(t -> !this.travels.contains(t)).count() == 0L;
-
-
+		return super.equals(aux) && this.status == aux.getStatus() 
+					 && this.rating == aux.getRating() 
+					 && this.kmsTraveled == aux.getKmsTraveled()
+					 && this.punctuality == aux.getPunctuality()
+					 && aux.getTravels().stream()
+					   		    .filter(t -> !this.travels.contains(t)).count() == 0L;
 	}
 
 	public String toString(){

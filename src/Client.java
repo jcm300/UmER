@@ -74,15 +74,14 @@ public class Client extends Account {
 	// request a ride to the nearest taxi
 	public void requestRide(){
 
-
-
-
 	}
 
 	// request a taxi for a ride
-	public void requestTaxi( id){
+	public void requestTaxi(String plate){
 
+	}
 
+	public makeReserve(String plate){
 
 	}
 	
