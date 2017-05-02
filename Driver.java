@@ -120,7 +120,7 @@ public class Driver extends Account {
 
 		Driver aux = (Driver)o;
 
-		return this.status == aux.getStatus() && this.rating == aux.getRating() && this.kmsTraveled == aux.getKmsTraveled()
+		return super.equals(aux) && this.status == aux.getStatus() && this.rating == aux.getRating() && this.kmsTraveled == aux.getKmsTraveled()
 			   										&& this.punctuality == aux.getPunctuality()
 													&& aux.getTravels().stream().filter(t -> !this.travels.contains(t)).count() == 0L;
 

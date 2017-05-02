@@ -5,7 +5,7 @@
 import static java . lang . Math . abs ;
 public class Point2D {
 	
-	//Instance variavels
+	//Instance variables
 	private double x , y ;
 	
 	// Constructors

@@ -2,7 +2,7 @@ import java.time.LocalDate;
 
 public class Travel {
 	
-	//instance variavels
+	//instance variables
 	private double cost;
 	private double time;
 	private double distance;

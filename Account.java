@@ -1,6 +1,6 @@
 public class Account {
 
-	//instance variavels
+	//instance variables
 	private String email;
 	private String name;
 	private String password;
@@ -8,7 +8,7 @@ public class Account {
 	private String birthday;
 
 
-    // contrutores
+    // constructors
     public Account(){
 	   this.email = null;
 	   this.name = null;
