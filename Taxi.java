@@ -4,12 +4,13 @@ public class Taxi {
 	
 	//instace variables
 	private String taxiType;
+	private String plate;
 	private double averageSpeed;
 	private double pricePerKm;
 	private double reliability;
 	private Point2D location;
 	private Driver driver;
-	//arraylist Travel //TODO 
+	List<Travel> tReg; 
 	/*
 	private boolean haveWaitList; //TODO
 	private ArrayDeque<Travel????> waitingList; //TODO
@@ -18,34 +19,44 @@ public class Taxi {
 	//Constructors
 	public Taxi(){
 		this.taxiType = null;
+		this.plate = "";
 		this.averageSpeed = 0;
 		this.pricePerKm = 0;
 		this.reliability = 0;
 		this.location = new Point2D();
 		this.driver = new Driver();
+		this.tReg = new ArrayList<>();
 	}
 
-	public Taxi(String taxiType, double averageSpeed, double pricePerKm, double reliability, Point2D location, Driver driver){
+	public Taxi(String taxiType, String plate, double averageSpeed, double pricePerKm, double reliability, Point2D location, Driver driver, List<Travel> tReg){
 		this.taxiType = taxiType;
+		this.plate = plate;
 		this.averageSpeed = averageSpeed;
 		this.pricePerKm = pricePerKm;
 		this.reliability = reliability;
 		this.location = location.clone();
 		this.driver = driver.clone();
+		this.tReg = tReg.stream().map(Travel::clone).collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	public Taxi(Taxi t){
 		this.taxiType = t.getTaxiType();
+		this.plate = t.getPlate();
 		this.averageSpeed = t.getAverageSpeed();
 		this.pricePerKm = t.getPricePerKm();
 		this.reliability = t.getReliability();
 		this.location = t.getLocation();
 		this.driver = t.getDriver();
+		this.tReg = t.getTReg();
 	}
 
 	//gets and sets
 	public String getTaxiType(){
 		return this.taxiType;
+	}
+
+	public String getPlate(){
+		return this.plate;
 	}
 
 	public double getAverageSpeed(){
@@ -68,8 +79,16 @@ public class Taxi {
 		return this.driver.clone();
 	}
 	
+	public List<Travel> getTReg(){
+		return this.tReg.stream().map(Travel::clone).collect(Collectors.toCollection(ArrayList::new));
+	}
+
 	public void setTaxiType(String tt){
 		this.taxiType = tt;
+	}
+
+	public void setPlate(String nPl){
+		this.plate = nPl;
 	}
 
 	public void setAverageSpeed(double as){
@@ -90,6 +109,10 @@ public class Taxi {
 
 	public void setDriver(Driver d){
 		this.driver = d.clone();
+	}
+
+	public void setTReg(List<Travel> nTReg){
+		this.tReg = nTReg.stream().map(Travel::clone).collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	public Taxi clone(){
@@ -115,19 +138,19 @@ public class Taxi {
         }
 
         public int hashCode(){
-                int r=13;
-                long aux;
-		
-		r = r*23 + this.taxiType.hashCode();
-                aux = Double.doubleToLongBits(this.averageSpeed);
-                r = r*23 + (int)(aux ^ (aux >>> 32));
-                aux = Double.doubleToLongBits(this.pricePerKm);
-                r = r*23 + (int)(aux ^ (aux >>> 32));
-                aux = Double.doubleToLongBits(this.reliability);
-                r = r*23 + (int)(aux ^ (aux >>> 32));
-                r = r*23 + this.location.hashCode();
-		r = r*23 + this.driver.hashCode();
-                return r;
+			int r=13;
+			long aux;
+			
+			r = r*23 + this.taxiType.hashCode();
+			aux = Double.doubleToLongBits(this.averageSpeed);
+			r = r*23 + (int)(aux ^ (aux >>> 32));
+			aux = Double.doubleToLongBits(this.pricePerKm);
+			r = r*23 + (int)(aux ^ (aux >>> 32));
+			aux = Double.doubleToLongBits(this.reliability);
+			r = r*23 + (int)(aux ^ (aux >>> 32));
+			r = r*23 + this.location.hashCode();
+			r = r*23 + this.driver.hashCode();
+			return r;
         }
 
         public int compareTo(Taxi t){
