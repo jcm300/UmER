@@ -9,6 +9,7 @@ public class Taxi {
 	private double reliability;
 	private Point2D location;
 	private Driver driver;
+	//arraylist Travel //TODO 
 	/*
 	private boolean haveWaitList; //TODO
 	private ArrayDeque<Travel????> waitingList; //TODO
