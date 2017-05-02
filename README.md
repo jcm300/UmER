@@ -1,2 +1,2 @@
-# work_of_POO
-work for POO(Programação Orientada aos Objetos - Objects Oriented Programing) using Java language in the course Computer engineering in Minho University.
+# UmER
+UmER is an application similar to Uber developed in the context of POO(Programação Orientada aos Objetos - Objects Oriented Programing), using the Java language in the Computer engineering course, at Minho University.
