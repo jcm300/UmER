@@ -1,4 +1,5 @@
 //import java.util.ArrayDeque;
+import java.util.List;
 
 public class Taxi {
 	
@@ -156,4 +157,10 @@ public class Taxi {
         public int compareTo(Taxi t){
                 return this.taxiType.compareTo(t.getTaxiType());
         }
+
+	public void addTravel(Client c, Travel t){
+		this.tReg.add(t.clone());
+		c.addTravel(t);
+		this.driver.addTravel(t);
+	}
 }
