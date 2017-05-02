@@ -2,7 +2,7 @@
 
 public class Taxi {
 	
-	//instace variavels
+	//instace variables
 	private String taxiType;
 	private double averageSpeed;
 	private double pricePerKm;

@@ -2,19 +2,18 @@ import java.util.ArrayList;
 
 public class Client extends Account {
 	
-	//instance variavels
+	//instance variables
 	private Point2D location;
 	private ArrayList<Travel> travels;  
 
-
-    	// contrutores
-    	public Client(){
+	// contructors
+	public Client(){
 		this.location = new Point2D();
-	    	this.travels = new ArrayList<Travel>();
-    	}
+		this.travels = new ArrayList<Travel>();
+	}
 
-    	public Client( Point2D location, ArrayList<Travel> travels){
-    		this.location = location.clone();
+	public Client( Point2D location, ArrayList<Travel> travels){
+		this.location = location.clone();
 		for(Travel t: travels) this.travels.add(t.clone());
 	}
 
@@ -23,8 +22,7 @@ public class Client extends Account {
     		this.travels = c.getTravels();
 	}
 
-	//gets
-
+	//gets & sets
 	public Point2D getLocation(){
 		return this.location.clone();
 	}
@@ -34,8 +32,6 @@ public class Client extends Account {
 		for(Travel t: this.travels) r.add(t.clone());
 		return r;
 	}
-	
-	//sets
 
 	public void setLocation(Point2D l){
 		this.location = l.clone();
@@ -46,8 +42,6 @@ public class Client extends Account {
 		for(Travel t: l) a.add(t.clone());
 		this.travels = a;
 	}
-
-	//clone, equals, toString, hashCode
 
 	public Client clone(){
 		return new Client(this);
@@ -61,18 +55,34 @@ public class Client extends Account {
 	}
 
 	public String toString(){
-        	StringBuilder r = new StringBuilder();
+		StringBuilder r = new StringBuilder();
                 
 		r.append("Location: ").append(this.location.toString()).append("\n");
 		r.append("Travels: ").append(this.travels.toString());
-            	return r.toString();
-    	}
+		return r.toString();
+	}
 
-    	public int hashCode(){
-    		int r=7;
+	public int hashCode(){
+		int r=7;
                 	
-        	r = r*11 + this.location.hashCode();
+		r = r*11 + this.location.hashCode();
 		r = r*11 + this.travels.hashCode();
-        	return r;
-    	}
+		return r;
+	}
+
+
+	// request a ride to the nearest taxi
+	public void requestRide(){
+
+
+
+
+	}
+
+	// request a taxi for a ride
+	public void requestTaxi( id){
+
+
+
+	}
 }
