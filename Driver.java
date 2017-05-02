@@ -138,4 +138,8 @@ public class Driver extends Account {
 		return sb.toString();
 	}
 
+	//register a travel for a client
+	public void addTravel(Travel t){
+		this.travels.add(t.clone());
+	}
 }

@@ -85,4 +85,9 @@ public class Client extends Account {
 
 
 	}
+	
+	//add a travel to the list
+	public void addTravel(Travel t){
+		this.travels.add(t.clone());
+	}
 }
