@@ -1,7 +1,7 @@
 //import java.util.ArrayDeque;
 import java.util.List;
 
-public class Taxi {
+public class Taxi extends App{
 	
 	//instace variables
 	private String taxiType;
