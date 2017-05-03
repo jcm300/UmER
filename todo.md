@@ -1,4 +1,4 @@
-#To do
+# To do
 - [ ] public void requestRide() (TODO 1)
 - [ ] public void requestTaxi(String plate) (TODO 2)
 - [ ] public void bookTaxi(String plate) (TODO 3)
@@ -7,7 +7,7 @@
 - [ ] Implement a (fifo) queue for taxis that support it
 - [ ] Rate driver after a ride 
 
-#Next
+# Next
 - [ ] Authentication via credentials
 - [ ] GUI for the app
 - [ ] Load and save application status in a file
