@@ -1,4 +1,7 @@
 import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 public abstract class Taxi extends App{
 	
@@ -10,8 +13,41 @@ public abstract class Taxi extends App{
 	private Point2D location;
 	private Driver driver;
 	List<Travel> tReg; 
+	
+	//Constructors
+	public Taxi(){
+		this.plate = "";
+		this.averageSpeed=0;
+		this.pricePerKm=0;
+		this.reliability=0;
+		this.location = new Point2D();
+		this.driver = new Driver();
+		this.tReg = new ArrayList<Travel>();
+	}
 
-    //gets and sets
+	public Taxi(Taxi t){
+		this.plate = t.getPlate();
+		this.averageSpeed= t.getAverageSpeed();
+                this.pricePerKm=t.getPricePerKm();
+                this.reliability=t.getReliability();
+                this.location = t.getLocation();
+                this.driver = t.getDriver();
+		this.tReg = t.getTReg();
+	}
+
+	public Taxi(String plate, double avS, double ppkm, double rel, Point2D loc, Driver d, ArrayList<Travel> tr){
+		this.plate = plate;
+		this.averageSpeed = avS;
+		this.pricePerKm = ppkm;
+		this.reliability = rel;
+		this.location = loc;
+		this.driver = d.clone();
+		
+		for(Travel t: tr)
+			this.tReg.add(t.clone());
+	}
+
+    	//gets and sets
 	public String getPlate(){
 		return this.plate;
 	}
@@ -68,6 +104,13 @@ public abstract class Taxi extends App{
 		this.tReg = nTReg.stream().map(Travel::clone).collect(Collectors.toCollection(ArrayList::new));
 	}
 
+	public boolean equals(Object o){
+		if(this==o) return true;
+		if((o==null) || (o.getClass()!=this.getClass())) return false;
+		Taxi h = (Taxi)o;
+		return (this.plate.equals(h.getPlate()) && this.averageSpeed==h.getAverageSpeed() && this.pricePerKm==h.getPricePerKm() && this.reliability==h.getReliability() && this.location.equals(h.getLocation()) && this.driver.equals(h.getDriver()) && this.tReg.equals(h.getTReg()));
+	}
+
     public String toString(){
         StringBuilder r = new StringBuilder();
         r.append("AverageSpeed: ").append(this.averageSpeed).append("\n");
@@ -83,7 +126,6 @@ public abstract class Taxi extends App{
         int r=13;
         long aux;
         
-        r = r*23 + this.taxiType.hashCode();
         aux = Double.doubleToLongBits(this.averageSpeed);
         r = r*23 + (int)(aux ^ (aux >>> 32));
         aux = Double.doubleToLongBits(this.pricePerKm);
@@ -96,7 +138,6 @@ public abstract class Taxi extends App{
     }
 
     public abstract Taxi clone();
-    public abstract equals(Object o);
     public abstract int compareTo(Taxi t);
     public abstract void addTravel(Client c, Travel t);
 
