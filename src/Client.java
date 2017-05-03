@@ -81,7 +81,7 @@ public class Client extends Account {
 
 	}
 
-	public makeReserve(String plate){
+	public void bookTaxi(String plate){
 
 	}
 	
