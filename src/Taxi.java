@@ -142,7 +142,7 @@ public class Taxi extends App{
 			int r=13;
 			long aux;
 			
-			r = r*23 + this.taxiTyp	e.hashCode();
+			r = r*23 + this.taxiType.hashCode();
 			aux = Double.doubleToLongBits(this.averageSpeed);
 			r = r*23 + (int)(aux ^ (aux >>> 32));
 			aux = Double.doubleToLongBits(this.pricePerKm);

@@ -85,7 +85,7 @@ public class Client extends Account {
 
     // request a specific taxi that isn't currently available
     // TODO 3
-	public bookTaxi(String plate){
+	public void bookTaxi(String plate){
 
 	}
 	

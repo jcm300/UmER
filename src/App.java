@@ -8,6 +8,8 @@
  */
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 public class App{
 
@@ -17,9 +19,9 @@ public class App{
 
     private App(){
 
-        this.users = ArrayList<>();
-        this.drivers = ArrayList<>();
-        this.vehicles = ArrayList<>();
+        this.users = new ArrayList<Client>();
+        this.drivers = new ArrayList<Driver>();
+        this.vehicles = new ArrayList<Taxi>();
 
     }
 
