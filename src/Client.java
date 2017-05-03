@@ -72,15 +72,19 @@ public class Client extends Account {
 
 
 	// request a ride to the nearest taxi
+    // TODO 1
 	public void requestRide(){
 
 	}
 
 	// request a taxi for a ride
+    // TODO 2
 	public void requestTaxi(String plate){
 
 	}
 
+    // request a specific taxi that isn't currently available
+    // TODO 3
 	public void bookTaxi(String plate){
 
 	}
