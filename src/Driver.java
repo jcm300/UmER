@@ -28,9 +28,7 @@ public class Driver extends Account {
 		super(email, nome, password, address, bday);
 		this.status = av;
 		this.rating = ratng;
-		this.travels = tvl.stream()
-				  .map(Travel::clone)
-				  .collect(Collectors.toCollection(ArrayList::new));
+		this.travels = tvl.stream().map(Travel::clone).collect(Collectors.toCollection(ArrayList::new));
 		this.kmsTraveled = kms;
 		this.punctuality = pc;
 	}

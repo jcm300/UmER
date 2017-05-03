@@ -1,0 +1,9 @@
+*.class
+*.png
+
+## macOS
+.DS_Store
+
+._*
+*.txt
+**/*.swp
