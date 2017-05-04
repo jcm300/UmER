@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Client extends Account {
 	
@@ -8,19 +9,19 @@ public class Client extends Account {
 
 	// constructors
 	public Client(){
-        super();
+	        super();
 		this.location = new Point2D();
 		this.travels = new ArrayList<Travel>();
 	}
 
 	public Client(String email, String nome, String password, String address, String bday, Point2D location, ArrayList<Travel> travels){
-        super()
+        	super();
 		this.location = location.clone();
 		for(Travel t: travels) this.travels.add(t.clone());
 	}
 
 	public Client (Client c){
-            super(c);
+            	super(c);
     		this.location = c.getLocation();
     		this.travels = c.getTravels();
 	}
@@ -54,7 +55,7 @@ public class Client extends Account {
 		if(o==this) return true;
 		if((o==null) || (o.getClass()!=this.getClass())) return false;
 		Client c = (Client)o;
-		return (super.equals(c) && (this.location.equals(c.getLocation()) && this.travels.equals(c.getTravels()));
+		return (super.equals(c) && this.location.equals(c.getLocation()) && this.travels.equals(c.getTravels()));
 	}
 
 	public String toString(){
@@ -76,19 +77,19 @@ public class Client extends Account {
 
 	// request a ride to the nearest taxi
     // TODO 1
-	public void requestRide(){
+	public void requestRide(List<Taxi> l){
 
 	}
 
 	// request a taxi for a ride
     // TODO 2
-	public void requestTaxi(String plate){
+	public void requestTaxi(String plate, List<Taxi> l){
 
 	}
 
     // request a specific taxi that isn't currently available
     // TODO 3
-	public void bookTaxi(String plate){
+	public void bookTaxi(String plate, List<Taxi> l){
 
 	}
 	

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
 
-public abstract class Taxi extends App{
+public abstract class Taxi{
 	
 	//instace variables
 	private String plate;
@@ -21,7 +21,7 @@ public abstract class Taxi extends App{
 		this.pricePerKm=0;
 		this.reliability=0;
 		this.location = new Point2D();
-		this.driver = new Driver();
+		this.driver = null;
 		this.tReg = new ArrayList<Travel>();
 	}
 
@@ -97,7 +97,7 @@ public abstract class Taxi extends App{
 	}
 
 	public void setDriver(Driver d){
-		this.driver = d.clone();
+		this.driver = d;
 	}
 
 	public void setTReg(List<Travel> nTReg){

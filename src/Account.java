@@ -1,4 +1,4 @@
-public class Account extends App{
+public class Account{
 
 	//instance variables
 	private String email;
