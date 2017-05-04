@@ -1,11 +1,11 @@
 # To do
-- [ ] public void requestRide() (TODO 1)
-- [ ] public void requestTaxi(String plate) (TODO 2)
-- [ ] public void bookTaxi(String plate) (TODO 3)
-- [x] Implement Taxi as an abstract class (TODO 5)
+- [ ] public requestRide (TODO 1)
+- [ ] public requestTaxi (TODO 2)
+- [ ] public bookTaxi (TODO 3)
 - [ ] Random trustworthiness generation after each ride (TODO 4)
+- [x] Implement Taxi as an abstract class (TODO 5)
+- [ ] public getNewRating (TODO 6)
 - [ ] Implement a (fifo) queue for taxis that support it
-- [ ] Rate driver after a ride 
 
 # Next
 - [ ] Authentication via credentials

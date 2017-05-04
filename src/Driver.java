@@ -149,4 +149,10 @@ public class Driver extends Account {
 	public void addTravel(Travel t){
 		this.travels.add(t.clone());
 	}
+
+    //Average's the rating of the current driver given the ratings already recieved
+    // TODO 6
+    public void getNewRating(double nR){
+
+    }
 }

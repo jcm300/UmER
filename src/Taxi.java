@@ -70,8 +70,7 @@ public abstract class Taxi{
 
 	public Driver getDriver(){
 		return this.driver.clone();
-	}
-	
+	} 
 	public List<Travel> getTReg(){
 		return this.tReg.stream().map(Travel::clone).collect(Collectors.toCollection(ArrayList::new));
 	}
@@ -103,6 +102,11 @@ public abstract class Taxi{
 	public void setTReg(List<Travel> nTReg){
 		this.tReg = nTReg.stream().map(Travel::clone).collect(Collectors.toCollection(ArrayList::new));
 	}
+
+    // Randomly generates the reliability of a taxi after a ride
+    // TODO 4
+    public void genReliability(){
+    }
 
 	public boolean equals(Object o){
 		if(this==o) return true;
@@ -136,6 +140,7 @@ public abstract class Taxi{
         r = r*23 + this.driver.hashCode();
         return r;
     }
+
 
     public abstract Taxi clone();
     public abstract int compareTo(Taxi t);
