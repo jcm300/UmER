@@ -70,4 +70,15 @@ public class App{
         
     }
 
+    public void addUser(Client nUser){
+        this.users.add(nUser.clone());
+    }
+
+    public void addDriver(Driver nDriver){
+        this.drivers.add(nDriver.clone());
+    }
+
+    public void addVehicle(Taxi nTaxi){
+        this.vehicles.add(nTaxi.clone());
+    }
 }

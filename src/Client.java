@@ -6,18 +6,21 @@ public class Client extends Account {
 	private Point2D location;
 	private ArrayList<Travel> travels;  
 
-	// contructors
+	// constructors
 	public Client(){
+        super();
 		this.location = new Point2D();
 		this.travels = new ArrayList<Travel>();
 	}
 
-	public Client( Point2D location, ArrayList<Travel> travels){
+	public Client(String email, String nome, String password, String address, String bday, Point2D location, ArrayList<Travel> travels){
+        super()
 		this.location = location.clone();
 		for(Travel t: travels) this.travels.add(t.clone());
 	}
 
 	public Client (Client c){
+            super(c);
     		this.location = c.getLocation();
     		this.travels = c.getTravels();
 	}
@@ -51,12 +54,12 @@ public class Client extends Account {
 		if(o==this) return true;
 		if((o==null) || (o.getClass()!=this.getClass())) return false;
 		Client c = (Client)o;
-		return (this.location.equals(c.getLocation()) && this.travels.equals(c.getTravels()));
+		return (super.equals(c) && (this.location.equals(c.getLocation()) && this.travels.equals(c.getTravels()));
 	}
 
 	public String toString(){
 		StringBuilder r = new StringBuilder();
-                
+        r.append(super.toString()).append("\n");
 		r.append("Location: ").append(this.location.toString()).append("\n");
 		r.append("Travels: ").append(this.travels.toString());
 		return r.toString();
