@@ -37,14 +37,25 @@ public class MotorBike extends Taxi {
 	}
 
 	//Methods
-	public void addTravel(Client c, Travel t){
+	public void addTravel(Travel t){
 		this.getTReg().add(t.clone());
 		this.getDriver().addTravel(t);
-		c.addTravel(t);
 	}
 	
 	public MotorBike clone(){
 		return new MotorBike(this);
+	}
+
+	public void addWaitingList(Travel t){
+		this.waitingList.add(t.clone());
+	}
+
+	public Travel removeWaitingList(Travel t){
+		return this.waitingList.remove().clone();
+	}
+
+	public boolean containsWaitingList(Travel t){
+		return this.waitingList.contains(t.clone());
 	}
 
 	public int compareTo(MotorBike m){
