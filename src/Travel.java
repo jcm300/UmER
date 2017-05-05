@@ -6,6 +6,7 @@ public class Travel {
 	private double cost;
 	private double time;
 	private double distance;
+	private Point2D dest;
 	private LocalDate date;
 	
 	//Constructors
@@ -13,13 +14,15 @@ public class Travel {
 		this.cost = 0;
 		this.time = 0;
 		this.distance = 0;
+		this.dest = new Point2D();
 		this.date = LocalDate.now();
 	}
 
-	public Travel(double cost, double time, double distance, LocalDate date){
+	public Travel(double cost, double time, double distance, LocalDate date, Point2D dest){
 		this.cost = cost;
 		this.time = time;
 		this.distance = distance;
+		this.dest = new Point2D(dest);
 		this.date = date;
 	}
 
@@ -27,6 +30,7 @@ public class Travel {
 		this.cost = t.getCost();
 		this.time = t.getTime();
 		this.distance = t.getDistance();
+		this.dest = t.getDest();
 		this.date = t.getDate();
 	}
 
@@ -41,6 +45,10 @@ public class Travel {
 
 	public double getDistance(){
 		return this.distance;
+	}
+
+	public Point2D getDest(){
+		return this.dest.clone();
 	}
 
 	public LocalDate getDate(){
@@ -59,6 +67,10 @@ public class Travel {
 		this.distance = d;
 	}
 
+	public void setDest(Point2D nDest){
+		this.dest = nDest.clone();
+	}
+
 	public void setDate(LocalDate ld){
 		this.date = ld;
 	}
@@ -71,7 +83,7 @@ public class Travel {
 		if(this == o) return true;
 		if((o == null) || (o.getClass()!=this.getClass())) return false;
 		Travel t = (Travel)o;
-		return (this.cost==t.getCost() && this.time==t.getTime() && this.distance==t.getDistance() && this.date.equals(t.getDate()));
+		return (this.cost==t.getCost() && this.time==t.getTime() && this.distance==t.getDistance() && this.dest==t.getDest() && this.date.equals(t.getDate()));
 	}
 
 	public String toString(){
@@ -79,6 +91,7 @@ public class Travel {
 		r.append("Cost: ").append(this.cost).append("\n");
 		r.append("Time: ").append(this.time).append("\n");
 		r.append("Distance: ").append(this.distance).append("\n");
+		r.append("Destiny: ").append(this.dest.toString()).append("\n");
 		r.append("Date: ").append(this.date.toString());
 		return r.toString();
 	}

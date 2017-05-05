@@ -93,9 +93,9 @@ public class Client extends Account {
             }
 
         if(closest != null){
-            aux = new Travel(closest.getAverageSpeed()*dist,closest.getPricePerKm()*dist, dist,curT);
+            aux = new Travel(closest.getAverageSpeed()*dist,closest.getPricePerKm()*dist, dist,curT, dest);
             travels.add(aux);
-            closest.addTravel(aux, dest);
+            closest.addTravel(aux);
             this.location = new Point2D(dest);
         }    
         
@@ -113,9 +113,9 @@ public class Client extends Account {
             t = l.get(plate);
             if(t.getDriver().getStatus()){
                 dist = this.location.getDist(t.getLocation());
-                aux = new Travel(t.getAverageSpeed()*dist,t.getPricePerKm()*dist, dist,curT);
+                aux = new Travel(t.getAverageSpeed()*dist,t.getPricePerKm()*dist, dist,curT, dest);
                 travels.add(aux);
-                t.addTravel(aux, dest);
+                t.addTravel(aux);
                 this.location = new Point2D(dest);
             }
         } 
@@ -133,7 +133,7 @@ public class Client extends Account {
             t = l.get(plate);              
             if(t instanceof TaxiQueue){         //supports a queue
                 dist = this.location.getDist(t.getLocation());
-                aux = new Travel(t.getAverageSpeed()*dist,t.getPricePerKm()*dist, dist,curT);
+                aux = new Travel(t.getAverageSpeed()*dist,t.getPricePerKm()*dist, dist,curT, dest);
                 ((TaxiQueue)t).addWaitingList(aux);
                 this.location = new Point2D(dest);
             }
