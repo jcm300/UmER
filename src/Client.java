@@ -1,11 +1,13 @@
 import java.util.ArrayList;
+import java.util.Map;
+import java.lang.Math;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Client extends Account {
 	
 	//instance variables
-	private Point2D location;
-	private ArrayList<Travel> travels;  
+	private Point2D location; private ArrayList<Travel> travels;  
 
 	// constructors
 	public Client(){
@@ -15,7 +17,7 @@ public class Client extends Account {
 	}
 
 	public Client(String email, String nome, String password, String address, String bday, Point2D location, ArrayList<Travel> travels){
-        	super();
+        super();
 		this.location = location.clone();
 		for(Travel t: travels) this.travels.add(t.clone());
 	}
@@ -75,21 +77,65 @@ public class Client extends Account {
 	}
 
 
+    
 	// request a ride to the nearest taxi
-    // TODO 1
-	public void requestRide(List<Taxi> l){
+	public void requestRide(Map<String,Taxi> l, Point2D dest){
 
+        LocalDate curT = LocalDate.now();
+        double dist = Double.MAX_VALUE, temp;
+        Taxi closest = null;
+        Travel aux;
+
+        for(Taxi t : l.values())                    //search for the nearest taxi
+            if((temp = this.location.getDist(t.getLocation())) < dist && t.getDriver().getStatus()){ 
+                closest = t;
+                dist = temp;
+            }
+
+        if(closest != null){
+            aux = new Travel(closest.getAverageSpeed()*dist,closest.getPricePerKm()*dist, dist,curT);
+            travels.add(aux);
+            closest.addTravel(aux);
+            this.location = new Point2D(dest);
+        }    
+        
 	}
 
 	// request a taxi for a ride
-    // TODO 2
-	public void requestTaxi(String plate, List<Taxi> l){
+	public void requestTaxi(String plate, Map<String,Taxi> l){
 
+        Travel aux;
+        Taxi t;
+        double dist;
+        LocalDate curT = LocalDate.now();
+
+        if(l.containsKey(plate)){
+            t = l.get(plate);
+            if(t.getDriver().getStatus()){
+                dist = this.location.getDist(t.getLocation());
+                aux = new Travel(t.getAverageSpeed()*dist,t.getPricePerKm()*dist, dist,curT);
+                travels.add(aux);
+                t.addTravel(aux);
+            }
+        } 
 	}
 
     // request a specific taxi that isn't currently available
-    // TODO 3
-	public void bookTaxi(String plate, List<Taxi> l){
+	public void bookTaxi(String plate, Map<String,Taxi> l){
+
+        Travel aux;
+        Taxi t;
+        LocalDate curT = LocalDate.now();
+        double dist;
+
+        if(l.containsKey(plate)){
+            t = l.get(plate);              
+            if(t instanceof TaxiQueue){         //supports a queue
+                dist = this.location.getDist(t.getLocation());
+                aux = new Travel(t.getAverageSpeed()*dist,t.getPricePerKm()*dist, dist,curT);
+                ((TaxiQueue)t).addWaitingList(aux);
+            }
+        }
 
 	}
 	

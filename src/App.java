@@ -8,6 +8,8 @@
  */
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
 
@@ -15,13 +17,13 @@ public class App{
 
     private ArrayList<Client> users;
     private ArrayList<Driver> drivers;
-    private ArrayList<Taxi> vehicles;
+    private Map<String,Taxi> vehicles;
 
     private App(){
 
         this.users = new ArrayList<Client>();
         this.drivers = new ArrayList<Driver>();
-        this.vehicles = new ArrayList<Taxi>();
+        this.vehicles = new HashMap<>();
 
     }
 
@@ -58,16 +60,12 @@ public class App{
 
     }
 
-    public ArrayList<Taxi> getVehicles(){
-
-        return this.vehicles.stream().map(Taxi::clone).collect(Collectors.toCollection(ArrayList::new));
-
+    public Map<String,Taxi> getVehicles(){
+        return this.vehicles.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue().clone()));
     }
 
-    public void setVehicles(ArrayList<Taxi> nT){
-
-        this.vehicles = nT.stream().map(Taxi::clone).collect(Collectors.toCollection(ArrayList::new));
-        
+    public void setVehicles(Map<String,Taxi> nT){
+        this.vehicles = nT.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue().clone()));
     }
 
     public void addUser(Client nUser){
@@ -79,6 +77,6 @@ public class App{
     }
 
     public void addVehicle(Taxi nTaxi){
-        this.vehicles.add(nTaxi.clone());
+        this.vehicles.put(nTaxi.getPlate(), nTaxi.clone());
     }
 }

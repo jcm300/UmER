@@ -1,9 +1,10 @@
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Company {
 
 	//instance variables
-	private ArrayList<Driver> taxis;
+	private ArrayList<Taxi> taxis;
 	private ArrayList<Driver> drivers;
 	private String name;
 
@@ -12,7 +13,7 @@ public class Company {
 	public Company(){
 
 		this.taxis = new ArrayList<>();
-		this.drives = new ArrayList<>();
+		this.drivers = new ArrayList<>();
 		this.name = new String("");
 	}
 

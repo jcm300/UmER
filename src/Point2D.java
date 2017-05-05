@@ -1,3 +1,4 @@
+import java.lang.Math;
 /* *
  * 2D point
 */
@@ -56,6 +57,11 @@ public class Point2D {
 	public boolean coordPos () {
 		return (this.x>0 && this.y>0);
 	}
+
+    public double getDist(Point2D pos){
+        return Math.sqrt(Math.pow(this.x-pos.getX(), 2)+Math.pow(this.y-pos.getY(), 2));
+    }
+
 
 	/* Check if the 2 points are equal */
 	public boolean equals (Object o) {

@@ -103,6 +103,11 @@ public abstract class Taxi{
 		this.tReg = nTReg.stream().map(Travel::clone).collect(Collectors.toCollection(ArrayList::new));
 	}
 
+	public void addTravel(Travel t){
+		this.getTReg().add(t.clone());
+		this.getDriver().addTravel(t);
+	}
+
     // Randomly generates the reliability of a taxi after a ride
     // TODO 4
     public void genReliability(){
@@ -144,6 +149,6 @@ public abstract class Taxi{
 
     public abstract Taxi clone();
     public abstract int compareTo(Taxi t);
-    public abstract void addTravel(Client c, Travel t);
+    
 
 }

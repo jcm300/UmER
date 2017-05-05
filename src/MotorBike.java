@@ -36,11 +36,6 @@ public class MotorBike extends Taxi {
                 	this.waitingList.add(t.clone());
 	}
 
-	//Methods
-	public void addTravel(Travel t){
-		this.getTReg().add(t.clone());
-		this.getDriver().addTravel(t);
-	}
 	
 	public MotorBike clone(){
 		return new MotorBike(this);
@@ -50,12 +45,12 @@ public class MotorBike extends Taxi {
 		this.waitingList.add(t.clone());
 	}
 
-	public Travel removeWaitingList(Travel t){
+	public Travel removeWaitingList(){
 		return this.waitingList.remove().clone();
 	}
 
 	public boolean containsWaitingList(Travel t){
-		return this.waitingList.contains(t.clone());
+		return this.waitingList.contains(t);
 	}
 
 	public int compareTo(MotorBike m){
