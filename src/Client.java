@@ -95,14 +95,14 @@ public class Client extends Account {
         if(closest != null){
             aux = new Travel(closest.getAverageSpeed()*dist,closest.getPricePerKm()*dist, dist,curT);
             travels.add(aux);
-            closest.addTravel(aux);
+            closest.addTravel(aux, dest);
             this.location = new Point2D(dest);
         }    
         
 	}
 
 	// request a taxi for a ride
-	public void requestTaxi(String plate, Map<String,Taxi> l){
+	public void requestTaxi(String plate, Map<String,Taxi> l, Point2D dest){
 
         Travel aux;
         Taxi t;
@@ -115,13 +115,14 @@ public class Client extends Account {
                 dist = this.location.getDist(t.getLocation());
                 aux = new Travel(t.getAverageSpeed()*dist,t.getPricePerKm()*dist, dist,curT);
                 travels.add(aux);
-                t.addTravel(aux);
+                t.addTravel(aux, dest);
+                this.location = new Point2D(dest);
             }
         } 
 	}
 
     // request a specific taxi that isn't currently available
-	public void bookTaxi(String plate, Map<String,Taxi> l){
+	public void bookTaxi(String plate, Map<String,Taxi> l, Point2D dest){
 
         Travel aux;
         Taxi t;
@@ -134,6 +135,7 @@ public class Client extends Account {
                 dist = this.location.getDist(t.getLocation());
                 aux = new Travel(t.getAverageSpeed()*dist,t.getPricePerKm()*dist, dist,curT);
                 ((TaxiQueue)t).addWaitingList(aux);
+                this.location = new Point2D(dest);
             }
         }
 

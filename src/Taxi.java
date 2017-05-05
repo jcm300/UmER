@@ -103,8 +103,9 @@ public abstract class Taxi{
 		this.tReg = nTReg.stream().map(Travel::clone).collect(Collectors.toCollection(ArrayList::new));
 	}
 
-	public void addTravel(Travel t){
+	public void addTravel(Travel t, Point2D dest){
 		this.getTReg().add(t.clone());
+        this.location = new Point2D(dest);
 		this.getDriver().addTravel(t);
 	}
 
