@@ -146,10 +146,11 @@ public abstract class Taxi{
         r = r*23 + this.driver.hashCode();
         return r;
     }
-
+	
+    public int compareTo(Taxi t){
+	    return this.plate.compareTo(t.getPlate());
+    }    
 
     public abstract Taxi clone();
-    public abstract int compareTo(Taxi t);
-    
 
 }

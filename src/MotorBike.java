@@ -54,6 +54,6 @@ public class MotorBike extends Taxi {
 	}
 
 	public int compareTo(MotorBike m){
-	
+		return super.compareTo(m);	
 	}	
 }
