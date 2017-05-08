@@ -104,9 +104,9 @@ public abstract class Taxi{
 	}
 
 	public void addTravel(Travel t){
-		this.getTReg().add(t.clone());
-        this.location = new Point2D(t.getDest());
-		this.getDriver().addTravel(t);
+		this.tReg.add(t.clone());
+        	this.location = new Point2D(t.getDest());
+		this.driver.addTravel(t);
 	}
 
     // Randomly generates the reliability of a taxi after a ride
