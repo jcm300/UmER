@@ -127,7 +127,7 @@ public class Client extends Account {
         	Taxi t;
         	LocalDate curT = LocalDate.now();
         	double dist;
-		boolean book = false;
+			boolean book = false;
 
         	if(l.containsKey(plate)){
             		t = l.get(plate);              

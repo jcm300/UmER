@@ -8,6 +8,7 @@
  */
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -15,14 +16,12 @@ import java.util.stream.Collectors;
 
 public class App{
 
-    private ArrayList<Client> users;
-    private ArrayList<Driver> drivers;
+    private Map<String,Account> users;
     private Map<String,Taxi> vehicles;
 
     private App(){
 
-        this.users = new ArrayList<Client>();
-        this.drivers = new ArrayList<Driver>();
+        this.users = new HashMap<>();
         this.vehicles = new HashMap<>();
 
     }
@@ -36,28 +35,12 @@ public class App{
 	}
 
     //gets & sets
-    public ArrayList<Client> getUsers(){
-
-        return this.users.stream().map(Client::clone).collect(Collectors.toCollection(ArrayList::new));
-
+    public Map<String, Account> getUsers(){
+        return this.users.entrySet().stream().collect(Collectors.toMap(e->e.getKey(), e->e.getValue().clone()));
     }
 
-    public void setUsers(ArrayList<Client> nC){
-
-        this.users = nC.stream().map(Client::clone).collect(Collectors.toCollection(ArrayList::new));
-
-    }
-
-    public ArrayList<Driver> getDrivers(){
-
-        return this.drivers.stream().map(Driver::clone).collect(Collectors.toCollection(ArrayList::new));
-
-    }
-
-    public void  setDrivers(ArrayList<Driver> nD){
-
-        this.drivers = nD.stream().map(Driver::clone).collect(Collectors.toCollection(ArrayList::new));
-
+    public void setUsers(Map<String, Account> nC){
+        this.users = nC.entrySet().stream().collect(Collectors.toMap(e->e.getKey(), e->e.getValue().clone()));
     }
 
     public Map<String,Taxi> getVehicles(){
@@ -68,15 +51,15 @@ public class App{
         this.vehicles = nT.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue().clone()));
     }
 
-    public void addUser(Client nUser){
-        this.users.add(nUser.clone());
-    }
-
-    public void addDriver(Driver nDriver){
-        this.drivers.add(nDriver.clone());
+    public void addUser(Account nUser){
+        this.users.put(nUser.getName(), nUser.clone());
     }
 
     public void addVehicle(Taxi nTaxi){
         this.vehicles.put(nTaxi.getPlate(), nTaxi.clone());
+    }
+
+    public List<Account> getUserList(){
+        return this.users.values().stream().map(Account::clone).collect(Collectors.toList());
     }
 }

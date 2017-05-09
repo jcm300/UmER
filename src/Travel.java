@@ -4,33 +4,41 @@ public class Travel {
 	
 	//instance variables
 	private double cost;
-	private double time;
+	private double rTime;
+    private double pTime;
 	private double distance;
+    private Point2D src;
 	private Point2D dest;
 	private LocalDate date;
 	
 	//Constructors
 	public Travel(){
 		this.cost = 0;
-		this.time = 0;
+		this.rTime = 0;
+		this.pTime = 0;
 		this.distance = 0;
 		this.dest = new Point2D();
+		this.src = new Point2D();
 		this.date = LocalDate.now();
 	}
 
-	public Travel(double cost, double time, double distance, LocalDate date, Point2D dest){
+	public Travel(double cost, double time, double distance, LocalDate date, Point2D dest, Point2D src){
 		this.cost = cost;
-		this.time = time;
+		this.rTime = rTime;
+		this.pTime = pTime;
 		this.distance = distance;
 		this.dest = new Point2D(dest);
+		this.src = new Point2D(src);
 		this.date = date;
 	}
 
 	public Travel(Travel t){
 		this.cost = t.getCost();
-		this.time = t.getTime();
+        this.rTime = getrTime();
+		this.pTime = getpTime();
 		this.distance = t.getDistance();
 		this.dest = t.getDest();
+        this.src = t.getSrc();
 		this.date = t.getDate();
 	}
 
@@ -39,8 +47,12 @@ public class Travel {
 		return this.cost;
 	}
 	
-	public double getTime(){
-		return this.time;
+	public double getrTime(){
+		return this.rTime;
+	}
+    
+    public double getpTime(){
+		return this.pTime;
 	}
 
 	public double getDistance(){
@@ -51,6 +63,10 @@ public class Travel {
 		return this.dest.clone();
 	}
 
+    public Point2D getSrc(){
+		return this.src.clone();
+	}
+
 	public LocalDate getDate(){
 		return this.date;
 	}
@@ -59,8 +75,12 @@ public class Travel {
 		this.cost = c;
 	}
 
-	public void setTime(double t){
-		this.time = t;
+	public void setrTime(double t){
+		this.rTime = t;
+	}
+
+    public void setpTime(double t){
+		this.pTime = t;
 	}
 
 	public void setDistance(double d){
@@ -69,6 +89,10 @@ public class Travel {
 
 	public void setDest(Point2D nDest){
 		this.dest = nDest.clone();
+	}
+
+    public void setSrc(Point2D nSrc){
+		this.src = nSrc.clone();
 	}
 
 	public void setDate(LocalDate ld){
@@ -89,7 +113,8 @@ public class Travel {
 	public String toString(){
 		StringBuilder r = new StringBuilder();
 		r.append("Cost: ").append(this.cost).append("\n");
-		r.append("Time: ").append(this.time).append("\n");
+		r.append("Effective Time: ").append(this.rTime).append("\n");
+		r.append("Predicted Time: ").append(this.pTime).append("\n");
 		r.append("Distance: ").append(this.distance).append("\n");
 		r.append("Destiny: ").append(this.dest.toString()).append("\n");
 		r.append("Date: ").append(this.date.toString());
