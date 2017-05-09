@@ -12,9 +12,9 @@
 - [x] Implement the Van class
 - [x] Implement the Lightweight class
 - [x] Add origin of a trip(Travel)
-- [ ] Predict time until client and until destiny after requesting a ride(Taxi)
-- [ ] Predict cost of the trip(Taxi)
-- [ ] Add time taken/predicted of a trip(Travel)
+- [x] Predict time until client and until destiny after requesting a ride(Taxi)
+- [x] Predict cost of the trip(Taxi)
+- [x] Add time taken/predicted of a trip(Travel)
 - [ ] Request rides taken in a period of time(Account/Taxi)
 - [ ] Consult the total profit of a certain taxi/company in a certain time frame(Taxi/Company)
 - [ ] Create a new user(App)

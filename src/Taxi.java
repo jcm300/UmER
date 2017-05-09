@@ -109,9 +109,14 @@ public abstract class Taxi{
 		this.driver.addTravel(t);
 	}
 
-    // Randomly generates the reliability of a taxi after a ride
+    // Randomly generates the reliability of a taxi before a ride
     // TODO 4
     public void genReliability(){
+    }
+
+    public double getEffectiveTime(double dist){
+        this.genReliability();
+        return dist/this.averageSpeed*this.reliability;
     }
 
 	public boolean equals(Object o){

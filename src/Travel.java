@@ -22,7 +22,7 @@ public class Travel {
 		this.date = LocalDate.now();
 	}
 
-	public Travel(double cost, double time, double distance, LocalDate date, Point2D dest, Point2D src){
+	public Travel(double cost, double rTime, double pTime, double distance, LocalDate date, Point2D dest, Point2D src){
 		this.cost = cost;
 		this.rTime = rTime;
 		this.pTime = pTime;
@@ -107,7 +107,9 @@ public class Travel {
 		if(this == o) return true;
 		if((o == null) || (o.getClass()!=this.getClass())) return false;
 		Travel t = (Travel)o;
-		return (this.cost==t.getCost() && this.time==t.getTime() && this.distance==t.getDistance() && this.dest==t.getDest() && this.date.equals(t.getDate()));
+		return (this.cost==t.getCost() && this.rTime==t.getrTime() && this.pTime==t.getpTime() && 
+                this.distance==t.getDistance() && this.src.equals(t.getSrc()) && 
+                this.dest.equals(t.getDest()) && this.date.equals(t.getDate()));
 	}
 
 	public String toString(){
@@ -116,6 +118,7 @@ public class Travel {
 		r.append("Effective Time: ").append(this.rTime).append("\n");
 		r.append("Predicted Time: ").append(this.pTime).append("\n");
 		r.append("Distance: ").append(this.distance).append("\n");
+		r.append("Source: ").append(this.src.toString()).append("\n");
 		r.append("Destiny: ").append(this.dest.toString()).append("\n");
 		r.append("Date: ").append(this.date.toString());
 		return r.toString();
@@ -127,10 +130,10 @@ public class Travel {
 
 		aux = Double.doubleToLongBits(this.cost);
 		r = r*23 + (int)(aux ^ (aux >>> 32));
-		aux = Double.doubleToLongBits(this.time);
-                r = r*23 + (int)(aux ^ (aux >>> 32));
+		aux = Double.doubleToLongBits(this.rTime);
+        r = r*23 + (int)(aux ^ (aux >>> 32));
 		aux = Double.doubleToLongBits(this.distance);
-                r = r*23 + (int)(aux ^ (aux >>> 32));
+        r = r*23 + (int)(aux ^ (aux >>> 32));
 		r = r*23 + this.date.hashCode();
 		return r;
 	}
