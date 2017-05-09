@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import java.time.LocalDate;
 
 public class Company {
 
@@ -25,6 +26,15 @@ public class Company {
 
 	}
 
-
-
+	//methods
+ 
+    //Profit between to dates on one Company
+    public double profitBetween(LocalDate init, LocalDate end){
+        double ret=0;
+ 
+        for(Taxi t: this.taxis)
+        	ret += t.profitBetween(init,end);
+ 
+        return ret;
+    }
 }

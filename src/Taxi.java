@@ -1,4 +1,5 @@
 import java.util.List;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
@@ -158,4 +159,21 @@ public abstract class Taxi{
 
     public abstract Taxi clone();
 
+	//Travels between to dates	
+	public List<Travel> getTravelsBetween(LocalDate init, LocalDate end){
+    	return this.tReg.stream()
+                    	.filter(t->t.getDate().isAfter(init) && t.getDate().isBefore(end))
+                        .collect(Collectors.toList());
+    }
+
+	//Profit between to dates on one Taxi
+	public double profitBetween(LocalDate init, LocalDate end){
+			List<Travel> aux = getTravelsBetween(init,end);
+			double ret=0;
+			
+			for(Travel t: aux)
+					ret += t.getCost();
+
+			return ret;
+	}
 }
