@@ -77,7 +77,7 @@ public class Client extends Account {
 
         if(closest != null){
             aux = new Travel(closest.getPricePerKm()*dist,dist/closest.getAverageSpeed(),closest.getEffectiveTime(dist), dist,curT, dest, this.location);
-            travels.add(aux);
+            this.addTravel(aux);
             closest.addTravel(aux);
             this.location = new Point2D(dest);
         }    
