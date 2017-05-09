@@ -5,9 +5,9 @@ public class Travel {
 	//instance variables
 	private double cost;
 	private double rTime;
-    private double pTime;
+   	private double pTime;
 	private double distance;
-    private Point2D src;
+	private Point2D src;
 	private Point2D dest;
 	private LocalDate date;
 	

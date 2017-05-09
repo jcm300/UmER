@@ -1,15 +1,10 @@
 import java.util.List;
-import java.util.ArrayList;
-import java.time.LocalDate;
-import java.util.stream.Stream;
-import java.util.stream.Collectors;
 
 public class Driver extends Account {
 	 
 	//instance variables
 	private boolean status;
 	private double rating;
-	private List<Travel> travels;
 	private double kmsTraveled;
 	private double punctuality;
 
@@ -19,16 +14,14 @@ public class Driver extends Account {
 		super();
 		this.status = false;
 		this.rating = 0.f;
-		this.travels = new ArrayList<>();
 		this.kmsTraveled = 0.f;
 		this.punctuality = 0.f;
 	}
 
-	public Driver(String email, String nome, String password, String address, String bday, boolean av, double ratng, List<Travel> tvl, double kms, double pc){
-		super(email, nome, password, address, bday);
+	public Driver(String email, String nome, String password, String address, String bday,List<Travel> tvl, boolean av, double ratng, double kms, double pc){
+		super(email, nome, password, address, bday,tvl);
 		this.status = av;
 		this.rating = ratng;
-		this.travels = tvl.stream().map(Travel::clone).collect(Collectors.toCollection(ArrayList::new));
 		this.kmsTraveled = kms;
 		this.punctuality = pc;
 	}
@@ -37,7 +30,6 @@ public class Driver extends Account {
 		super(oldDriver);
 		this.status = oldDriver.getStatus();
 		this.rating = oldDriver.getRating();
-		this.travels = oldDriver.getTravels();
 		this.kmsTraveled = oldDriver.getKmsTraveled();
 		this.punctuality = oldDriver.getPunctuality();
 	}
@@ -66,22 +58,6 @@ public class Driver extends Account {
 
 	}
 
-	public List<Travel> getTravels(){
-
-		return this.travels.stream()
-				   .map(t->t.clone())
-				   .collect(Collectors.toList());
-
-	}
-
-	public void setTravels(List<Travel> nTL){
-
-		this.travels = nTL.stream()
-				  .map(Travel::clone)
-				  .collect(Collectors.toCollection(ArrayList::new));
-
-	}
-
 	public double getKmsTraveled(){
 
 		return this.kmsTraveled;
@@ -105,15 +81,6 @@ public class Driver extends Account {
 
 	}
 
-	//all the travels between two given dates
-	public List<Travel> getTravelsBetween(LocalDate init, LocalDate end){
-
-		return this.travels.stream()
-				   .filter(t->t.getDate().isAfter(init) && t.getDate().isBefore(end))
-				   .collect(Collectors.toList());
-
-	}
-
 	public Driver clone(){
 
 		return new Driver(this);
@@ -128,10 +95,7 @@ public class Driver extends Account {
 		Driver aux = (Driver)o;
 		return super.equals(aux) && this.status == aux.getStatus() 
 					 && this.rating == aux.getRating() 
-					 && this.kmsTraveled == aux.getKmsTraveled()
-					 && this.punctuality == aux.getPunctuality()
-					 && aux.getTravels().stream()
-					   		    .filter(t -> !this.travels.contains(t)).count() == 0L;
+					 && this.kmsTraveled == aux.getKmsTraveled();
 	}
 
 	public String toString(){
@@ -143,11 +107,6 @@ public class Driver extends Account {
 		sb.append("Punctuality(0-100%): ").append(this.punctuality*100).append("%\n");
 
 		return sb.toString();
-	}
-
-	//register a travel for a client
-	public void addTravel(Travel t){
-		this.travels.add(t.clone());
 	}
 
     //Average's the rating of the current driver given the ratings already recieved

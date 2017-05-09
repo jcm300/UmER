@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Map;
 import java.lang.Math;
 import java.time.LocalDate;
@@ -7,25 +6,22 @@ import java.util.List;
 public class Client extends Account {
 	
 	//instance variables
-	private Point2D location; private ArrayList<Travel> travels;  
+	private Point2D location; 
 
 	// constructors
 	public Client(){
-        super();
+        	super();
 		this.location = new Point2D();
-		this.travels = new ArrayList<Travel>();
 	}
 
-	public Client(String email, String nome, String password, String address, String bday, Point2D location, ArrayList<Travel> travels){
-        super();
+	public Client(String email, String nome, String password, String address, String bday, List<Travel> tvl, Point2D location){
+        	super(email,nome,password,address,bday,tvl);
 		this.location = location.clone();
-		for(Travel t: travels) this.travels.add(t.clone());
 	}
 
 	public Client (Client c){
-        super(c);
-        this.location = c.getLocation();
-        this.travels = c.getTravels();
+        	super(c);
+        	this.location = c.getLocation();
 	}
 
 	//gets & sets
@@ -33,20 +29,8 @@ public class Client extends Account {
 		return this.location.clone();
 	}
 
-	public ArrayList<Travel> getTravels(){
-		ArrayList<Travel> r = new ArrayList<Travel>();
-		for(Travel t: this.travels) r.add(t.clone());
-		return r;
-	}
-
 	public void setLocation(Point2D l){
 		this.location = l.clone();
-	}
-
-	public void setTravels(ArrayList<Travel> l){
-		ArrayList<Travel> a = new ArrayList<Travel>();
-		for(Travel t: l) a.add(t.clone());
-		this.travels = a;
 	}
 
 	public Client clone(){
@@ -57,22 +41,21 @@ public class Client extends Account {
 		if(o==this) return true;
 		if((o==null) || (o.getClass()!=this.getClass())) return false;
 		Client c = (Client)o;
-		return (super.equals(c) && this.location.equals(c.getLocation()) && this.travels.equals(c.getTravels()));
+		return (super.equals(c) && this.location.equals(c.getLocation()));
 	}
 
 	public String toString(){
 		StringBuilder r = new StringBuilder();
         r.append(super.toString()).append("\n");
 		r.append("Location: ").append(this.location.toString()).append("\n");
-		r.append("Travels: ").append(this.travels.toString());
 		return r.toString();
 	}
 
 	public int hashCode(){
 		int r=7;
-                	
+                
+		r = r*11 + super.hashCode();	
 		r = r*11 + this.location.hashCode();
-		r = r*11 + this.travels.hashCode();
 		return r;
 	}
 
@@ -81,16 +64,16 @@ public class Client extends Account {
 	// request a ride to the nearest taxi
 	public void requestRide(Map<String,Taxi> l, Point2D dest){
 
-        LocalDate curT = LocalDate.now();
-        double dist = Double.MAX_VALUE, temp;
-        Taxi closest = null;
-        Travel aux;
+		LocalDate curT = LocalDate.now();
+        	double dist = Double.MAX_VALUE, temp;
+        	Taxi closest = null;
+        	Travel aux;
 
-        for(Taxi t : l.values())                    //search for the nearest taxi
-            if((temp = this.location.getDist(t.getLocation())) < dist && t.getDriver().getStatus()){ 
-                closest = t;
-                dist = temp;
-            }
+        	for(Taxi t : l.values())                    //search for the nearest taxi
+            	if((temp = this.location.getDist(t.getLocation())) < dist && t.getDriver().getStatus()){ 
+                	closest = t;
+                	dist = temp;
+            	}
 
         if(closest != null){
             aux = new Travel(closest.getPricePerKm()*dist,dist/closest.getAverageSpeed(),closest.getEffectiveTime(dist), dist,curT, dest, this.location);
@@ -103,21 +86,21 @@ public class Client extends Account {
 	// request a taxi for a ride
 	public void requestTaxi(String plate, Map<String,Taxi> l, Point2D dest){
 
-        Travel aux;
-        Taxi t;
-        double dist;
-        LocalDate curT = LocalDate.now();
+        	Travel aux;
+        	Taxi t;
+        	double dist;
+        	LocalDate curT = LocalDate.now();
 
-        if(l.containsKey(plate)){
-            t = l.get(plate);
-            if(t.getDriver().getStatus()){
-                dist = this.location.getDist(t.getLocation());
-                aux = new Travel(t.getPricePerKm()*dist, dist/t.getAverageSpeed(), t.getEffectiveTime(dist),dist,curT, dest, this.location);
-                travels.add(aux);
-                t.addTravel(aux);
-                this.location = new Point2D(dest);
-            }
-        }
+        	if(l.containsKey(plate)){
+            		t = l.get(plate);
+            		if(t.getDriver().getStatus()){
+                		dist = this.location.getDist(t.getLocation());
+                		aux = new Travel(t.getPricePerKm()*dist, dist/t.getAverageSpeed(), t.getEffectiveTime(dist),dist,curT, dest, this.location);
+                		this.addTravel(aux);
+                		t.addTravel(aux);
+                		this.location = new Point2D(dest);
+            		}
+        	}
 	}
 
     	// request a specific taxi that isn't currently available
@@ -140,10 +123,5 @@ public class Client extends Account {
             }
         }
         return book;
-    }
-
-    //add a travel to the list
-    public void addTravel(Travel t){
-        this.travels.add(t.clone());
     }
 }

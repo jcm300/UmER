@@ -1,3 +1,8 @@
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.time.LocalDate;
+
 public class Account{
 
 	//instance variables
@@ -6,7 +11,7 @@ public class Account{
 	private String password;
 	private String homeAddress;
 	private String birthday;
-
+	private List<Travel> travels;
 
     // constructors
     public Account(){
@@ -15,14 +20,16 @@ public class Account{
 	   this.password = null;
 	   this.homeAddress = null;
 	   this.birthday = null;
+	   this.travels = new ArrayList<>();
     }
 
-    public Account( String email, String name, String password, String homeAddress, String birthday){
+    public Account( String email, String name, String password, String homeAddress, String birthday, List<Travel> tvl){
         this.email = email;
         this.name = name;
         this.password = password;
         this.homeAddress = homeAddress;
         this.birthday = birthday;
+		this.travels = tvl.stream().map(Travel::clone).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public Account (Account a){
@@ -31,6 +38,7 @@ public class Account{
         this.password = a.getPassword();
         this.homeAddress = a.getHomeAddress();
         this.birthday =a.getBirthday();
+		this.travels = a.getTravels();
     }
 
     //gets 
@@ -55,6 +63,13 @@ public class Account{
             return this.birthday;
     }
 
+	public List<Travel> getTravels(){
+   
+		return this.travels.stream()
+                           .map(t->t.clone())
+						   .collect(Collectors.toList());
+    }
+
     //sets 
 
     public void setEmail (String e){
@@ -75,7 +90,14 @@ public class Account{
 
     public void setBirthday (String b){
         this.birthday = b;
-    }   
+    }
+
+	public void setTravels(List<Travel> nTL){
+
+        this.travels = nTL.stream()
+                          .map(Travel::clone)
+                          .collect(Collectors.toCollection(ArrayList::new)); 
+    }	
 
     //clone, equals, toString, hashcode, compareTo
 
@@ -87,7 +109,7 @@ public class Account{
         if (o==this) return true;
         if ((o==null) || (o.getClass()!=this.getClass())) return false;
         Account a = (Account)o;
-            return (this.email.equals(a.getEmail()) && this.name.equals(a.getName()) && this.password.equals(a.getPassword()) && this.homeAddress.equals(a.getHomeAddress()) && this.birthday.equals(a.getBirthday()));
+            return (this.email.equals(a.getEmail()) && this.name.equals(a.getName()) && this.password.equals(a.getPassword()) && this.homeAddress.equals(a.getHomeAddress()) && this.birthday.equals(a.getBirthday())) && a.getTravels().stream().filter(t -> !this.travels.contains(t)).count() == 0L;
     }
 
     public String toString(){
@@ -96,8 +118,9 @@ public class Account{
         r.append("Name: ").append(this.name).append("\n");
         r.append("Password: ").append(this.password).append("\n");
         r.append("HomeAddress: ").append(this.homeAddress).append("\n");
-        r.append("Birthday: ").append(this.birthday);
-	return r.toString();
+        r.append("Birthday: ").append(this.birthday).append("\n");
+		r.append("Travels: ").append(this.travels.toString());
+		return r.toString();
     }
 
     public int hashCode(){
@@ -108,13 +131,26 @@ public class Account{
         r = r*11 + this.password.hashCode();
         r = r*11 + this.homeAddress.hashCode();
         r = r*11 + this.birthday.hashCode();
-        return r;
+        r = r*11 + this.travels.hashCode();
+		return r;
     }
 
     public int compareTo (Account a){
          return this.name.compareTo(a.getName());
 
-    }   
+    }
+
+	//methods
+	
+	//all the travels between two given dates
+    public List<Travel> getTravelsBetween(LocalDate init, LocalDate end){
+    	return this.travels.stream()
+   				   .filter(t->t.getDate().isAfter(init) && t.getDate().isBefore(end))
+                           .collect(Collectors.toList()); 
+	}
+
+	//register a travel
+    public void addTravel(Travel t){
+    	this.travels.add(t.clone());
+    }	
 }
-
-
