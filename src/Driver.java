@@ -110,8 +110,7 @@ public class Driver extends Account {
 	}
 
     //Average's the rating of the current driver given the ratings already recieved
-    // TODO 6
     public void getNewRating(double nR){
-
+        this.rating = (nR +rating* ravels.size())/(travels.size()+1);
     }
 }

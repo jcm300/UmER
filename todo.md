@@ -3,7 +3,7 @@
 - [x] public requestTaxi (TODO 2)
 - [x] public bookTaxi (TODO 3)
 - [ ] Random trustworthiness generation after each ride (TODO 4)
-- [ ] public getNewRating (TODO 6)
+- [x] public getNewRating (TODO 6)
 - [x] Implement Taxi as an abstract class (TODO 5)
 - [x] Implement a (fifo) queue for taxis that support it
 - [x] Log new rides(Client)
