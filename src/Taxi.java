@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
+import java.util.Random;
 
 public abstract class Taxi{
 	
@@ -111,8 +112,9 @@ public abstract class Taxi{
 	}
 
     // Randomly generates the reliability of a taxi before a ride
-    // TODO 4
     public void genReliability(){
+        Random gen = new Random();
+        this.reliability = gen.nextDouble();
     }
 
     public double getEffectiveTime(double dist){
