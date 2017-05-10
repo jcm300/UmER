@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * Class that manages the interactions between the 
  * classes that make up the UmER app, such as 
@@ -62,4 +64,28 @@ public class App{
     public List<Account> getUserList(){
         return this.users.values().stream().map(Account::clone).collect(Collectors.toList());
     }
+
+	public Account login () throws LoginException{
+		boolean enter = false;
+		String email, password;
+		Account ret = null;
+
+		Scanner input = new Scanner(System.in);
+
+		System.out.println("Enter ");
+		System.out.print("Email: ");
+		email = input.nextLine();
+		System.out.print("Password: ");
+		password = input.nextLine();
+		if(this.users.containsKey(email)){
+			ret = this.users.get(email).clone();
+			if(ret.getPassword().equals(password)) enter = true;
+			else System.out.println("Wrong email or password. Try again.");
+		}
+		
+		input.close();	
+
+		if(enter) return ret;
+		else throw new LoginException(email);
+	}
 }
