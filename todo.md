@@ -1,4 +1,5 @@
-# To do
+# Roadmap
+## Urgent
 - [x] public requestRide (TODO 1)
 - [x] public requestTaxi (TODO 2)
 - [x] public bookTaxi (TODO 3)
@@ -19,10 +20,14 @@
 - [x] Consult the total profit of a certain taxi/company in a certain time frame(Taxi/Company)
 - [x] Create a new user(App)
 - [x] Authentication via credentials(App)
-- [ ] Basic Terminal Menu(Menu?)
-
-# Next
-- [ ] GUI for the app
+- [x] Basic Terminal Menu(Menu?)
 - [ ] Company class which consists of a groups of drivers and taxis
 - [ ] Load and save application status in a file
+- [ ] Check for config/saved file at startup
+- [ ] Fetch top 10/5 clients/drivers
+
+
+## Next
 - [ ] Change time that a ride takes according to (random) factors such as the weather, traffic, etc
+- [ ] Ensure that there's only one instance of the StateManager class (via Singleton)
+- [ ] GUI for the app
