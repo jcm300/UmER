@@ -5,6 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
 
 public class App{
 
@@ -104,7 +106,8 @@ public class App{
                     break;
                 case 2:
                     System.out.println("Checking travel reg");
-                    break;
+                    checkReg();
+					break;
                 case 3:
                     login = false;
                     System.out.println("Logging out");
@@ -127,8 +130,9 @@ public class App{
                     System.out.println("Fetching a taxi");
                     break;
                 case 2:
-                    System.out.println("Checking travel reg");
-                    break;
+					System.out.println("Checking travel reg");
+                    checkReg();
+					break;
                 case 3:
                     login = false;
                     System.out.println("Logging out");
@@ -159,14 +163,13 @@ public class App{
                 password = input.nextLine();
                 System.out.print("Home Adress: ");
                 homeAdress = input.nextLine();
-                System.out.print("BirthDay(day-month-year): ");
-                birthday = input.nextLine();
+                System.out.println("BirthDay:");
+                birthday = dateInput();
                 System.out.print("Are you a client(write false) or a driver(write true)? ");
                 type = input.nextBoolean();
                 success = true;
 		    }catch(Exception e){
 				System.out.println("Input error ("+e.getMessage() + ") please try again");
-                success = false;
             }
         }
 
@@ -193,7 +196,6 @@ public class App{
                 success = true;
             }catch(Exception e){
                 System.out.println("Input error ("+e.getMessage() + ") please try again");
-                success = false;
             }
         }
         if(this.curState.userExists(email)){
@@ -204,4 +206,47 @@ public class App{
         if(enter) return ret;
         else throw new WrongPasswordException("Incorrect password for "+email); //paswords didn't match
     }
+	
+	private String dateInput() {
+		int year = 0, month = 0, day = 0;
+		boolean success = false;
+		
+		while(!success){
+			try{
+				Scanner input = new Scanner(System.in);
+        		System.out.print("Year: ");
+        		year = input.nextInt();
+        		System.out.print("Month: ");
+        		month = input.nextInt();
+        		System.out.print("Day: ");
+        		day = input.nextInt();
+				success = true;
+			}catch(Exception e){
+				System.out.println("Input error ("+e.getMessage() + ") please try again");
+			}
+		}
+        return (year + "-" + month + "-" + day);
+	}
+
+	public void checkReg(){
+			String date;
+			LocalDate init, end;
+			int i=1;
+
+			try{
+				System.out.println("Select initial date:");
+				date = dateInput();
+				init = LocalDate.parse(date);
+				System.out.println("Select final date:");
+                date = dateInput();
+				end = LocalDate.parse(date);
+				List<Travel> reg = curUser.getTravelsBetween(init,end);
+				for(Travel t: reg){
+						System.out.println(i + ": "+ t.toString());
+						i++;
+				}	
+			}catch(Exception e){
+				System.out.println(e.getMessage());
+			}	
+	}
 }

@@ -115,12 +115,12 @@ public class Travel implements Serializable{
 
 	public String toString(){
 		StringBuilder r = new StringBuilder();
-		r.append("Cost: ").append(this.cost).append("\n");
-		r.append("Effective Time: ").append(this.rTime).append("\n");
-		r.append("Predicted Time: ").append(this.pTime).append("\n");
-		r.append("Distance: ").append(this.distance).append("\n");
-		r.append("Source: ").append(this.src.toString()).append("\n");
-		r.append("Destiny: ").append(this.dest.toString()).append("\n");
+		r.append("Cost: ").append(this.cost).append(" | ");
+		r.append("Effective Time: ").append(this.rTime).append(" | ");
+		r.append("Predicted Time: ").append(this.pTime).append(" | ");
+		r.append("Distance: ").append(this.distance).append(" | ");
+		r.append("Source: ").append(this.src.toString()).append(" | ");
+		r.append("Destiny: ").append(this.dest.toString()).append(" | ");
 		r.append("Date: ").append(this.date.toString());
 		return r.toString();
 	}
