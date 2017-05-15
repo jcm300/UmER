@@ -22,8 +22,8 @@
 - [x] Authentication via credentials(App)
 - [x] Basic Terminal Menu(Menu?)
 - [ ] Company class which consists of a groups of drivers and taxis
-- [ ] Load and save application status in a file
-- [ ] Check for config/saved file at startup
+- [x] Load and save application status in a file
+- [x] Check for config/saved file at startup
 - [ ] Fetch top 10/5 clients/drivers
 
 

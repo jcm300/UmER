@@ -6,11 +6,11 @@ import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.Serializable;
 
-public class App implements Serializable{
+public class App{
 
     private static StateManager curState;
     private static Account curUser;
-    private Menu appMenu;
+    private static Menu appMenu;
     
     public static void main(String[] args){
         App mApp = new App();
@@ -26,7 +26,7 @@ public class App implements Serializable{
 		if(recover){
 			try{
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream("state"));
-				mApp.curState = (StateManager) ois.readObject();
+				App.curState = (StateManager) ois.readObject();
 				ois.close();
 			}catch(Exception e){
 					System.out.println("Not loaded! (" + e.getMessage() + ")");
@@ -39,9 +39,9 @@ public class App implements Serializable{
         String[] mOps = {"Login", "Register", "Top 10 Clients", "Top 5 Drivers"};
         String[] cOps = {"Request a Ride", "Check Travel Registry", "Logout"};
         String[] dOps = {"Associate a new vehicle", "Check Travel Registry", "Logout"};
-        this.curState = new StateManager();
-        this.curUser = null;
-        this.appMenu = new Menu(mOps, cOps, dOps);
+        App.curState = new StateManager();
+        App.curUser = null;
+        App.appMenu = new Menu(mOps, cOps, dOps);
     }
 
     public void run(boolean loggedIn){
@@ -146,25 +146,29 @@ public class App implements Serializable{
     public Account register () throws DuplicateRegistrationException{
         Account ret = null;
         String name = null, email = null, password = null, homeAdress = null, birthday = null;
-        boolean enter = false, type = false;
+        boolean enter = false, type = false, success=false;
         
-		try{
-			Scanner input = new Scanner(System.in);
-    		System.out.print("Name: ");
-			name = input.nextLine();
-			System.out.print("Email: ");
-    		email = input.nextLine();
-    		System.out.print("Password: ");
-    		password = input.nextLine();
-			System.out.print("Home Adress: ");
-			homeAdress = input.nextLine();
-			System.out.print("BirthDay(day-month-year): ");
-    		birthday = input.nextLine();
-			System.out.print("Are you a client(write false) or a driver(write true)? ");
-			type = input.nextBoolean();
-		}catch(Exception e){
-				System.out.println(e.getMessage());
-		}
+		while(!success){
+            try{
+                Scanner input = new Scanner(System.in);
+                System.out.print("Name: ");
+                name = input.nextLine();
+                System.out.print("Email: ");
+                email = input.nextLine();
+                System.out.print("Password: ");
+                password = input.nextLine();
+                System.out.print("Home Adress: ");
+                homeAdress = input.nextLine();
+                System.out.print("BirthDay(day-month-year): ");
+                birthday = input.nextLine();
+                System.out.print("Are you a client(write false) or a driver(write true)? ");
+                type = input.nextBoolean();
+                success = true;
+		    }catch(Exception e){
+				System.out.println("Input error ("+e.getMessage() + ") please try again");
+                success = false;
+            }
+        }
 
         if(this.curState.userExists(email)) throw new DuplicateRegistrationException(email);
 		
@@ -175,20 +179,23 @@ public class App implements Serializable{
 	}
 
     public Account login () throws WrongPasswordException, UserNotFoundException{
-        boolean enter = false;
+        boolean enter = false, success = false;
         String email = null, password = null;
         Account ret = null;
         
-		try{
-			Scanner input = new Scanner(System.in);
-        	System.out.print("Email: ");
-        	email = input.nextLine();
-        	System.out.print("Password: ");
-        	password = input.nextLine();
-		}catch(Exception e){
-			System.out.println(e.getMessage());
-		}
-
+        while(!success){
+            try{
+                Scanner input = new Scanner(System.in);
+                System.out.print("Email: ");
+                email = input.nextLine();
+                System.out.print("Password: ");
+                password = input.nextLine();
+                success = true;
+            }catch(Exception e){
+                System.out.println("Input error ("+e.getMessage() + ") please try again");
+                success = false;
+            }
+        }
         if(this.curState.userExists(email)){
             ret = this.curState.getUser(email);
             enter = ret.getPassword().equals(password);
