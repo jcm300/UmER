@@ -1,8 +1,9 @@
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
+import java.io.Serializable;
 
-public class Company {
+public class Company implements Serializable{
 
 	//instance variables
 	private ArrayList<Taxi> taxis;

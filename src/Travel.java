@@ -1,6 +1,7 @@
 import java.time.LocalDate;
+import java.io.Serializable;
 
-public class Travel {
+public class Travel implements Serializable{
 	
 	//instance variables
 	private double cost;

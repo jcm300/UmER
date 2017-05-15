@@ -2,8 +2,9 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
+import java.io.Serializable;
 
-public class Account{
+public class Account implements Serializable{
 
 	//instance variables
 	private String email;

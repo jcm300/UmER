@@ -1,19 +1,44 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.Serializable;
 
-public class App{
+public class App implements Serializable{
 
     private static StateManager curState;
     private static Account curUser;
     private Menu appMenu;
     
-    static public void main(String[] args){
-        App mApp = new App();
+    public static void main(String[] args){
+        App mApp = null;
+		boolean recover=false, success=false;
+		
+		try{
+			Scanner input = new Scanner(System.in);
+			System.out.print("Do you want to recover a previous state?(false or true) ");
+	        recover = input.nextBoolean();
+		}catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+		if(recover){
+			try{
+				ObjectInputStream ois = new ObjectInputStream(new FileInputStream("state"));
+				mApp = (App) ois.readObject();
+				ois.close();
+				success = true;
+			}catch(Exception e){
+					System.out.println("Not loaded! (" + e.getMessage() + ")");
+			}	
+		}
+		if(!success) mApp = new App();
         mApp.run(false);
     }
 
     private App(){
-        String[] mOps = {"Login", "Register", "Top 10 Clients", "Top 5 Drivers"};
+        String[] mOps = {"Login", "Register", "Top 10 Clients", "Top 5 Drivers", "Save State"};
         String[] cOps = {"Request a Ride", "Check Travel Registry", "Logout"};
         String[] dOps = {"Associate a new vehicle", "Check Travel Registry", "Logout"};
         this.curState = new StateManager();
@@ -56,7 +81,17 @@ public class App{
                         System.out.println("User with email "+e.getMessage()+"already exists");
                     }
                     break;
-                case 0:
+				case 5:
+					try{
+						ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("state"));
+	         			oos.writeObject(this);
+	         			oos.flush();
+	         			oos.close();
+					}catch(Exception e){
+						System.out.println(e.getMessage());
+					}
+					break;
+				case 0:
                     System.out.println("Exiting...");
                     break;
         }
@@ -114,22 +149,26 @@ public class App{
 
     public Account register () throws DuplicateRegistrationException{
         Account ret = null;
-        String name, email, password, homeAdress, birthday;
-        boolean enter = false, type;
-        Scanner input = new Scanner(System.in);
-
-    	System.out.print("Name: ");
-		name = input.nextLine();
-		System.out.print("Email: ");
-    	email = input.nextLine();
-    	System.out.print("Password: ");
-    	password = input.nextLine();
-		System.out.print("Home Adress: ");
-		homeAdress = input.nextLine();
-		System.out.print("BirthDay(day-month-year): ");
-    	birthday = input.nextLine();
-		System.out.print("Are you a client(write false) or a driver(write true)? ");
-		type = input.nextBoolean();
+        String name = null, email = null, password = null, homeAdress = null, birthday = null;
+        boolean enter = false, type = false;
+        
+		try{
+			Scanner input = new Scanner(System.in);
+    		System.out.print("Name: ");
+			name = input.nextLine();
+			System.out.print("Email: ");
+    		email = input.nextLine();
+    		System.out.print("Password: ");
+    		password = input.nextLine();
+			System.out.print("Home Adress: ");
+			homeAdress = input.nextLine();
+			System.out.print("BirthDay(day-month-year): ");
+    		birthday = input.nextLine();
+			System.out.print("Are you a client(write false) or a driver(write true)? ");
+			type = input.nextBoolean();
+		}catch(Exception e){
+				System.out.println(e.getMessage());
+		}
 
         if(this.curState.userExists(email)) throw new DuplicateRegistrationException(email);
 		
@@ -141,14 +180,19 @@ public class App{
 
     public Account login () throws WrongPasswordException, UserNotFoundException{
         boolean enter = false;
-        String email, password;
+        String email = null, password = null;
         Account ret = null;
-        Scanner input = new Scanner(System.in);
+        
+		try{
+			Scanner input = new Scanner(System.in);
+        	System.out.print("Email: ");
+        	email = input.nextLine();
+        	System.out.print("Password: ");
+        	password = input.nextLine();
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
 
-        System.out.print("Email: ");
-        email = input.nextLine();
-        System.out.print("Password: ");
-        password = input.nextLine();
         if(this.curState.userExists(email)){
             ret = this.curState.getUser(email);
             enter = ret.getPassword().equals(password);
@@ -157,5 +201,4 @@ public class App{
         if(enter) return ret;
         else throw new WrongPasswordException("Incorrect password for "+email); //paswords didn't match
     }
-
 }

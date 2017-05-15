@@ -13,8 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
+import java.io.Serializable;
 
-public class StateManager{
+public class StateManager implements Serializable{
 
     private Map<String,Account> users;
     private Map<String,Taxi> vehicles;

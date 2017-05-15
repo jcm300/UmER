@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
 import java.util.Random;
+import java.io.Serializable;
 
-public abstract class Taxi{
+public abstract class Taxi implements Serializable{
 	
 	//instace variables
 	private String plate;

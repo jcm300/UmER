@@ -3,6 +3,7 @@ import java.util.stream.Collectors;
 import java.util.Scanner;
 import java.util.List;
 import java.util.Arrays;
+import java.io.Serializable;
 
 /**
  * Simple text menu
@@ -12,7 +13,7 @@ import java.util.Arrays;
  * @author Miguel Quaresma
  * @version 1.0
 */
-public class Menu{
+public class Menu implements Serializable{
 
     private List<String> mChoices;
     private List<String> cliChoices;
@@ -108,11 +109,11 @@ public class Menu{
      * Reads the option from the user
      */
     public void readOption(int size){
-        Scanner in = new Scanner(System.in);
 
-        System.out.print("Choice: ");
         try{
-           this.opt = in.nextInt(); 
+			Scanner in = new Scanner(System.in);
+            System.out.print("Choice: ");
+			this.opt = in.nextInt(); 
         }catch(InputMismatchException e){
             System.out.println(e.getMessage());
         }
