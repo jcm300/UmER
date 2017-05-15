@@ -21,13 +21,16 @@
 - [x] Create a new user(App)
 - [x] Authentication via credentials(App)
 - [x] Basic Terminal Menu(Menu?)
+- [ ] Fetch top 10/5 clients/drivers
 - [ ] Company class which consists of a groups of drivers and taxis
 - [x] Load and save application status in a file
 - [x] Check for config/saved file at startup
-- [ ] Fetch top 10/5 clients/drivers
-
+- [ ] Attribute a taxi to a driver when requested by a driver
+- [ ] Output travel registers
+- [ ] Ensure that there's only one instance of the StateManager class (via Singleton or as static variable in the App class)
 
 ## Next
+
+## Additional Features
 - [ ] Change time that a ride takes according to (random) factors such as the weather, traffic, etc
-- [ ] Ensure that there's only one instance of the StateManager class (via Singleton)
 - [ ] GUI for the app
