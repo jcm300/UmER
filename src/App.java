@@ -13,7 +13,7 @@ public class App implements Serializable{
     private Menu appMenu;
     
     public static void main(String[] args){
-        App mApp = null;
+        App mApp = new App();
 		boolean recover=false, success=false;
 		
 		try{
@@ -26,19 +26,17 @@ public class App implements Serializable{
 		if(recover){
 			try{
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream("state"));
-				mApp = (App) ois.readObject();
+				mApp.curState = (StateManager) ois.readObject();
 				ois.close();
-				success = true;
 			}catch(Exception e){
 					System.out.println("Not loaded! (" + e.getMessage() + ")");
 			}	
 		}
-		if(!success) mApp = new App();
         mApp.run(false);
     }
 
     private App(){
-        String[] mOps = {"Login", "Register", "Top 10 Clients", "Top 5 Drivers", "Save State"};
+        String[] mOps = {"Login", "Register", "Top 10 Clients", "Top 5 Drivers"};
         String[] cOps = {"Request a Ride", "Check Travel Registry", "Logout"};
         String[] dOps = {"Associate a new vehicle", "Check Travel Registry", "Logout"};
         this.curState = new StateManager();
@@ -81,17 +79,15 @@ public class App implements Serializable{
                         System.out.println("User with email "+e.getMessage()+"already exists");
                     }
                     break;
-				case 5:
-					try{
-						ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("state"));
-	         			oos.writeObject(this);
-	         			oos.flush();
-	         			oos.close();
-					}catch(Exception e){
-						System.out.println(e.getMessage());
-					}
-					break;
 				case 0:
+					try{
+                        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("state"));
+                        oos.writeObject(this.curState);
+                        oos.flush();
+                        oos.close();
+                    }catch(Exception e){
+                        System.out.println(e.getMessage());
+                    }
                     System.out.println("Exiting...");
                     break;
         }

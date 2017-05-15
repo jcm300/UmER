@@ -1,10 +1,11 @@
 import java.lang.Math;
+import java.io.Serializable;
 /* *
  * 2D point
 */
 
 import static java . lang . Math . abs ;
-public class Point2D {
+public class Point2D implements Serializable{
 	
 	//Instance variables
 	private double x , y ;
