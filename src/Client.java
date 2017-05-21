@@ -62,32 +62,33 @@ public class Client extends Account {
 
     
 	// request a ride to the nearest taxi
-	public void requestRide(Map<String,Taxi> l, Point2D dest){
-
+	public Travel requestRide(Map<String,Taxi> l, Point2D dest) throws TaxiIndisponivelException{
 		LocalDate curT = LocalDate.now();
-        	double dist = Double.MAX_VALUE, temp;
-        	Taxi closest = null;
-        	Travel aux;
+        double dist = Double.MAX_VALUE, temp;
+        Taxi closest = null;
+        Travel aux=null;
 
-        	for(Taxi t : l.values())                    //search for the nearest taxi
-            	if((temp = this.location.getDist(t.getLocation())) < dist && t.getDriver().getStatus()){ 
-                	closest = t;
-                	dist = temp;
-            	}
+        for(Taxi t : l.values())                    //search for the nearest taxi
+            if((temp = this.location.getDist(t.getLocation())) < dist && t.getDriver().getStatus()){ 
+                closest = t;
+                dist = temp;
+            }
 
         if(closest != null){
             aux = new Travel(closest.getPricePerKm()*dist,dist/closest.getAverageSpeed(),closest.getEffectiveTime(dist), dist,curT, dest, this.location);
             this.addTravel(aux);
             closest.addTravel(aux);
             this.location = new Point2D(dest);
-        }    
+        }else throw new TaxiIndisponivelException(plate + ": nao ha taxis disponiveis de momento.");
+
+        return aux;
+
 	}
 
 	// request a taxi for a ride
-	public void requestTaxi(String plate, Map<String,Taxi> l, Point2D dest){
-
-        	Travel aux;
-        	Taxi t;
+	public Travel requestTaxi(String plate, Map<String,Taxi> l, Point2D dest) throws TaxiIndisponivelException{
+        	Travel aux=null;
+        	Taxi t=null;
         	double dist;
         	LocalDate curT = LocalDate.now();
 
@@ -99,18 +100,17 @@ public class Client extends Account {
                 		this.addTravel(aux);
                 		t.addTravel(aux);
                 		this.location = new Point2D(dest);
-            		}
-        	}
+            		}else throw new TaxiIndisponivelException(plate + ": taxi indisponivel.");
+        	}else throw new TaxiIndisponivelException(plate + ": matricula nao encontrada.");
+            return aux;
 	}
 
-    	// request a specific taxi that isn't currently available
-	public boolean bookTaxi(String plate, Map<String,Taxi> l, Point2D dest){
-
-        Travel aux;
-        Taxi t;
+    // request a specific taxi that isn't currently available
+	public Travel bookTaxi(String plate, Map<String,Taxi> l, Point2D dest) throws TaxiIndisponivelException{
+        Travel aux=null;
+        Taxi t=null;
         LocalDate curT = LocalDate.now();
         double dist;
-        boolean book = false;
 
         if(l.containsKey(plate)){
             t = l.get(plate);              
@@ -119,9 +119,8 @@ public class Client extends Account {
                 aux = new Travel(t.getPricePerKm()*dist, dist/t.getAverageSpeed(), t.getEffectiveTime(dist),dist,curT, dest, this.location.clone());
                 ((TaxiQueue)t).addWaitingList(aux);
                 this.location = new Point2D(dest);
-                book = true;
-            }
-        }
-        return book;
+            }else throw new TaxiIndisponivelException(plate +": nao suporta files de espera.")
+        }else throw new TaxiIndisponivelException(plate + ": matricula nao encontrada.");
+        return aux;
     }
 }

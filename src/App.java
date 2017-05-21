@@ -48,26 +48,26 @@ public class App{
 
     public void run(boolean loggedIn){
         do{
-            if(!loggedIn) loggedIn = this.menuActions();
+            if(!loggedIn) loggedIn = App.menuActions();
             else{ 
-                if(this.curUser instanceof Client)
-                    loggedIn = this.userActions();
-                else loggedIn = this.driverActions();
+                if(App.curUser instanceof Client)
+                    loggedIn = App.userActions();
+                else loggedIn = App.driverActions();
             }    
-        }while(this.appMenu.getOpt() != 0);
+        }while(App.appMenu.getOpt() != 0);
     }
 
     public boolean menuActions(){  
         Account aux;
         boolean login=false;
 
-        this.appMenu.mMenu();
-        switch(this.appMenu.getOpt()){
+        App.appMenu.mMenu();
+        switch(App.appMenu.getOpt()){
                 case 1:
                     try{
                         aux = login();
                         login = true;
-                        this.curUser = aux;
+                        App.curUser = aux;
                         System.out.println("Log in successful");
                     }catch(WrongPasswordException | UserNotFoundException e){
                         System.out.println(e.getMessage());
@@ -76,7 +76,7 @@ public class App{
                 case 2:
                     try{
                         aux = register();
-                        this.curState.addUser(aux);
+                        App.curState.addUser(aux);
                     }catch(DuplicateRegistrationException e){
                         System.out.println("User with email "+e.getMessage()+"already exists");
                     }
@@ -84,7 +84,7 @@ public class App{
 				case 0:
 					try{
                         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("state"));
-                        oos.writeObject(this.curState);
+                        oos.writeObject(App.curState);
                         oos.flush();
                         oos.close();
                     }catch(Exception e){
@@ -99,11 +99,11 @@ public class App{
     public boolean userActions(){
         boolean login=true;
 
-        this.appMenu.cliMenu();
-        switch(this.appMenu.getOpt()){
+        App.appMenu.cliMenu();
+        switch(App.appMenu.getOpt()){
                 case 1:
-                    System.out.println("Requesting a ride");
-                    break;
+                    getRide();
+                                        break;
                 case 2:
                     System.out.println("Checking travel reg");
                     checkReg();
@@ -111,7 +111,7 @@ public class App{
                 case 3:
                     login = false;
                     System.out.println("Logging out");
-                    this.curState.updateUser(this.curUser);
+                    App.curState.updateUser(App.curUser);
                     break;
                 case 0:
                     System.out.println("Exiting...");
@@ -124,8 +124,8 @@ public class App{
     public boolean driverActions(){
         boolean login=true;
 
-        this.appMenu.dMenu();
-        switch(this.appMenu.getOpt()){
+        App.appMenu.dMenu();
+        switch(App.appMenu.getOpt()){
                 case 1:
                     System.out.println("Fetching a taxi");
                     break;
@@ -136,7 +136,7 @@ public class App{
                 case 3:
                     login = false;
                     System.out.println("Logging out");
-                    this.curState.updateUser(this.curUser);
+                    App.curState.updateUser(App.curUser);
                     break;
                 case 0:
                     System.out.println("Exiting...");
@@ -173,7 +173,7 @@ public class App{
             }
         }
 
-        if(this.curState.userExists(email)) throw new DuplicateRegistrationException(email);
+        if(App.curState.userExists(email)) throw new DuplicateRegistrationException(email);
 		
 		if(type) ret = new Driver(name,email,password,homeAdress,birthday,new ArrayList<Travel>(),false,0.d,0.d,0.d);
 		else ret = new Client(name,email,password,homeAdress,birthday,new ArrayList<Travel>(),new Point2D());
@@ -198,8 +198,8 @@ public class App{
                 System.out.println("Input error ("+e.getMessage() + ") please try again");
             }
         }
-        if(this.curState.userExists(email)){
-            ret = this.curState.getUser(email);
+        if(App.curState.userExists(email)){
+            ret = App.curState.getUser(email);
             enter = ret.getPassword().equals(password);
         }else throw new UserNotFoundException("No user found with "+email);
 
@@ -249,4 +249,50 @@ public class App{
 				System.out.println(e.getMessage());
 			}	
 	}
+
+    public void getRide(){
+        Scanner in = new Scanner(System.in);
+        Point2D tmp = new Point2D();
+        Travel res=null;
+        String plate;
+        int coord;
+        double rat;
+        char c;
+
+        try{
+            System.out.println("Onde se encontra: ");
+            System.out.print("X: ");
+            coord = in.nextInt();
+            tmp.setX(coord);
+            System.out.print("Y: ");
+            coord = in.nextInt();
+            tmp.setY(coord);
+            App.curUser.setLocation(tmp);
+            System.out.println("Indique o destino: ");
+            System.out.print("X: ");
+            coord = in.nextInt();
+            tmp.setX(coord);
+            System.out.print("Y: ");
+            coord = in.nextInt();
+            tmp.setY(coord);
+            System.out.println("Deseja algum taxi em especifico?(S/N)");
+            c = in.nextChar();
+            if(c == 'N') App.curUser.requestRide(App.curState.getVehicles(), dest);
+            else{
+                System.out.print("Insira a matricula:");
+                plate = in.nextLine();
+                System.out.println("Deseja reservar viagem?(S/N)")
+                c = in.nextChar();
+                if(c == 'N') res=App.curUser.requestTaxi(plate, App.curState.getVehicles(), dest);
+                else res=App.curUser.bookTaxi(plate, App.curState.getVehicles, dest);
+            }
+            System.out.println(aux.toString());
+            System.out.print("Avaliaçao do condutor (0-100): ");
+            rat = in.nextDouble();
+            aux.getDriver().getNewRating(rat);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
 }
