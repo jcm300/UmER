@@ -75,11 +75,11 @@ public class Client extends Account {
             }
 
         if(closest != null){
-            aux = new Travel(closest.getPricePerKm()*dist,dist/closest.getAverageSpeed(),closest.getEffectiveTime(dist), dist,curT, dest, this.location);
+            aux = new Travel(closest.getPricePerKm()*dist,dist/closest.getAverageSpeed(),closest.getEffectiveTime(dist), dist,curT, dest, this.location, closest.getDriver());
             this.addTravel(aux);
             closest.addTravel(aux);
             this.location = new Point2D(dest);
-        }else throw new TaxiIndisponivelException(plate + ": nao ha taxis disponiveis de momento.");
+        }else throw new TaxiIndisponivelException("Nao ha taxis disponiveis de momento.");
 
         return aux;
 
@@ -96,7 +96,7 @@ public class Client extends Account {
             		t = l.get(plate);
             		if(t.getDriver().getStatus()){
                 		dist = this.location.getDist(t.getLocation());
-                		aux = new Travel(t.getPricePerKm()*dist, dist/t.getAverageSpeed(), t.getEffectiveTime(dist),dist,curT, dest, this.location);
+                		aux = new Travel(t.getPricePerKm()*dist, dist/t.getAverageSpeed(), t.getEffectiveTime(dist),dist,curT, dest, this.location, t.getDriver());
                 		this.addTravel(aux);
                 		t.addTravel(aux);
                 		this.location = new Point2D(dest);
@@ -116,10 +116,10 @@ public class Client extends Account {
             t = l.get(plate);              
             if(t instanceof TaxiQueue){         //supports a queue
                 dist = this.location.getDist(t.getLocation());
-                aux = new Travel(t.getPricePerKm()*dist, dist/t.getAverageSpeed(), t.getEffectiveTime(dist),dist,curT, dest, this.location.clone());
+                aux = new Travel(t.getPricePerKm()*dist, dist/t.getAverageSpeed(), t.getEffectiveTime(dist),dist,curT, dest, this.location.clone(), t.getDriver());
                 ((TaxiQueue)t).addWaitingList(aux);
                 this.location = new Point2D(dest);
-            }else throw new TaxiIndisponivelException(plate +": nao suporta files de espera.")
+            }else throw new TaxiIndisponivelException(plate +": nao suporta files de espera.");
         }else throw new TaxiIndisponivelException(plate + ": matricula nao encontrada.");
         return aux;
     }

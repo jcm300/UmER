@@ -31,10 +31,10 @@ public abstract class Taxi implements Serializable{
 	public Taxi(Taxi t){
 		this.plate = t.getPlate();
 		this.averageSpeed= t.getAverageSpeed();
-                this.pricePerKm=t.getPricePerKm();
-                this.reliability=t.getReliability();
-                this.location = t.getLocation();
-                this.driver = t.getDriver();
+        this.pricePerKm=t.getPricePerKm();
+        this.reliability=t.getReliability();
+        this.location = t.getLocation();
+        this.driver = t.getDriver();
 		this.tReg = t.getTReg();
 	}
 
@@ -44,7 +44,7 @@ public abstract class Taxi implements Serializable{
 		this.pricePerKm = ppkm;
 		this.reliability = rel;
 		this.location = loc;
-		this.driver = d.clone();
+		this.driver = d;
 		
 		for(Travel t: tr)
 			this.tReg.add(t.clone());
@@ -72,7 +72,7 @@ public abstract class Taxi implements Serializable{
 	}
 
 	public Driver getDriver(){
-		return this.driver.clone();
+		return this.driver;
 	} 
 	public List<Travel> getTReg(){
 		return this.tReg.stream().map(Travel::clone).collect(Collectors.toCollection(ArrayList::new));

@@ -46,7 +46,7 @@ public class App{
         App.appMenu = new Menu(mOps, cOps, dOps);
     }
 
-    public void run(boolean loggedIn){
+    public static void run(boolean loggedIn){
         do{
             if(!loggedIn) loggedIn = App.menuActions();
             else{ 
@@ -103,7 +103,7 @@ public class App{
         switch(App.appMenu.getOpt()){
                 case 1:
                     getRide();
-                                        break;
+                    break;
                 case 2:
                     System.out.println("Checking travel reg");
                     checkReg();
@@ -251,6 +251,7 @@ public class App{
 	}
 
     public void getRide(){
+        Client aux = (Client)App.curUser;
         Scanner in = new Scanner(System.in);
         Point2D tmp = new Point2D();
         Travel res=null;
@@ -267,7 +268,7 @@ public class App{
             System.out.print("Y: ");
             coord = in.nextInt();
             tmp.setY(coord);
-            App.curUser.setLocation(tmp);
+            aux.setLocation(tmp);
             System.out.println("Indique o destino: ");
             System.out.print("X: ");
             coord = in.nextInt();
@@ -276,20 +277,20 @@ public class App{
             coord = in.nextInt();
             tmp.setY(coord);
             System.out.println("Deseja algum taxi em especifico?(S/N)");
-            c = in.nextChar();
-            if(c == 'N') App.curUser.requestRide(App.curState.getVehicles(), dest);
+            c=in.nextLine().charAt(0);
+            if(c == 'N') res=aux.requestRide(App.curState.getVehicles(), tmp);
             else{
                 System.out.print("Insira a matricula:");
                 plate = in.nextLine();
-                System.out.println("Deseja reservar viagem?(S/N)")
-                c = in.nextChar();
-                if(c == 'N') res=App.curUser.requestTaxi(plate, App.curState.getVehicles(), dest);
-                else res=App.curUser.bookTaxi(plate, App.curState.getVehicles, dest);
+                System.out.println("Deseja reservar viagem?(S/N)");
+                c=in.nextLine().charAt(0);
+                if(c == 'N') res=aux.requestTaxi(plate, App.curState.getVehicles(), tmp);
+                else res=aux.bookTaxi(plate, App.curState.getVehicles(), tmp);
             }
-            System.out.println(aux.toString());
+            System.out.println(res.toString());
             System.out.print("Avaliaçao do condutor (0-100): ");
             rat = in.nextDouble();
-            aux.getDriver().getNewRating(rat);
+            res.getDriver().getNewRating(rat);
         }catch(Exception e){
             System.out.println(e.getMessage());
         }

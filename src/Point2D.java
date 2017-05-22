@@ -26,6 +26,9 @@ public class Point2D implements Serializable{
 	public double getX() { return this.x; }
 	public double getY() { return this.y; }
 
+    public void setX(double x){ this.x = x; }
+    public void setY(double y){ this.y = y; }
+
 	/* * increment of coordinates */
 	public void incCoord ( double dx , double dy ) {
 		this.x += dx; 
@@ -59,9 +62,9 @@ public class Point2D implements Serializable{
 		return (this.x>0 && this.y>0);
 	}
 
-    	public double getDist(Point2D pos){
-        	return Math.sqrt(Math.pow(this.x-pos.getX(), 2)+Math.pow(this.y-pos.getY(), 2));
-    	}
+    public double getDist(Point2D pos){
+        return Math.sqrt(Math.pow(this.x-pos.getX(), 2)+Math.pow(this.y-pos.getY(), 2));
+    }
 
 	/* Check if the 2 points are equal */
 	public boolean equals (Object o) {

@@ -1,4 +1,4 @@
-public class TaxiIndisponivelException implements Exception{
+public class TaxiIndisponivelException extends Exception{
 
     public TaxiIndisponivelException(){
         super();
