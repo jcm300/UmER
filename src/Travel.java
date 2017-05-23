@@ -11,7 +11,6 @@ public class Travel implements Serializable{
 	private Point2D src;
 	private Point2D dest;
 	private LocalDate date;
-    private Driver drv;
 
 	//Constructors
 	public Travel(){
@@ -22,10 +21,9 @@ public class Travel implements Serializable{
 		this.dest = new Point2D();
 		this.src = new Point2D();
 		this.date = LocalDate.now();
-        this.drv = new Driver();
 	}
 
-	public Travel(double cost, double rTime, double pTime, double distance, LocalDate date, Point2D dest, Point2D src, Driver dv){
+	public Travel(double cost, double rTime, double pTime, double distance, LocalDate date, Point2D dest, Point2D src){
 		this.cost = cost;
 		this.rTime = rTime;
 		this.pTime = pTime;
@@ -33,7 +31,6 @@ public class Travel implements Serializable{
 		this.dest = new Point2D(dest);
 		this.src = new Point2D(src);
 		this.date = date;
-        this.drv = dv;
 	}
 
 	public Travel(Travel t){
@@ -44,7 +41,6 @@ public class Travel implements Serializable{
 		this.dest = t.getDest();
         this.src = t.getSrc();
 		this.date = t.getDate();
-        this.drv = t.getDriver();
 	}
 
 	//gets and sets
@@ -76,10 +72,6 @@ public class Travel implements Serializable{
 		return this.date;
 	}
 
-    public Driver getDriver(){
-        return this.drv;
-    }
-
 	public void setCost(double c){
 		this.cost = c;
 	}
@@ -108,11 +100,7 @@ public class Travel implements Serializable{
 		this.date = ld;
 	}
 
-    public void setDriver(Driver d){
-        this.drv = d;
-    }
-
-	public Travel clone(){
+   	public Travel clone(){
 		return new Travel(this);
 	}
 
@@ -122,7 +110,7 @@ public class Travel implements Serializable{
 		Travel t = (Travel)o;
 		return (this.cost==t.getCost() && this.rTime==t.getrTime() && this.pTime==t.getpTime() && 
                 this.distance==t.getDistance() && this.src.equals(t.getSrc()) && 
-                this.dest.equals(t.getDest()) && this.date.equals(t.getDate()) && this.drv.equals(t.getDriver()));
+                this.dest.equals(t.getDest()) && this.date.equals(t.getDate()));
 	}
 
 	public String toString(){

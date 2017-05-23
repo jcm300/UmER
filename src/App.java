@@ -10,15 +10,17 @@ import java.util.List;
 
 public class App{
 
-    private static StateManager curState;
-    private static Account curUser;
-    private static Menu appMenu;
+    private StateManager curState;
+    private Account curUser;
+    private Menu appMenu;
+    private static int count=0;
     
     public static void main(String[] args){
-        App mApp = new App();
+        App mApp = null;
 		boolean recover=false, success=false;
 		
 		try{
+            mApp = new App();
 			Scanner input = new Scanner(System.in);
 			System.out.print("Do you want to recover a previous state?(false or true) ");
 	        recover = input.nextBoolean();
@@ -28,7 +30,7 @@ public class App{
 		if(recover){
 			try{
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream("state"));
-				App.curState = (StateManager) ois.readObject();
+				this.curState = (StateManager)ois.readObject();
 				ois.close();
 			}catch(Exception e){
 					System.out.println("Not loaded! (" + e.getMessage() + ")");
@@ -37,37 +39,39 @@ public class App{
         mApp.run(false);
     }
 
-    private App(){
-        String[] mOps = {"Login", "Register", "Top 10 Clients", "Top 5 Drivers"};
-        String[] cOps = {"Request a Ride", "Check Travel Registry", "Logout"};
-        String[] dOps = {"Associate a new vehicle", "Check Travel Registry", "Logout"};
-        App.curState = new StateManager();
-        App.curUser = null;
-        App.appMenu = new Menu(mOps, cOps, dOps);
+    private App() throws TooManyInstancesException{
+        if(count == 0){
+            String[] mOps = {"Login", "Register", "Top 10 Clients", "Top 5 Drivers"};
+            String[] cOps = {"Request a Ride", "Check Travel Registry", "Logout"};
+            String[] dOps = {"Associate a new vehicle", "Check Travel Registry", "Logout"};
+            this.curState = new StateManager();
+            this.curUser = null;
+            this.appMenu = new Menu(mOps, cOps, dOps);
+        }else throw new TooManyInstancesException();
     }
 
-    public static void run(boolean loggedIn){
+    public void run(boolean loggedIn){
         do{
-            if(!loggedIn) loggedIn = App.menuActions();
+            if(!loggedIn) loggedIn = this.menuActions();
             else{ 
-                if(App.curUser instanceof Client)
-                    loggedIn = App.userActions();
-                else loggedIn = App.driverActions();
+                if(this.curUser instanceof Client)
+                    loggedIn = this.userActions();
+                else loggedIn = this.driverActions();
             }    
-        }while(App.appMenu.getOpt() != 0);
+        }while(this.appMenu.getOpt() != 0);
     }
 
     public boolean menuActions(){  
         Account aux;
         boolean login=false;
 
-        App.appMenu.mMenu();
-        switch(App.appMenu.getOpt()){
+        this.appMenu.mMenu();
+        switch(this.appMenu.getOpt()){
                 case 1:
                     try{
                         aux = login();
                         login = true;
-                        App.curUser = aux;
+                        this.curUser = aux;
                         System.out.println("Log in successful");
                     }catch(WrongPasswordException | UserNotFoundException e){
                         System.out.println(e.getMessage());
@@ -76,7 +80,7 @@ public class App{
                 case 2:
                     try{
                         aux = register();
-                        App.curState.addUser(aux);
+                        this.curState.addUser(aux);
                     }catch(DuplicateRegistrationException e){
                         System.out.println("User with email "+e.getMessage()+"already exists");
                     }
@@ -84,7 +88,7 @@ public class App{
 				case 0:
 					try{
                         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("state"));
-                        oos.writeObject(App.curState);
+                        oos.writeObject(this.curState);
                         oos.flush();
                         oos.close();
                     }catch(Exception e){
@@ -99,8 +103,8 @@ public class App{
     public boolean userActions(){
         boolean login=true;
 
-        App.appMenu.cliMenu();
-        switch(App.appMenu.getOpt()){
+        this.appMenu.cliMenu();
+        switch(this.appMenu.getOpt()){
                 case 1:
                     getRide();
                     break;
@@ -111,7 +115,7 @@ public class App{
                 case 3:
                     login = false;
                     System.out.println("Logging out");
-                    App.curState.updateUser(App.curUser);
+                    this.curState.updateUser(this.curUser);
                     break;
                 case 0:
                     System.out.println("Exiting...");
@@ -124,8 +128,8 @@ public class App{
     public boolean driverActions(){
         boolean login=true;
 
-        App.appMenu.dMenu();
-        switch(App.appMenu.getOpt()){
+        this.appMenu.dMenu();
+        switch(this.appMenu.getOpt()){
                 case 1:
                     System.out.println("Fetching a taxi");
                     break;
@@ -136,7 +140,7 @@ public class App{
                 case 3:
                     login = false;
                     System.out.println("Logging out");
-                    App.curState.updateUser(App.curUser);
+                    this.curState.updateUser(this.curUser);
                     break;
                 case 0:
                     System.out.println("Exiting...");
@@ -173,7 +177,7 @@ public class App{
             }
         }
 
-        if(App.curState.userExists(email)) throw new DuplicateRegistrationException(email);
+        if(this.curState.userExists(email)) throw new DuplicateRegistrationException(email);
 		
 		if(type) ret = new Driver(name,email,password,homeAdress,birthday,new ArrayList<Travel>(),false,0.d,0.d,0.d);
 		else ret = new Client(name,email,password,homeAdress,birthday,new ArrayList<Travel>(),new Point2D());
@@ -198,8 +202,8 @@ public class App{
                 System.out.println("Input error ("+e.getMessage() + ") please try again");
             }
         }
-        if(App.curState.userExists(email)){
-            ret = App.curState.getUser(email);
+        if(this.curState.userExists(email)){
+            ret = this.curState.getUser(email);
             enter = ret.getPassword().equals(password);
         }else throw new UserNotFoundException("No user found with "+email);
 
@@ -251,10 +255,10 @@ public class App{
 	}
 
     public void getRide(){
-        Client aux = (Client)App.curUser;
-        Scanner in = new Scanner(System.in);
-        Point2D tmp = new Point2D();
-        Travel res=null;
+        Client aux=(Client)this.curUser;
+        Scanner in=new Scanner(System.in);
+        Point2D tmp=new Point2D();
+        InfoTravel res=null;
         String plate;
         int coord;
         double rat;
@@ -278,19 +282,20 @@ public class App{
             tmp.setY(coord);
             System.out.println("Deseja algum taxi em especifico?(S/N)");
             c=in.nextLine().charAt(0);
-            if(c == 'N') res=aux.requestRide(App.curState.getVehicles(), tmp);
+            if(c=='N') res=aux.requestRide(this.curState.getVehicles(), tmp);
             else{
                 System.out.print("Insira a matricula:");
                 plate = in.nextLine();
                 System.out.println("Deseja reservar viagem?(S/N)");
                 c=in.nextLine().charAt(0);
-                if(c == 'N') res=aux.requestTaxi(plate, App.curState.getVehicles(), tmp);
-                else res=aux.bookTaxi(plate, App.curState.getVehicles(), tmp);
+                if(c=='N') res=aux.requestTaxi(plate, this.curState.getVehicles(), tmp);
+                else res=aux.bookTaxi(plate, this.curState.getVehicles(), tmp);
             }
-            System.out.println(res.toString());
+            System.out.println(res.getTravel().toString());
             System.out.print("Avaliaçao do condutor (0-100): ");
             rat = in.nextDouble();
             res.getDriver().getNewRating(rat);
+            this.curState.updateUser(res.getDriver());
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
