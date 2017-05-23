@@ -34,4 +34,22 @@ public class InfoTravel{
     public void setTravel(Travel nT){
         this.tl = nT;
     }
+
+    public boolean equals(Object o){
+        if(o==this) return true;
+        if((o==null) || this.getClass()!=this.getClass()) return false;
+        InfoTravel it = (InfoTravel)o;
+        return this.driv.equals(it.getDriver()) && this.tl.equals(it.getTravel());
+    }
+
+    public InfoTravel clone(){
+        return new InfoTravel(this);
+    }
+    
+    public String toString(){
+        StringBuilder ret = new StringBuilder();
+        ret.append(this.driv.toString()).append("\n");
+        ret.append(this.tl.toString());
+        return ret.toString();
+    }
 }

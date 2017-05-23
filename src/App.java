@@ -30,7 +30,7 @@ public class App{
 		if(recover){
 			try{
 				ObjectInputStream ois = new ObjectInputStream(new FileInputStream("state"));
-				this.curState = (StateManager)ois.readObject();
+				mApp.curState = (StateManager)ois.readObject();
 				ois.close();
 			}catch(Exception e){
 					System.out.println("Not loaded! (" + e.getMessage() + ")");
@@ -85,6 +85,11 @@ public class App{
                         System.out.println("User with email "+e.getMessage()+"already exists");
                     }
                     break;
+                case 3:
+                    System.out.println(top5Clients());
+                    break;
+                case 4:
+                    System.out.println(top10Drivers());
 				case 0:
 					try{
                         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("state"));
@@ -300,5 +305,12 @@ public class App{
             System.out.println(e.getMessage());
         }
     }
+    
+    public String top5Clients(){
+        
+    }
 
+    public String top10Drivers(){
+
+    }
 }
