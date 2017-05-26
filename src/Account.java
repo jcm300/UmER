@@ -153,5 +153,12 @@ public class Account implements Serializable{
 	//register a travel
     public void addTravel(Travel t){
     	this.travels.add(t.clone());
-    }	
+    }
+
+    //get the total costs of the travels
+    public double getCosts(){
+        return this.travels.stream()
+                           .mapToDouble(a -> a.getCost())
+                           .sum();
+    }
 }

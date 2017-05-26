@@ -86,10 +86,10 @@ public class App{
                     }
                     break;
                 case 3:
-                    System.out.println(top5Clients());
+                    System.out.println(top10Clients());
                     break;
                 case 4:
-                    System.out.println(top10Drivers());
+                    System.out.println(top5Drivers());
 				case 0:
 					try{
                         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("state"));
@@ -306,11 +306,11 @@ public class App{
         }
     }
     
-    public String top5Clients(){
-        
+    public String top10Clients(){
+    
     }
 
-    public String top10Drivers(){
+    public String top5Drivers(){
 
     }
 }
