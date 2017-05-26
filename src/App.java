@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.TreeMap;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.io.FileOutputStream;
@@ -307,7 +308,21 @@ public class App{
     }
     
     public String top10Clients(){
-    
+        TreeMap<Double,String> aux = new TreeMap<Double,String>(new ComparatorClientSpend());
+        Double d=null;
+        StringBuilder ret = new StringBuilder();
+        int i;
+        
+        for(Account a: this.curState.getUsers().values()){
+            if(a.getClass().getSimpleName().equals("Client")) aux.put(a.getCosts(),a.getName());
+        }
+        
+        for(i=1; aux.size()>0 && i<=10; i++){
+            d=aux.lastKey();
+            ret.append(i).append("- ").append(aux.get(d)).append("\n");
+            aux.remove(d);
+        }
+        return ret.toString();
     }
 
     public String top5Drivers(){
