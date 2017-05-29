@@ -24,11 +24,10 @@ public class StateManager implements Serializable{
         this.users = new HashMap<>();
         this.vehicles = new HashMap<>();
     }
-
     
     public StateManager(Map<String,Account> usersL, Map<String,Taxi> vehiclesL){
-
-
+        this.users = usersL.entrySet().stream().collect(Collectors.toMap(e->e.getKey(), e->e.getValue().clone()));
+        this.vehicles = vehiclesL.entrySet().stream().collect(Collectors.toMap(e->e.getKey(), e->e.getValue().clone()));
     }
 
     //gets & sets
