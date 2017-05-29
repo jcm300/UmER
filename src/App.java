@@ -325,9 +325,21 @@ public class App{
         return ret.toString();
     }
 
-    /*public String top5Drivers(){
-
+    public String top5Drivers(){
+        TreeMap<Double,String> aux = new TreeMap<Double,String>();
+        Double d=null;
+        StringBuilder ret = new StringBuilder();
+        int i;
         
-    }*/
+        for(Account a: this.curState.getUsers().values())
+            if(a.getClass().getSimpleName().equals("Driver")) aux.put(a.getFluctuationTime(),a.getName());
+        
+        for(i=1; aux.size()>0 && i<=5; i++){
+            d=aux.lastKey();
+            ret.append(i).append("- ").append(aux.get(d)).append("\n");
+            aux.remove(d);
+        }
+        return ret.toString();
+    }
 
 }

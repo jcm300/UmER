@@ -112,15 +112,15 @@ public abstract class Taxi implements Serializable{
 		this.driver.addTravel(t);
 	}
 
+    public double getEffectiveTime(double dist){
+        this.genReliability();
+        return (dist/this.averageSpeed)/this.reliability;
+    }
+    
     // Randomly generates the reliability of a taxi before a ride
     private void genReliability(){
         Random gen = new Random();
-        this.reliability = gen.nextDouble();
-    }
-
-    public double getEffectiveTime(double dist){
-        this.genReliability();
-        return dist/this.averageSpeed*this.reliability;
+        this.reliability = gen.nextDouble()+0.01f;
     }
 
 	public boolean equals(Object o){
