@@ -138,8 +138,8 @@ public class App{
         this.appMenu.dMenu();
         switch(this.appMenu.getOpt()){
                 case 1:
-                    System.out.println("Fetching a taxi");
-                    break;
+                    Taxi tax=this.getTaxiInfo();
+                    tax.setDriver((Driver)this.curUser);
                 case 2:
 					System.out.println("Checking travel reg");
                     checkReg();
@@ -230,6 +230,7 @@ public class App{
             }
         }
         success=false;
+        input.nextLine();
         while(!success){
             try{
                 System.out.println("Taxi info"); 
