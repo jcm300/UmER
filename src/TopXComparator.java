@@ -1,4 +1,6 @@
-public class TopXComparator implements Comparator{
+import java.util.Comparator;
+
+public class TopXComparator implements Comparator<Account>{
     public int compare (Account a1, Account a2){
         double d1=0.f, d2=0.f;
         if(a1 instanceof Client){
