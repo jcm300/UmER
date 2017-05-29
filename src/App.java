@@ -138,8 +138,14 @@ public class App{
         this.appMenu.dMenu();
         switch(this.appMenu.getOpt()){
                 case 1:
+                    this.curState.removeTaxi((Driver)this.curUser);
                     Taxi tax=this.getTaxiInfo();
                     tax.setDriver((Driver)this.curUser);
+                    try{
+                        this.curState.addVehicle(tax);
+                    }catch(Exception e){
+                        System.out.print(e.getMessage());
+                    }
                 case 2:
 					System.out.println("Checking travel reg");
                     checkReg();
@@ -156,7 +162,6 @@ public class App{
         }
         return login;
     }
-
 
     public Account register () throws DuplicateRegistrationException{
         Scanner input = new Scanner(System.in);
