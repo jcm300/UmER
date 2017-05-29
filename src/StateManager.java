@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Iterator;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
 import java.io.Serializable;
@@ -71,4 +72,14 @@ public class StateManager implements Serializable{
     public Account getUser(String mail){
         return this.users.get(mail).clone();
     }
+
+    public void removeTaxi(Driver d){
+        Iterator<Taxi> run = this.vehicles.values().iterator();
+        boolean rem=false;
+
+        while(run.hasNext() && !rem)
+            if((rem=run.next().getDriver().equals(d))) 
+                run.remove();
+    }
+
 }
