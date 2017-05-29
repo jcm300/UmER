@@ -83,7 +83,7 @@ public class App{
                         aux = register();
                         this.curState.addUser(aux);
                     }catch(DuplicateRegistrationException e){
-                        System.out.println("User with email "+e.getMessage()+"already exists");
+                        System.out.println("User with email "+e.getMessage()+" already exists");
                     }
                     break;
                 case 3:
@@ -251,12 +251,14 @@ public class App{
                 date = dateInput();
 				end = LocalDate.parse(date);
 				List<Travel> reg = curUser.getTravelsBetween(init,end);
-				for(Travel t: reg){
+				System.out.println("Travels done between dates:");
+                if(reg.isEmpty()) System.out.println("No travels.");
+                else for(Travel t: reg){
 						System.out.println(i + ": "+ t.toString());
 						i++;
-				}	
+				     }	
 			}catch(Exception e){
-				System.out.println(e.getMessage());
+				System.out.println("Invalid date. Try again.");
 			}	
 	}
 
