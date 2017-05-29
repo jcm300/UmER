@@ -51,8 +51,9 @@ public class StateManager implements Serializable{
         this.users.put(nUser.getName(), nUser.clone());
     }
 
-    public void addVehicle(Taxi nTaxi){
-        this.vehicles.put(nTaxi.getPlate(), nTaxi.clone());
+    public void addVehicle(Taxi nTaxi) throws DuplicateTaxiException{
+        if(this.vehicles.containsKey(nTaxi.getPlate())) throw new DuplicateTaxiException(nTaxi.getPlate());
+        else this.vehicles.put(nTaxi.getPlate(), nTaxi.clone());
     }
 
     public List<Account> getUserList(){

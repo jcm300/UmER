@@ -68,40 +68,41 @@ public class App{
 
         this.appMenu.mMenu();
         switch(this.appMenu.getOpt()){
-                case 1:
-                    try{
-                        aux = login();
-                        login = true;
-                        this.curUser = aux;
-                        System.out.println("Log in successful");
-                    }catch(WrongPasswordException | UserNotFoundException e){
-                        System.out.println(e.getMessage());
-                    }
-                    break;
-                case 2:
-                    try{
-                        aux = register();
-                        this.curState.addUser(aux);
-                    }catch(DuplicateRegistrationException e){
-                        System.out.println("User with email "+e.getMessage()+"already exists");
-                    }
-                    break;
-                case 3:
-                    System.out.println(top10Clients());
-                    break;
-                case 4:
-                    //System.out.println(top5Drivers());
-				case 0:
-					try{
-                        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("state"));
-                        oos.writeObject(this.curState);
-                        oos.flush();
-                        oos.close();
-                    }catch(Exception e){
-                        System.out.println(e.getMessage());
-                    }
-                    System.out.println("Exiting...");
-                    break;
+            case 1:
+                try{
+                    aux = login();
+                    login = true;
+                    this.curUser = aux;
+                    System.out.println("Log in successful");
+                }catch(WrongPasswordException | UserNotFoundException e){
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case 2:
+                try{
+                    aux = register();
+                    this.curState.addUser(aux);
+                }catch(DuplicateRegistrationException e){
+                    System.out.println("User with email "+e.getMessage()+"already exists");
+                }
+                break;
+            case 3:
+                System.out.println(top10Clients());
+                break;
+            case 4:
+                System.out.println(top5Drivers());
+                break;
+            case 0:
+                try{
+                    ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("state"));
+                    oos.writeObject(this.curState);
+                    oos.flush();
+                    oos.close();
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+                System.out.println("Exiting...");
+                break;
         }
         return login;
     }
@@ -158,13 +159,15 @@ public class App{
 
 
     public Account register () throws DuplicateRegistrationException{
-        Account ret = null;
-        String name = null, email = null, password = null, homeAdress = null, birthday = null;
-        boolean enter = false, type = false, success=false;
+        Scanner input = new Scanner(System.in);
+        Account ret=null;
+        Taxi tax=null;
+        String name=null, email=null, password=null, homeAdress=null, birthday=null;
+        double aux=0.f;
+        boolean enter=false, type=false, success=false;
         
 		while(!success){
             try{
-                Scanner input = new Scanner(System.in);
                 System.out.print("Name: ");
                 name = input.nextLine();
                 System.out.print("Email: ");
@@ -185,11 +188,68 @@ public class App{
 
         if(this.curState.userExists(email)) throw new DuplicateRegistrationException(email);
 		
-		if(type) ret = new Driver(name,email,password,homeAdress,birthday,new ArrayList<Travel>(),false,0.d,0.d,0.d);
+		if(type){ 
+            ret=new Driver(name,email,password,homeAdress,birthday,new ArrayList<Travel>(),false,0.d,0.d,0.d);
+            tax=this.getTaxiInfo();
+            tax.setDriver((Driver)ret);
+        }
 		else ret = new Client(name,email,password,homeAdress,birthday,new ArrayList<Travel>(),new Point2D());
     
 		return ret; 
 	}
+
+    private Taxi getTaxiInfo(){
+        Scanner input = new Scanner(System.in);
+        Taxi tax=null;
+        String plate=null;
+        double aux=0.f;
+        int taxiType=-1;
+        boolean success=false;
+
+        while(!success){
+            System.out.println("What type of taxi do you own");
+            System.out.print("1-Motorbike\n2-Lightweight\n3-Van\nChoice: ");
+            taxiType=input.nextInt(); 
+            switch(taxiType){
+                case 1:
+                    tax = new MotorBike();
+                    success=true;
+                    break;
+                case 2:
+                    tax = new LightWeight();
+                    success=true;
+                    break;
+                case 3:
+                    tax = new Van();
+                    success=true;
+                    break;
+                default:
+                    System.out.println("Invalid option");
+                    success = false;
+                    break;
+            }
+        }
+        success=false;
+        while(!success){
+            try{
+                System.out.println("Taxi info"); 
+                System.out.print("Number plate: "); 
+                plate = input.nextLine();
+                tax.setPlate(plate);
+                System.out.print("Price charged per km: ");
+                aux=input.nextDouble();
+                tax.setPricePerKm(aux);
+                System.out.print("Average Speed: ");
+                aux=input.nextDouble();
+                tax.setAverageSpeed(aux);
+                curState.addVehicle(tax);
+                success = true;
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+        } 
+        return tax;
+    }
 
     public Account login () throws WrongPasswordException, UserNotFoundException{
         boolean enter = false, success = false;

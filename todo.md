@@ -23,14 +23,15 @@
 - [x] Basic Terminal Menu(Menu?)
 - [x] Load and save application status in a file
 - [x] Check for config/saved file at startup
-- [ ] Attribute a taxi to a driver when requested by a driver
-- [ ] Fetch top 10/5 clients/drivers
-- [ ] Company class which consists of a groups of drivers and taxis
+- [x] Fetch top 10/5 clients/drivers
 - [x] Output travel registers
+- [ ] Associate a driver with a taxi if it's an independent driver
 
 
 ## Next
 
 ## Additional Features
 - [ ] Change time that a ride takes according to (random) factors such as the weather, traffic, etc
+- [ ] Company class which consists of a groups of drivers and taxis
 - [ ] GUI for the app
+- [ ] Attribute a taxi to a driver when requested by a driver

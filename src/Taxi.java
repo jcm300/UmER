@@ -20,9 +20,9 @@ public abstract class Taxi implements Serializable{
 	//Constructors
 	public Taxi(){
 		this.plate = "";
-		this.averageSpeed=0;
-		this.pricePerKm=0;
-		this.reliability=0;
+		this.averageSpeed=0.d;
+		this.pricePerKm=0.d;
+		this.reliability=0.d;
 		this.location = new Point2D();
 		this.driver = null;
 		this.tReg = new ArrayList<Travel>();
