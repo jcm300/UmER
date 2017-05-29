@@ -161,4 +161,18 @@ public class Account implements Serializable{
                            .mapToDouble(a -> a.getCost())
                            .sum();
     }
+    
+    //get the average fluctuation between real time and predicted time of the travels
+    public double getFluctuationTime(){
+        double s=0.f, a=0.f;
+        int i=0;
+
+        for(Travel t: this.travels){
+            s += t.getrTime() - t.getpTime();
+            i++;
+        }
+
+        if(i!=0) a = s/i;
+        return a;
+    }
 }

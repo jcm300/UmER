@@ -308,7 +308,7 @@ public class App{
     }
     
     public String top10Clients(){
-        TreeMap<Double,String> aux = new TreeMap<Double,String>(new ComparatorClientSpend());
+        TreeMap<Double,String> aux = new TreeMap<Double,String>();
         Double d=null;
         StringBuilder ret = new StringBuilder();
         int i;

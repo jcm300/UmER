@@ -113,7 +113,7 @@ public abstract class Taxi implements Serializable{
 	}
 
     // Randomly generates the reliability of a taxi before a ride
-    public void genReliability(){
+    private void genReliability(){
         Random gen = new Random();
         this.reliability = gen.nextDouble();
     }
