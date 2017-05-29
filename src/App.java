@@ -384,8 +384,11 @@ public class App{
                                .limit(10)
                                .map(a->a.getName())
                                .collect(Collectors.toList());
-        for(String st : aux)
-            sb.append(st).append("\n");
+        int i=1;
+        for(String st : aux){
+            sb.append(i).append("- ").append(st).append("\n");
+            i++;
+        }
 
         return sb.toString();
     }
@@ -398,8 +401,11 @@ public class App{
                                .limit(5)
                                .map(a->a.getName())
                                .collect(Collectors.toList());
-        for(String st : aux)
-            sb.append(st).append("\n");
+        int i=1;
+        for(String st : aux){
+            sb.append(i).append("- ").append(st).append("\n");
+            i++;
+        }
         return sb.toString();
     }
 
