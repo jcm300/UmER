@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class App{
 
@@ -376,38 +377,30 @@ public class App{
     }
     
     public String top10Clients(){
-        TreeMap<Double,String> aux = new TreeMap<Double,String>();
-        Double d=null;
-        StringBuilder ret = new StringBuilder();
-        int i;
-        
-        for(Account a: this.curState.getUsers().values()){
-            if(a.getClass().getSimpleName().equals("Client")) aux.put(a.getCosts(),a.getName());
-        }
-        
-        for(i=1; aux.size()>0 && i<=10; i++){
-            d=aux.lastKey();
-            ret.append(i).append("- ").append(aux.get(d)).append("\n");
-            aux.remove(d);
-        }
-        return ret.toString();
+        StringBuilder sb = new StringBuilder();
+        List<String> aux = this.curState.getUsers().values().stream()
+                               .filter(a->a.getClass().getSimpleName().equals("Client"))
+                               .sorted(new TopXComparator())
+                               .limit(10)
+                               .map(a->a.getName())
+                               .collect(Collectors.toList());
+        for(String st : aux)
+            sb.append(st).append("\n");
+
+        return sb.toString();
     }
 
     public String top5Drivers(){
-        TreeMap<Double,String> aux = new TreeMap<Double,String>();
-        Double d=null;
-        StringBuilder ret = new StringBuilder();
-        int i;
-        
-        for(Account a: this.curState.getUsers().values())
-            if(a.getClass().getSimpleName().equals("Driver")) aux.put(a.getFluctuationTime(),a.getName());
-        
-        for(i=1; aux.size()>0 && i<=5; i++){
-            d=aux.lastKey();
-            ret.append(i).append("- ").append(aux.get(d)).append("\n");
-            aux.remove(d);
-        }
-        return ret.toString();
+        StringBuilder sb = new StringBuilder();
+        List<String> aux = this.curState.getUsers().values().stream()
+                               .filter(a->a.getClass().getSimpleName().equals("Driver"))
+                               .sorted(new TopXComparator())
+                               .limit(5)
+                               .map(a->a.getName())
+                               .collect(Collectors.toList());
+        for(String st : aux)
+            sb.append(st).append("\n");
+        return sb.toString();
     }
 
 }
