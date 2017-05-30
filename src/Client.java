@@ -62,57 +62,60 @@ public class Client extends Account {
 
     
 	// request a ride to the nearest taxi
-	public InfoTravel requestRide(Map<String,Taxi> l, Point2D dest) throws TaxiIndisponivelException{
+	public Driver requestRide(List<Account> l, Point2D dest) throws TaxiIndisponivelException{
+        Driver closest=null;
+        Taxi cAux=null;
+        Travel auxT=null;
 		LocalDate curT = LocalDate.now();
         double dist = Double.MAX_VALUE, temp;
-        Taxi closest = null;
-        InfoTravel auxI=null;
-        Travel auxT=null;
+        List<Driver> available=this.l.stream()
+                                     .filter(a->a.getClass().getSimpleName().equals("Driver"))
+                                     .map(a->(Driver)a)
+                                     .filter(a->((Driver)a).getStatus())
+                                     .collect(Collectors.toList());
 
-        for(Taxi t : l.values()){                   //search for the nearest taxi
-            System.out.println("Searching");
-            if((temp = this.location.getDist(t.getLocation())) < dist && t.getDriver().getStatus()){ 
+        for(Driver d : l.values()){                   //search for the nearest driver
+            System.out.println("Searching"); // TODO: remove after debugging
+            if((temp = d.getCurPos().getDist(this.location)) < dist){ 
                 closest = t;
                 dist = temp;
             }
         }
 
         if(closest != null){
-            auxT = new Travel(closest.getPricePerKm()*dist,dist/closest.getAverageSpeed(),closest.getEffectiveTime(dist), dist,curT, dest, this.location);
+            cAux=closest.getCar();
+            auxT = new Travel(cAux.getPricePerKm()*dist,dist/cAux.getAverageSpeed(),cAux.getEffectiveTime(dist), dist,curT, dest, this.location);
             this.addTravel(auxT);
-            this.location = new Point2D(dest);
             closest.addTravel(auxT);
-            auxI = new InfoTravel(closest.getDriver(), auxT);
-        }else throw new TaxiIndisponivelException("Nao ha taxis disponiveis de momento.");
+            this.location = new Point2D(dest);
+        }else throw new TaxiIndisponivelException("Nao ha condutores disponiveis de momento.");
 
-        return auxI;
-
+        return closest;
 	}
 
 	// request a taxi for a ride
-	public InfoTravel requestTaxi(String plate, Map<String,Taxi> l, Point2D dest) throws TaxiIndisponivelException{
-            InfoTravel auxI = null;
-        	Travel auxT=null;
-        	Taxi t=null;
-        	double dist;
-        	LocalDate curT = LocalDate.now();
-
-        	if(l.containsKey(plate)){
-            		t = l.get(plate);
-            		if(t.getDriver().getStatus()){
-                		dist = this.location.getDist(t.getLocation());
-                		auxT = new Travel(t.getPricePerKm()*dist, dist/t.getAverageSpeed(), t.getEffectiveTime(dist),dist,curT, dest, this.location);
-                		this.addTravel(auxT);
-                		this.location = new Point2D(dest);
-                		t.addTravel(auxT);
-                        auxI = new InfoTravel(t.getDriver(), auxT);
-            		}else throw new TaxiIndisponivelException(plate);
-        	}else throw new TaxiIndisponivelException(plate);
-            return auxI;
+	public Driver requestTaxi(String plate, List<Account> l, Point2D dest) throws TaxiIndisponivelException{
+        Driver d=null;
+        Travel auxT=null;
+        LocalDate curT = LocalDate.now();
+        double dist;
+    
+        if(l.containsKey(plate)){
+                t = l.get(plate);
+                if(t.getDriver().getStatus()){
+                    dist = this.location.getDist(t.getLocation());
+                    auxT = new Travel(t.getPricePerKm()*dist, dist/t.getAverageSpeed(), t.getEffectiveTime(dist),dist,curT, dest, this.location);
+                    this.addTravel(auxT);
+                    this.location = new Point2D(dest);
+                    t.addTravel(auxT);
+                    auxI = new InfoTravel(t.getDriver(), auxT);
+                }else throw new TaxiIndisponivelException(plate);
+        }else throw new TaxiIndisponivelException(plate);
+        return auxI;
 	}
 
     // request a specific taxi that isn't currently available
-	public InfoTravel bookTaxi(String plate, Map<String,Taxi> l, Point2D dest) throws TaxiIndisponivelException{
+	public Driver bookTaxi(String plate, List<Account> l, Point2D dest) throws TaxiIndisponivelException{
         InfoTravel auxI=null;
         Travel auxT=null;
         Taxi t=null;
