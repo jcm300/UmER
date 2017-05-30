@@ -1,7 +1,7 @@
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 
-public class MotorBike extends Taxi {
+public class MotorBike extends Taxi implements TaxiQueue{
 	
 	//instace variables
 	private ArrayDeque<Travel> waitingList;
