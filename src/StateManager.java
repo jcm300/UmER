@@ -17,18 +17,14 @@ import java.util.stream.Collectors;
 import java.io.Serializable;
 
 public class StateManager implements Serializable{
-
     private Map<String,Account> users;
-    private Map<String,Taxi> vehicles;
 
     public StateManager(){
         this.users = new HashMap<>();
-        this.vehicles = new HashMap<>();
     }
     
-    public StateManager(Map<String,Account> usersL, Map<String,Taxi> vehiclesL){
+    public StateManager(Map<String,Account> usersL){
         this.users = usersL.entrySet().stream().collect(Collectors.toMap(e->e.getKey(), e->e.getValue().clone()));
-        this.vehicles = vehiclesL.entrySet().stream().collect(Collectors.toMap(e->e.getKey(), e->e.getValue().clone()));
     }
 
     //gets & sets
@@ -40,21 +36,8 @@ public class StateManager implements Serializable{
         this.users = nC.entrySet().stream().collect(Collectors.toMap(e->e.getKey(), e->e.getValue().clone()));
     }
 
-    public Map<String,Taxi> getVehicles(){
-        return this.vehicles.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue().clone()));
-    }
-
-    public void setVehicles(Map<String,Taxi> nT){
-        this.vehicles = nT.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue().clone()));
-    }
-
     public void addUser(Account nUser){
         this.users.put(nUser.getName(), nUser);
-    }
-
-    public void addVehicle(Taxi nTaxi) throws DuplicateTaxiException{
-        if(this.vehicles.containsKey(nTaxi.getPlate())) throw new DuplicateTaxiException(nTaxi.getPlate());
-        else this.vehicles.put(nTaxi.getPlate(), nTaxi);
     }
 
     public List<Account> getUserList(){
@@ -73,14 +56,4 @@ public class StateManager implements Serializable{
     public Account getUser(String mail){
         return this.users.get(mail);
     }
-
-    public void removeTaxi(Driver d){
-        Iterator<Taxi> run = this.vehicles.values().iterator();
-        boolean rem=false;
-
-        while(run.hasNext() && !rem)
-            if((rem=run.next().getDriver().equals(d))) 
-                run.remove();
-    }
-
 }

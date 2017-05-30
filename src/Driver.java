@@ -7,6 +7,7 @@ public class Driver extends Account {
 	private double rating;
 	private double kmsTraveled;
 	private double punctuality;
+    private Taxi car;
 
 
 	//constructors
@@ -16,14 +17,16 @@ public class Driver extends Account {
 		this.rating = 0.f;
 		this.kmsTraveled = 0.f;
 		this.punctuality = 0.f;
+        this.car = new Taxi();
 	}
 
-	public Driver(String email, String nome, String password, String address, String bday,List<Travel> tvl, boolean av, double ratng, double kms, double pc){
+	public Driver(String email, String nome, String password, String address, String bday,List<Travel> tvl, boolean av, double ratng, double kms, double pc, Taxi vehicle){
 		super(email, nome, password, address, bday,tvl);
 		this.status = av;
 		this.rating = ratng;
 		this.kmsTraveled = kms;
 		this.punctuality = pc;
+        this.car = vehicle;
 	}
 
 	public Driver(Driver oldDriver){
@@ -32,85 +35,77 @@ public class Driver extends Account {
 		this.rating = oldDriver.getRating();
 		this.kmsTraveled = oldDriver.getKmsTraveled();
 		this.punctuality = oldDriver.getPunctuality();
+        this.car = oldDriver.getCar();
 	}
 
 	//gets & sets
 	public boolean getStatus(){
-
 		return this.status;
-
 	}
 	public void setStatus(boolean status){
-
 		this.status = status;
-
 	}
 
 	public double getRating(){
-
 		return this.rating;
-
 	}
-
 	public void setRating(double nRating){
-
 		this.rating = nRating;
-
 	}
 
 	public double getKmsTraveled(){
-
 		return this.kmsTraveled;
-
 	}
 	public void setKmsTraveled(double nKms){
-
 		this.kmsTraveled = nKms;
-
 	}
 
 	public double getPunctuality(){
-
 		return this.punctuality;
-
 	}
-	
 	public void setPunctuality(double p){
-
 		this.punctuality = p;
-
 	}
+    
+    public Taxi getCar(){
+        return this.car.clone(); 
+    }
+    public void setCar(Taxi nCar){
+        return this.car=nCar; 
+    }
+    
+    public Point2D getCurPosition(){
+        return this.car.getLocation();
+    } 
+
+    //Average's the rating of the current driver given the ratings already recieved
+    public void setNewRating(double nR){
+        this.rating = (nR + this.rating * this.getTravels().size()) / (this.getTravels().size() + 1);
+    }
 
 	public Driver clone(){
-
 		return new Driver(this);
-
 	}
 
 	public boolean equals(Object o){
-
 		if(this == o) return true;
 		else if(o == null || this.getClass() != o.getClass()) return false;
 
 		Driver aux = (Driver)o;
 		return super.equals(aux) && this.status == aux.getStatus() 
 					 && this.rating == aux.getRating() 
-					 && this.kmsTraveled == aux.getKmsTraveled();
+					 && this.kmsTraveled == aux.getKmsTraveled()
+                     && this.car.equals(aux.getCar());
 	}
 
 	public String toString(){
-
 		StringBuilder sb = new StringBuilder();
 		sb.append("Available: ").append(this.status).append("\n");
 		sb.append("Rating: ").append(this.rating).append("\n");
 		sb.append("Kms Traveled: ").append(this.kmsTraveled).append("\n");
 		sb.append("Punctuality(0-100%): ").append(this.punctuality*100).append("%\n");
+        sb.append("Car: ").append(this.car.toString());
 
 		return sb.toString();
 	}
-
-    //Average's the rating of the current driver given the ratings already recieved
-    public void getNewRating(double nR){
-        this.rating = (nR + this.rating * this.getTravels().size()) / (this.getTravels().size() + 1);
-    }
 }
