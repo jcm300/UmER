@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
 
 public class App{
 
-    private StateManager curState;
-    private Account curUser;
-    private Menu appMenu;
+    private StateManager curState; 
+    private Account curUser; //cur user logged in the system, null if none
+    private Menu appMenu; //cur menu based on curUser: wether any user logged in and if it is, the type of user
     private static int count=0;
     
     public static void main(String[] args){
@@ -42,7 +42,7 @@ public class App{
     }
 
     private App() throws TooManyInstancesException{
-        if(count == 0){
+        if(count == 0){ //only allow one instance of App to be running
             String[] mOps = {"Login", "Register", "Top 10 Clients", "Top 5 Drivers"};
             String[] cOps = {"Request a Ride", "Check Travel Registry", "Logout"};
             String[] dOps = {"Associate a new vehicle", "Check Travel Registry", "Toggle Status", "Logout"};
@@ -63,6 +63,10 @@ public class App{
         }while(this.appMenu.getOpt() != 0);
     }
 
+    /**
+     * Main menu which displays when no
+     * user is logged in
+     */
     public boolean menuActions(){  
         Account aux;
         boolean login=false;
@@ -325,11 +329,11 @@ public class App{
 				System.out.println("Travels done between dates:");
                 if(reg.isEmpty()) System.out.println("No travels.");
                 else for(Travel t: reg){
-						System.out.println(i + ": "+ t.toString());
-						i++;
-				     }	
+				    System.out.println(i + ": "+ t.toString());
+					i++;
+				}	
 			}catch(Exception e){
-				System.out.println("Invalid date. Try again.");
+				System.out.println(e.getMessage());
 			}	
 	}
 

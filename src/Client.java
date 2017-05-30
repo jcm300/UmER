@@ -69,11 +69,13 @@ public class Client extends Account {
         InfoTravel auxI=null;
         Travel auxT=null;
 
-        for(Taxi t : l.values())                    //search for the nearest taxi
+        for(Taxi t : l.values()){                   //search for the nearest taxi
+            System.out.println("Searching");
             if((temp = this.location.getDist(t.getLocation())) < dist && t.getDriver().getStatus()){ 
                 closest = t;
                 dist = temp;
             }
+        }
 
         if(closest != null){
             auxT = new Travel(closest.getPricePerKm()*dist,dist/closest.getAverageSpeed(),closest.getEffectiveTime(dist), dist,curT, dest, this.location);

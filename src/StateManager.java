@@ -49,7 +49,7 @@ public class StateManager implements Serializable{
     }
 
     public void addUser(Account nUser){
-        this.users.put(nUser.getName(), nUser.clone());
+        this.users.put(nUser.getName(), nUser);
     }
 
     public void addVehicle(Taxi nTaxi) throws DuplicateTaxiException{
@@ -66,11 +66,12 @@ public class StateManager implements Serializable{
     }
 
     public void updateUser(Account nInfo){
-        if(this.users.containsKey(nInfo.getEmail())) this.users.replace(nInfo.getEmail(), nInfo.clone());
+        this.users.remove(nInfo.getEmail());
+        this.users.put(nInfo.getEmail(), nInfo);
     }
 
     public Account getUser(String mail){
-        return this.users.get(mail).clone();
+        return this.users.get(mail);
     }
 
     public void removeTaxi(Driver d){
