@@ -142,16 +142,13 @@ public class App{
                     this.curState.removeTaxi((Driver)this.curUser);
                     Taxi tax=this.getTaxiInfo();
                     tax.setDriver((Driver)this.curUser);
-                    try{
-                        this.curState.addVehicle(tax);
-                    }catch(Exception e){
-                        System.out.print(e.getMessage());
-                    }
+                    break;
                 case 2:
 					System.out.println("Checking travel reg");
                     checkReg();
 					break;
                 case 3:
+                    ((Driver)this.curUser).setStatus(!((Driver)this.curUser).getStatus());
                     System.out.println("You are now appearing as "+(((Driver)this.curUser).getStatus() ? "" : "un")+"available");
                     break;
                 case 4:
@@ -200,6 +197,7 @@ public class App{
 		
 		if(type){ 
             System.out.print("Appear as available?(Y/N) ");
+            input.nextLine();
             c=input.nextLine().charAt(0);
             ret=new Driver(name,email,password,homeAdress,birthday,new ArrayList<Travel>(),c=='Y',0.d,0.d,0.d);
             tax=this.getTaxiInfo();
@@ -291,18 +289,18 @@ public class App{
     }
 	
 	private String dateInput() {
-		int year = 0, month = 0, day = 0;
+		String year = null, month = null, day = null;
 		boolean success = false;
 		
 		while(!success){
 			try{
 				Scanner input = new Scanner(System.in);
         		System.out.print("Year: ");
-        		year = input.nextInt();
+        		year = input.nextLine();
         		System.out.print("Month: ");
-        		month = input.nextInt();
+        		month = input.nextLine();
         		System.out.print("Day: ");
-        		day = input.nextInt();
+        		day = input.nextLine();
 				success = true;
 			}catch(Exception e){
 				System.out.println("Input error ("+e.getMessage() + ") please try again");
