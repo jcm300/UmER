@@ -45,7 +45,7 @@ public class App{
         if(count == 0){
             String[] mOps = {"Login", "Register", "Top 10 Clients", "Top 5 Drivers"};
             String[] cOps = {"Request a Ride", "Check Travel Registry", "Logout"};
-            String[] dOps = {"Associate a new vehicle", "Check Travel Registry", "Logout"};
+            String[] dOps = {"Associate a new vehicle", "Check Travel Registry", "Toggle Status", "Logout"};
             this.curState = new StateManager();
             this.curUser = null;
             this.appMenu = new Menu(mOps, cOps, dOps);
@@ -152,6 +152,9 @@ public class App{
                     checkReg();
 					break;
                 case 3:
+                    System.out.println("You are now appearing as "+(((Driver)this.curUser).getStatus() ? "" : "un")+"available");
+                    break;
+                case 4:
                     login = false;
                     System.out.println("Logging out");
                     this.curState.updateUser(this.curUser);
@@ -171,6 +174,7 @@ public class App{
         String name=null, email=null, password=null, homeAdress=null, birthday=null;
         double aux=0.f;
         boolean enter=false, type=false, success=false;
+        char c;
         
 		while(!success){
             try{
@@ -195,7 +199,9 @@ public class App{
         if(this.curState.userExists(email)) throw new DuplicateRegistrationException(email);
 		
 		if(type){ 
-            ret=new Driver(name,email,password,homeAdress,birthday,new ArrayList<Travel>(),false,0.d,0.d,0.d);
+            System.out.print("Appear as available?(Y/N) ");
+            c=input.nextLine().charAt(0);
+            ret=new Driver(name,email,password,homeAdress,birthday,new ArrayList<Travel>(),c=='Y',0.d,0.d,0.d);
             tax=this.getTaxiInfo();
             tax.setDriver((Driver)ret);
         }
@@ -334,7 +340,7 @@ public class App{
         Scanner in=new Scanner(System.in);
         Point2D tmp=new Point2D();
         InfoTravel res=null;
-        String plate;
+        String plate=null;
         int coord;
         double rat;
         char c;
@@ -354,6 +360,7 @@ public class App{
             tmp.setX(coord);
             System.out.print("Y: ");
             coord = in.nextInt();
+            in.nextLine();
             tmp.setY(coord);
             System.out.println("Deseja algum taxi em especifico?(S/N)");
             c=in.nextLine().charAt(0);
@@ -363,7 +370,7 @@ public class App{
                 plate = in.nextLine();
                 System.out.println("Deseja reservar viagem?(S/N)");
                 c=in.nextLine().charAt(0);
-                if(c=='N') res=aux.requestTaxi(plate, this.curState.getVehicles(), tmp);
+                if(c=='N'||c=='n') res=aux.requestTaxi(plate, this.curState.getVehicles(), tmp);
                 else res=aux.bookTaxi(plate, this.curState.getVehicles(), tmp);
             }
             System.out.println(res.getTravel().toString());
