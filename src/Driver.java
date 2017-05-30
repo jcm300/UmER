@@ -1,4 +1,5 @@
 import java.util.List;
+import java.time.LocalDate;
 
 public class Driver extends Account {
 	 
@@ -17,7 +18,7 @@ public class Driver extends Account {
 		this.rating = 0.f;
 		this.kmsTraveled = 0.f;
 		this.punctuality = 0.f;
-        this.car = new Taxi();
+        this.car = null;
 	}
 
 	public Driver(String email, String nome, String password, String address, String bday,List<Travel> tvl, boolean av, double ratng, double kms, double pc, Taxi vehicle){
@@ -71,7 +72,7 @@ public class Driver extends Account {
         return this.car.clone(); 
     }
     public void setCar(Taxi nCar){
-        return this.car=nCar; 
+        this.car = nCar; 
     }
     
     public Point2D getCurPosition(){
@@ -108,4 +109,15 @@ public class Driver extends Account {
 
 		return sb.toString();
 	}
+
+    //Profit between to dates on one Taxi/Driver
+    public double profitBetween(LocalDate init, LocalDate end){
+        List<Travel> aux = getTravelsBetween(init,end);
+        double ret=0;
+
+        for(Travel t: aux)
+            ret += t.getCost();
+
+        return ret;
+    }
 }

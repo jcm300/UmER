@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class LightWeight extends Taxi {
 		
 	//Constructors
@@ -11,8 +9,8 @@ public class LightWeight extends Taxi {
                 super(l);
         }
 
-        public LightWeight(String p,double as, double ppk, double rel, Point2D l, Driver d, ArrayList<Travel> t){
-                super(p,as,ppk,rel,l,d,t);
+        public LightWeight(String p,double as, double ppk, double rel, Point2D l){
+                super(p,as,ppk,rel,l);
         }
   
         //Methods

@@ -26,12 +26,12 @@ public class Company implements Serializable{
 	//methods
  
     //Profit between to dates on one Company
-    public double profitBetween(LocalDate init, LocalDate end){
+    /*public double profitBetween(LocalDate init, LocalDate end){
         double ret=0;
  
         for(Taxi t: this.taxis)
         	ret += t.profitBetween(init,end);
  
         return ret;
-    }
+    }*/
 }

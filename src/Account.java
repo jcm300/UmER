@@ -146,7 +146,7 @@ public class Account implements Serializable{
 	//all the travels between two given dates
     public List<Travel> getTravelsBetween(LocalDate init, LocalDate end){
     	return this.travels.stream()
-   				   .filter(t->t.getDate().isAfter(init) && t.getDate().isBefore(end))
+   				           .filter(t->t.getDate().isAfter(init) && t.getDate().isBefore(end))
                            .collect(Collectors.toList()); 
 	}
 

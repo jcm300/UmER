@@ -32,7 +32,7 @@ public abstract class Taxi implements Serializable{
         this.location = t.getLocation();
 	}
 
-	public Taxi(String plate, double avS, double ppkm, double rel, Point2D loc, ArrayList<Travel> tr){
+	public Taxi(String plate, double avS, double ppkm, double rel, Point2D loc){
 		this.plate = plate;
 		this.averageSpeed = avS;
 		this.pricePerKm = ppkm;
@@ -130,15 +130,4 @@ public abstract class Taxi implements Serializable{
     }    
 
     public abstract Taxi clone();
-
-	//Profit between to dates on one Taxi
-	public double profitBetween(LocalDate init, LocalDate end){
-			List<Travel> aux = getTravelsBetween(init,end);
-			double ret=0;
-			
-			for(Travel t: aux)
-					ret += t.getCost();
-
-			return ret;
-	}
 }

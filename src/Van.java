@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Van extends Taxi {
 
 	//Constructors
@@ -11,8 +9,8 @@ public class Van extends Taxi {
 		super(v);
 	}
 
-	public Van(String p,double as, double ppk, double rel, Point2D l, Driver d, ArrayList<Travel> t){
-		super(p,as,ppk,rel,l,d,t);
+	public Van(String p,double as, double ppk, double rel, Point2D l){
+		super(p,as,ppk,rel,l);
 	}
 
 	//Methods

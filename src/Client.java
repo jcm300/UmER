@@ -2,6 +2,8 @@ import java.util.Map;
 import java.lang.Math;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Client extends Account {
 	
@@ -10,18 +12,18 @@ public class Client extends Account {
 
 	// constructors
 	public Client(){
-        	super();
+        super();
 		this.location = new Point2D();
 	}
 
 	public Client(String email, String nome, String password, String address, String bday, List<Travel> tvl, Point2D location){
-        	super(email,nome,password,address,bday,tvl);
+    	super(email,nome,password,address,bday,tvl);
 		this.location = location.clone();
 	}
 
 	public Client (Client c){
-        	super(c);
-        	this.location = c.getLocation();
+    	super(c);
+    	this.location = c.getLocation();
 	}
 
 	//gets & sets
@@ -68,16 +70,16 @@ public class Client extends Account {
         Travel auxT=null;
 		LocalDate curT = LocalDate.now();
         double dist = Double.MAX_VALUE, temp;
-        List<Driver> available=this.l.stream()
-                                     .filter(a->a.getClass().getSimpleName().equals("Driver"))
-                                     .map(a->(Driver)a)
-                                     .filter(a->((Driver)a).getStatus())
-                                     .collect(Collectors.toList());
+        List<Driver> available=l.stream()
+                                .filter(a->a.getClass().getSimpleName().equals("Driver"))
+                                .map(a->(Driver)a)
+                                .filter(a->((Driver)a).getStatus())
+                                .collect(Collectors.toList());
 
-        for(Driver d : l.values()){                   //search for the nearest driver
+        for(Driver d : available){           //search for the nearest driver
             System.out.println("Searching"); // TODO: remove after debugging
-            if((temp = d.getCurPos().getDist(this.location)) < dist){ 
-                closest = t;
+            if((temp = d.getCurPosition().getDist(this.location)) < dist){ 
+                closest = d;
                 dist = temp;
             }
         }
@@ -99,39 +101,44 @@ public class Client extends Account {
         Travel auxT=null;
         LocalDate curT = LocalDate.now();
         double dist;
-    
-        if(l.containsKey(plate)){
-                t = l.get(plate);
-                if(t.getDriver().getStatus()){
-                    dist = this.location.getDist(t.getLocation());
-                    auxT = new Travel(t.getPricePerKm()*dist, dist/t.getAverageSpeed(), t.getEffectiveTime(dist),dist,curT, dest, this.location);
+
+        for(Account a : l){
+            if(a.getClass().getSimpleName().equals("Driver") && ((Driver)a).getCar().getPlate().equals(plate)) d = (Driver)a;
+        }
+
+        if(d!=null){
+            if(d.getStatus()){
+                Taxi t = d.getCar();
+                dist = this.location.getDist(t.getLocation());
+                auxT = new Travel(t.getPricePerKm()*dist, dist/t.getAverageSpeed(), t.getEffectiveTime(dist),dist,curT, dest, this.location);
                     this.addTravel(auxT);
                     this.location = new Point2D(dest);
-                    t.addTravel(auxT);
-                    auxI = new InfoTravel(t.getDriver(), auxT);
-                }else throw new TaxiIndisponivelException(plate);
+                    d.addTravel(auxT);
+            }else throw new TaxiIndisponivelException(plate);
         }else throw new TaxiIndisponivelException(plate);
-        return auxI;
+        return d;
 	}
 
     // request a specific taxi that isn't currently available
 	public Driver bookTaxi(String plate, List<Account> l, Point2D dest) throws TaxiIndisponivelException{
-        InfoTravel auxI=null;
         Travel auxT=null;
-        Taxi t=null;
+        Driver d=null;
         LocalDate curT = LocalDate.now();
         double dist;
+        
+        for(Account a : l){
+            if(a.getClass().getSimpleName().equals("Driver") && ((Driver)a).getCar().getPlate().equals(plate)) d = (Driver)a;
+        }
 
-        if(l.containsKey(plate)){
-            t = l.get(plate);
+        if(d!=null){
+            Taxi t = d.getCar();
             if(t instanceof TaxiQueue){         //supports a queue
                 dist = this.location.getDist(t.getLocation());
                 auxT = new Travel(t.getPricePerKm()*dist, dist/t.getAverageSpeed(), t.getEffectiveTime(dist),dist,curT, dest, this.location.clone());
                 this.location = new Point2D(dest);
                 ((TaxiQueue)t).addWaitingList(auxT);
-                auxI = new InfoTravel(t.getDriver(), auxT);
             }else throw new TaxiIndisponivelException(plate);
         }else throw new TaxiIndisponivelException(plate);
-        return auxI;
+        return d;
     }
 }

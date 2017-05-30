@@ -1,5 +1,4 @@
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 
 public class MotorBike extends Taxi implements TaxiQueue{
 	
@@ -17,8 +16,8 @@ public class MotorBike extends Taxi implements TaxiQueue{
 		this.waitingList = m.getWaitingList();
 	}
 
-	public MotorBike(String plate, double avS, double ppkm, double rel, Point2D loc, Driver d, ArrayList<Travel> tr, ArrayDeque<Travel> tw){
-		super(plate, avS, ppkm, rel, loc, d, tr);
+	public MotorBike(String plate, double avS, double ppkm, double rel, Point2D loc, ArrayDeque<Travel> tw){
+		super(plate, avS, ppkm, rel, loc);
 		this.setWaitingList(tw);
 	}
 

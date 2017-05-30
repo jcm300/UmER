@@ -170,7 +170,6 @@ public class App{
     public Account register () throws DuplicateRegistrationException{
         Scanner input = new Scanner(System.in);
         Account ret=null;
-        Taxi tax=null;
         String name=null, email=null, password=null, homeAdress=null, birthday=null;
         double aux=0.f;
         boolean enter=false, type=false, success=false;
@@ -202,9 +201,7 @@ public class App{
             System.out.print("Appear as available?(Y/N) ");
             input.nextLine();
             c=input.nextLine().charAt(0);
-            ret=new Driver(name,email,password,homeAdress,birthday,new ArrayList<Travel>(),c=='Y',0.d,0.d,0.d);
-            tax=this.getTaxiInfo();
-            ((Driver)ret).setCar(tax);
+            ret=new Driver(name,email,password,homeAdress,birthday,new ArrayList<Travel>(),c=='Y',0.d,0.d,0.d,this.getTaxiInfo());
         }
 		else ret = new Client(name,email,password,homeAdress,birthday,new ArrayList<Travel>(),new Point2D());
     
@@ -376,7 +373,7 @@ public class App{
             System.out.println(res.getLastTravel().toString());
             System.out.print("Avaliaçao do condutor (0-100): ");
             rat = in.nextDouble();
-            res.getNewRating(rat);
+            res.setNewRating(rat);
             this.curState.updateUser(res);
         }catch(Exception e){
             System.out.println(e.getMessage());
