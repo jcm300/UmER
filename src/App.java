@@ -143,9 +143,8 @@ public class App{
         this.appMenu.dMenu();
         switch(this.appMenu.getOpt()){
                 case 1:
-                    this.curState.removeTaxi((Driver)this.curUser);
                     Taxi tax=this.getTaxiInfo();
-                    tax.setDriver((Driver)this.curUser);
+                    ((Driver)this.curUser).setCar(tax);
                     break;
                 case 2:
 					System.out.println("Checking travel reg");
@@ -205,7 +204,7 @@ public class App{
             c=input.nextLine().charAt(0);
             ret=new Driver(name,email,password,homeAdress,birthday,new ArrayList<Travel>(),c=='Y',0.d,0.d,0.d);
             tax=this.getTaxiInfo();
-            tax.setDriver((Driver)ret);
+            ((Driver)ret).setCar(tax);
         }
 		else ret = new Client(name,email,password,homeAdress,birthday,new ArrayList<Travel>(),new Point2D());
     
@@ -257,7 +256,6 @@ public class App{
                 System.out.print("Average Speed: ");
                 aux=input.nextDouble();
                 tax.setAverageSpeed(aux);
-                curState.addVehicle(tax);
                 success = true;
             }catch(Exception e){
                 System.out.println(e.getMessage());
@@ -341,7 +339,7 @@ public class App{
         Client aux=(Client)this.curUser;
         Scanner in=new Scanner(System.in);
         Point2D tmp=new Point2D();
-        InfoTravel res=null;
+        Driver res=null;
         String plate=null;
         int coord;
         double rat;
@@ -366,20 +364,20 @@ public class App{
             tmp.setY(coord);
             System.out.println("Deseja algum taxi em especifico?(S/N)");
             c=in.nextLine().charAt(0);
-            if(c=='N') res=aux.requestRide(this.curState.getVehicles(), tmp);
+            if(c=='N' || c=='n') res=aux.requestRide(this.curState.getUserList(), tmp);
             else{
                 System.out.print("Insira a matricula:");
                 plate = in.nextLine();
                 System.out.println("Deseja reservar viagem?(S/N)");
                 c=in.nextLine().charAt(0);
-                if(c=='N'||c=='n') res=aux.requestTaxi(plate, this.curState.getVehicles(), tmp);
-                else res=aux.bookTaxi(plate, this.curState.getVehicles(), tmp);
+                if(c=='N'||c=='n') res=aux.requestTaxi(plate, this.curState.getUserList(), tmp);
+                else res=aux.bookTaxi(plate, this.curState.getUserList(), tmp);
             }
-            System.out.println(res.getTravel().toString());
+            System.out.println(res.getLastTravel().toString());
             System.out.print("Avaliaçao do condutor (0-100): ");
             rat = in.nextDouble();
-            res.getDriver().getNewRating(rat);
-            this.curState.updateUser(res.getDriver());
+            res.getNewRating(rat);
+            this.curState.updateUser(res);
         }catch(Exception e){
             System.out.println(e.getMessage());
         }

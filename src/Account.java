@@ -175,4 +175,9 @@ public class Account implements Serializable{
         if(i!=0) a = s/i;
         return a;
     }
+
+    //get last Travel
+    public Travel getLastTravel(){
+        return this.travels.get(this.travels.size()-1);
+    }
 }
