@@ -20,7 +20,7 @@ public abstract class Taxi implements Serializable{
 		this.plate = "";
 		this.averageSpeed=0.d;
 		this.pricePerKm=0.d;
-		this.reliability=0.d;
+		this.genReliability();
 		this.location = new Point2D();
 	}
 
@@ -87,7 +87,7 @@ public abstract class Taxi implements Serializable{
     }
     
     // Randomly generates the reliability of a taxi before a ride
-    private void genReliability(){
+    public void genReliability(){
         Random gen = new Random();
         this.reliability = gen.nextDouble()+0.01f;
     }

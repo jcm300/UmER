@@ -61,6 +61,10 @@ public class Driver extends Account {
 		this.kmsTraveled = nKms;
 	}
 
+    public void addKmsTraveled(double nKms){
+        this.kmsTraveled += nKms;
+    }
+
 	public double getPunctuality(){
 		return this.punctuality;
 	}
@@ -77,7 +81,11 @@ public class Driver extends Account {
     
     public Point2D getCurPosition(){
         return this.car.getLocation();
-    } 
+    }
+
+    public void setNewPosition(Point2D p){
+        this.car.setLocation(p);
+    }
 
     //Average's the rating of the current driver given the ratings already recieved
     public void setNewRating(double nR){
@@ -101,7 +109,8 @@ public class Driver extends Account {
 
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
-		sb.append("Available: ").append(this.status).append("\n");
+		sb.append(super.toString()).append("\n");
+        sb.append("Available: ").append(this.status).append("\n");
 		sb.append("Rating: ").append(this.rating).append("\n");
 		sb.append("Kms Traveled: ").append(this.kmsTraveled).append("\n");
 		sb.append("Punctuality(0-100%): ").append(this.punctuality*100).append("%\n");

@@ -63,6 +63,17 @@ public class App{
         }while(this.appMenu.getOpt() != 0);
     }
 
+    public void save(){
+        try{
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("state"));
+            oos.writeObject(this.curState);
+            oos.flush();
+            oos.close();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
     /**
      * Main menu which displays when no
      * user is logged in
@@ -88,7 +99,7 @@ public class App{
                     aux = register();
                     this.curState.addUser(aux);
                 }catch(DuplicateRegistrationException e){
-                    System.out.println("User with email "+e.getMessage()+"already exists");
+                    System.out.println("User with email "+e.getMessage()+" already exists");
                 }
                 break;
             case 3:
@@ -98,14 +109,7 @@ public class App{
                 System.out.println(top5Drivers());
                 break;
             case 0:
-                try{
-                    ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("state"));
-                    oos.writeObject(this.curState);
-                    oos.flush();
-                    oos.close();
-                }catch(Exception e){
-                    System.out.println(e.getMessage());
-                }
+                save();
                 System.out.println("Exiting...");
                 break;
         }
@@ -115,6 +119,7 @@ public class App{
     public boolean userActions(){
         boolean login=true;
 
+        System.out.println(this.curUser.toString());
         this.appMenu.cliMenu();
         switch(this.appMenu.getOpt()){
                 case 1:
@@ -131,6 +136,7 @@ public class App{
                     break;
                 case 0:
                     System.out.println("Exiting...");
+                    save();
                     login = false;
                     break;
         }
@@ -139,7 +145,8 @@ public class App{
 
     public boolean driverActions(){
         boolean login=true;
-
+        
+        System.out.println(this.curUser.toString());
         this.appMenu.dMenu();
         switch(this.appMenu.getOpt()){
                 case 1:
@@ -161,6 +168,7 @@ public class App{
                     break;
                 case 0:
                     System.out.println("Exiting...");
+                    save();
                     login = false;
                     break;
         }
@@ -192,6 +200,7 @@ public class App{
                 success = true;
 		    }catch(Exception e){
 				System.out.println("Input error ("+e.getMessage() + ") please try again");
+                input.nextLine();
             }
         }
 
