@@ -69,7 +69,7 @@ public class Client extends Account {
         Taxi cAux=null;
         Travel auxT=null;
 		LocalDate curT = LocalDate.now();
-        double dist = Double.MAX_VALUE, temp;
+        double dist = Double.MAX_VALUE, temp, temp2;
         List<Driver> available=l.stream()
                                 .filter(a->a.getClass().getSimpleName().equals("Driver"))
                                 .map(a->(Driver)a)
@@ -86,7 +86,6 @@ public class Client extends Account {
 
         if(closest != null){
             cAux=closest.getCar();
-            cAux.genReliability();
             dist = dist + this.location.getDist(dest);
             auxT = new Travel(cAux.getPricePerKm()*dist,dist/cAux.getAverageSpeed(),cAux.getEffectiveTime(dist), dist,curT, dest, this.location);
             this.addTravel(auxT);
@@ -113,14 +112,13 @@ public class Client extends Account {
         if(d!=null){
             if(d.getStatus()){
                 Taxi t = d.getCar();
-                t.genReliability();
                 dist = this.location.getDist(t.getLocation()) + this.location.getDist(dest);
-                auxT = new Travel(t.getPricePerKm()*dist, dist/t.getAverageSpeed(), t.getEffectiveTime(dist),dist,curT, dest, this.location);
-                    this.addTravel(auxT);
-                    this.location = new Point2D(dest);
-                    d.addTravel(auxT);
-                    d.setNewPosition(dest);
-                    d.addKmsTraveled(dist);
+                auxT = new Travel(t.getPricePerKm()*dist, dist*t.getAverageSpeed(), t.getEffectiveTime(dist),dist,curT, dest, this.location);
+                this.addTravel(auxT);
+                this.location = new Point2D(dest);
+                d.addTravel(auxT);
+                d.setNewPosition(dest);
+                d.addKmsTraveled(dist);
             }else throw new TaxiIndisponivelException("Taxi unavailable.");
         }else throw new TaxiIndisponivelException("Taxi doesn't exist.");
         return d;
@@ -140,7 +138,6 @@ public class Client extends Account {
         if(d!=null){
             Taxi t = d.getCar();
             if(t instanceof TaxiQueue){ //supports a queue
-                t.genReliability();
                 dist = this.location.getDist(t.getLocation()) + this.location.getDist(dest);
                 auxT = new Travel(t.getPricePerKm()*dist, dist/t.getAverageSpeed(), t.getEffectiveTime(dist),dist,curT, dest, this.location.clone());
                 this.location = new Point2D(dest);
