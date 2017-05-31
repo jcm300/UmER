@@ -83,11 +83,11 @@ public abstract class Taxi implements Serializable{
 
     public double getEffectiveTime(double dist){
         this.genReliability();
-        return (dist/this.averageSpeed)/this.reliability;
+        return dist/(this.averageSpeed*this.reliability);
     }
     
     // Randomly generates the reliability of a taxi before a ride
-    public void genReliability(){
+    private void genReliability(){
         Random gen = new Random();
         this.reliability = gen.nextDouble()+0.01f;
     }
