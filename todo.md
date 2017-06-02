@@ -26,11 +26,11 @@
 - [x] Fetch top 10/5 clients/drivers
 - [x] Output travel registers
 - [x] Associate a driver with a taxi if it's an independent driver
-- [ ] Fix bug that rounds every trip effective/real time to 0
 - [ ] Dispatch queue when there are reservations
-- [ ] Deny ride requests when there are still reservations
+- [x] Deny ride requests when there are still reservations
 - [ ] Calculate average punctuality after each ride 
-- [ ] Charge a certain amount based on the difference between predicted/real time of a ride 
+- [x] Charge a certain amount based on the difference between predicted/real time of a ride 
+- [ ] Fix bug that rounds every trip effective/real time to 0
 - [ ] Generate initial config to allow testing on presentation
 - [ ] Finish report
 
