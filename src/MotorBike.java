@@ -55,4 +55,8 @@ public class MotorBike extends Taxi implements TaxiQueue{
 	public int compareTo(MotorBike m){
 		return super.compareTo(m);	
 	}	
+
+    public boolean isAvailable(){
+        return this.waitingList.isEmpty();
+    }
 }

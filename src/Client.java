@@ -73,7 +73,7 @@ public class Client extends Account {
         List<Driver> available=l.stream()
                                 .filter(a->a.getClass().getSimpleName().equals("Driver"))
                                 .map(a->(Driver)a)
-                                .filter(a->((Driver)a).getStatus())
+                                .filter(a->((Driver)a).getRStatus())
                                 .collect(Collectors.toList());
 
         for(Driver d : available){           //search for the nearest driver
@@ -110,7 +110,7 @@ public class Client extends Account {
         }
 
         if(d!=null){
-            if(d.getStatus()){
+            if(d.getRStatus()){
                 Taxi t = d.getCar();
                 dist = this.location.getDist(t.getLocation()) + this.location.getDist(dest);
                 auxT = new Travel(t.getPricePerKm()*dist, dist*t.getAverageSpeed(), t.getEffectiveTime(dist),dist,curT, dest, this.location);
@@ -124,28 +124,4 @@ public class Client extends Account {
         return d;
 	}
 
-    // request a specific taxi that isn't currently available
-	public Driver bookTaxi(String plate, List<Account> l, Point2D dest) throws TaxiIndisponivelException{
-        Travel auxT=null;
-        Driver d=null;
-        LocalDate curT = LocalDate.now();
-        double dist;
-        
-        for(Account a : l){
-            if(a.getClass().getSimpleName().equals("Driver") && ((Driver)a).getCar().getPlate().equals(plate)) d = (Driver)a;
-        }
-
-        if(d!=null){
-            Taxi t = d.getCar();
-            if(t instanceof TaxiQueue){ //supports a queue
-                dist = this.location.getDist(t.getLocation()) + this.location.getDist(dest);
-                auxT = new Travel(t.getPricePerKm()*dist, dist/t.getAverageSpeed(), t.getEffectiveTime(dist),dist,curT, dest, this.location.clone());
-                this.location = new Point2D(dest);
-                ((TaxiQueue)t).addWaitingList(auxT);
-                t.setLocation(dest);
-                d.addKmsTraveled(dist);
-            }else throw new TaxiIndisponivelException("Taxi unavailable.");
-        }else throw new TaxiIndisponivelException("Taxi doesn't exist.");
-        return d;
-    }
 }
