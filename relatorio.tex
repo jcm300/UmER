@@ -5,7 +5,7 @@
 \usepackage{fancyvrb}
 \usepackage{graphicx}
 
-\title{Projeto do grupo 40 \\Programação Orientada aos Objectos}
+\title{Projeto do grupo 40 \\ Programação Orientada aos Objectos}
 \author{Martins, José(a78821)\
         \and
         Costa, Mariana(a78824)\
@@ -23,11 +23,11 @@
 \tableofcontents
  
 \chapter{Introdução}
-
+Este trabalho realizado no ambito da disciplina de Programação Orientada aos Objetos teve como proposto a implementação de um serviço(aplicação) de transporte de passageiros bastante similar a uma bastante popular no qual permitisse aos utilizadores realizar um viagem de táxi. Para além disso gerir os motoristas dos taxis, fornecendo-lhes viagens consoante a distancia aos utilizadores, o que estiver mais perto realiza a viagem. Contudo o utilizador se o desejar pode requesitar um taxi à sua escolha desde que disponivel e, naqueles em que for possivel, poderá também caso o taxi esteja ocupado ou indisponivel fazer um pedido que será depois satisfeito.
 
 \chapter{Desenvolvimento}
 
-\section{Classes}
+\section{Arquitetura de Classes}
 
 \begin{figure}[ht!]
     \centering
@@ -35,8 +35,15 @@
     \caption{Principais Classes}
 \end{figure}
 
-Em termos de classes, como podemos visualizar na imagem acima, temos uma cla    sse principal(App) que "controla" tudo, dependendo por composição das classes StateManager, Account e Menu.
+Em termos de classes, como podemos visualizar na imagem acima, temos uma classe principal(App) que "controla" tudo, dependendo por composição das classes StateManager, Account e Menu.
+
+\section{Aplicação e suas funcionalidades}
+
+\section{Como seria possível adicionar novos tipos de viaturas e motoristas na aplicação?}
+
+Para adicionar novas viaturas basta criar a classe da mesma e torná-la subclasse da classe abstrata Taxi. Contudo quanto a adicionar novos tipos de motorista n seria tão fácil, pois seria necessário, tornar a classe motorista como abstrata e a partir daí pôr os novos tipos de motoristas como subclasse dessa.
 
 \chapter{Conclusão}
+Devio a alguns contratempos acabamos por nao implementar as companhias/empresas de taxis nem suas funções subjacentes(p.e. indicar o total faturado por uma viatura, ou empresa de táxis, num determinado período), porém com a atual estrutura do projeto é viável de se concretizar.
 
 \end{document}
