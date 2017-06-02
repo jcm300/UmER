@@ -87,11 +87,14 @@ public class Client extends Account {
         if(closest != null){
             cAux=closest.getCar();
             dist = dist + this.location.getDist(dest);
-            auxT = new Travel(cAux.getPricePerKm()*dist,dist/cAux.getAverageSpeed(),cAux.getEffectiveTime(dist), dist,curT, dest, this.location);
+            double pTime = dist/cAux.getAverageSpeed();
+            double rTime = cAux.getEffectiveTime(dist);
+            auxT = new Travel(cAux.getPricePerKm()*dist,pTime,rTime, dist,curT, dest, this.location);
             this.addTravel(auxT);
             closest.addTravel(auxT);
             closest.setNewPosition(dest);
             closest.addKmsTraveled(dist);
+            closest.setPunctuality((pTime-(rTime-pTime)%pTime)/pTime);
             this.location = new Point2D(dest);
         }else throw new TaxiIndisponivelException("Nao ha condutores disponiveis de momento.");
 
@@ -113,39 +116,17 @@ public class Client extends Account {
             if(d.getStatus()){
                 Taxi t = d.getCar();
                 dist = this.location.getDist(t.getLocation()) + this.location.getDist(dest);
-                auxT = new Travel(t.getPricePerKm()*dist, dist*t.getAverageSpeed(), t.getEffectiveTime(dist),dist,curT, dest, this.location);
+                double pTime = dist/t.getAverageSpeed();
+                double rTime = t.getEffectiveTime(dist);
+                auxT = new Travel(t.getPricePerKm()*dist,pTime,rTime,dist,curT, dest, this.location);
                 this.addTravel(auxT);
                 this.location = new Point2D(dest);
                 d.addTravel(auxT);
                 d.setNewPosition(dest);
                 d.addKmsTraveled(dist);
+                d.setPunctuality((pTime-(rTime-pTime)%pTime)/pTime);
             }else throw new TaxiIndisponivelException("Taxi unavailable.");
         }else throw new TaxiIndisponivelException("Taxi doesn't exist.");
         return d;
 	}
-
-    // request a specific taxi that isn't currently available
-	public Driver bookTaxi(String plate, List<Account> l, Point2D dest) throws TaxiIndisponivelException{
-        Travel auxT=null;
-        Driver d=null;
-        LocalDate curT = LocalDate.now();
-        double dist;
-        
-        for(Account a : l){
-            if(a.getClass().getSimpleName().equals("Driver") && ((Driver)a).getCar().getPlate().equals(plate)) d = (Driver)a;
-        }
-
-        if(d!=null){
-            Taxi t = d.getCar();
-            if(t instanceof TaxiQueue){ //supports a queue
-                dist = this.location.getDist(t.getLocation()) + this.location.getDist(dest);
-                auxT = new Travel(t.getPricePerKm()*dist, dist/t.getAverageSpeed(), t.getEffectiveTime(dist),dist,curT, dest, this.location.clone());
-                this.location = new Point2D(dest);
-                ((TaxiQueue)t).addWaitingList(auxT);
-                t.setLocation(dest);
-                d.addKmsTraveled(dist);
-            }else throw new TaxiIndisponivelException("Taxi unavailable.");
-        }else throw new TaxiIndisponivelException("Taxi doesn't exist.");
-        return d;
-    }
 }

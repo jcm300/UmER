@@ -86,6 +86,11 @@ public class Driver extends Account {
     public void setNewPosition(Point2D p){
         this.car.setLocation(p);
     }
+    
+    public boolean getRStatus(){
+        if(this.car instanceof TaxiQueue) return this.car.isAvailable() && this.status;
+        else return this.status;
+    }
 
     //Average's the rating of the current driver given the ratings already recieved
     public void setNewRating(double nR){

@@ -374,10 +374,7 @@ public class App{
             else{
                 System.out.print("Insira a matricula:");
                 plate = in.nextLine();
-                System.out.println("Deseja reservar viagem?(S/N)");
-                c=in.nextLine().charAt(0);
-                if(c=='N'||c=='n') res=aux.requestTaxi(plate, this.curState.getUserList(), tmp);
-                else res=aux.bookTaxi(plate, this.curState.getUserList(), tmp);
+                res=aux.requestTaxi(plate, this.curState.getUserList(), tmp);
             }
             System.out.println(res.getLastTravel().toString());
             System.out.print("Avaliaçao do condutor (0-100): ");
