@@ -1,4 +1,5 @@
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 
 public interface TaxiQueue {
 
@@ -8,4 +9,5 @@ public interface TaxiQueue {
 	public void setWaitingList(ArrayDeque<InfoTravel> ad);
 	public ArrayDeque<InfoTravel> getWaitingList();
     public boolean isAvailable();
+    public ArrayList<Travel> dispatchQueue();
 }

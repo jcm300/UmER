@@ -1,4 +1,5 @@
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 
 public class MotorBike extends Taxi implements TaxiQueue{
 	
@@ -41,11 +42,11 @@ public class MotorBike extends Taxi implements TaxiQueue{
 	}
 
 	public void addWaitingList(InfoTravel t){
-		this.waitingList.add(t.clone());
+		this.waitingList.add(t);
 	}
 
 	public InfoTravel removeWaitingList(){
-		return this.waitingList.remove().clone();
+		return this.waitingList.remove();
 	}
 
 	public boolean containsWaitingList(InfoTravel t){
@@ -58,5 +59,18 @@ public class MotorBike extends Taxi implements TaxiQueue{
 
     public boolean isAvailable(){
         return this.waitingList.isEmpty();
+    }
+
+    public ArrayList<Travel> dispatchQueue(){
+        InfoTravel aux;
+        ArrayList<Travel> ret = new ArrayList<Travel>();
+
+        while(!this.waitingList.isEmpty()){
+            aux = this.removeWaitingList();
+            Travel t = aux.getTravel();
+            aux.getClient().addTravel(t);
+            ret.add(t);
+        }
+        return ret;
     }
 }

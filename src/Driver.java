@@ -1,5 +1,6 @@
 import java.util.List;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Driver extends Account {
 	 
@@ -88,13 +89,21 @@ public class Driver extends Account {
     }
     
     public boolean getRStatus(){
-        if(this.car instanceof TaxiQueue) return this.car.isAvailable() && this.status;
+        if(this.car instanceof TaxiQueue) return ((TaxiQueue)this.car).isAvailable() && this.status;
         else return this.status;
     }
 
     //Average's the rating of the current driver given the ratings already recieved
     public void setNewRating(double nR){
         this.rating = (nR + this.rating * this.getTravels().size()) / (this.getTravels().size() + 1);
+    }
+
+    public void dispatchQueue(){
+        if(this.status && this.getCar() instanceof TaxiQueue){
+            ArrayList<Travel> aux = ((TaxiQueue)this.getCar()).dispatchQueue();
+            for(Travel t : aux)
+                this.addTravel(t);
+        }
     }
 
 	public Driver clone(){

@@ -159,6 +159,7 @@ public class App{
 					break;
                 case 3:
                     ((Driver)this.curUser).setStatus(!((Driver)this.curUser).getStatus());
+                    ((Driver)this.curUser).dispatchQueue();
                     System.out.println("You are now appearing as "+(((Driver)this.curUser).getStatus() ? "" : "un")+"available");
                     break;
                 case 4:
