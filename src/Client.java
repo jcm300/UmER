@@ -78,7 +78,7 @@ public class Client extends Account {
         List<Driver> available=l.stream()
                                 .filter(a->a.getClass().getSimpleName().equals("Driver"))
                                 .map(a->(Driver)a)
-                                .filter(a->((Driver)a).getRStatus())
+                                .filter(a->((Driver)a).getStatus())
                                 .collect(Collectors.toList());
 
         for(Driver d : available){           //search for the nearest driver
@@ -119,7 +119,7 @@ public class Client extends Account {
             if(a.getClass().getSimpleName().equals("Driver") && ((Driver)a).getCar().getPlate().equals(plate)) d = (Driver)a;
 
         if(d!=null){
-            if(d.getRStatus()){
+            if(d.getStatus()){
                 t = d.getCar();
                 dist = this.location.getDist(t.getLocation()) + this.location.getDist(dest);
                 pTime = dist/t.getAverageSpeed();

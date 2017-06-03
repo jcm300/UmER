@@ -87,11 +87,6 @@ public class Driver extends Account {
     public void setNewPosition(Point2D p){
         this.car.setLocation(p);
     }
-    
-    public boolean getRStatus(){
-        if(this.car instanceof TaxiQueue) return ((TaxiQueue)this.car).isAvailable() && this.status;
-        else return this.status;
-    }
 
     //Average's the rating of the current driver given the ratings already recieved
     public void setNewRating(double nR){
@@ -99,7 +94,7 @@ public class Driver extends Account {
     }
 
     public void dispatchQueue(){
-        if(this.status && this.getCar() instanceof TaxiQueue){
+        if(!this.status && this.getCar() instanceof TaxiQueue){
             ArrayList<Travel> aux = ((TaxiQueue)this.getCar()).dispatchQueue();
             for(Travel t : aux)
                 this.addTravel(t);

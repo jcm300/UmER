@@ -1,8 +1,7 @@
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 
-public interface TaxiQueue {
-
+public interface TaxiQueue{
 	public void addWaitingList(InfoTravel t);
 	public InfoTravel removeWaitingList();
 	public boolean containsWaitingList(InfoTravel t);
