@@ -94,10 +94,17 @@ public class Driver extends Account {
     }
 
     public void dispatchQueue(){
+    	double pTime=0.f,rTime=0.f;
         if(this.status && this.getCar() instanceof TaxiQueue){
             ArrayList<Travel> aux = ((TaxiQueue)this.getCar()).dispatchQueue();
-            for(Travel t : aux)
+            for(Travel t : aux){
+                this.setNewPosition(t.getDest());
+                this.addKmsTraveled(t.getDistance());
+                pTime=t.getpTime();
+                rTime=t.getrTime();
+                this.setPunctuality((pTime-(rTime-pTime)%pTime)/pTime);
                 this.addTravel(t);
+            }
         }
     }
 
