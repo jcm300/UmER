@@ -27,7 +27,7 @@
 \section{Introdução}
 \textbf{UmER} é uma aplicação para transporte de passageiros e que permite que um utilizador realize viagens em táxis da UmER. Esta(aplicação) providencia mecanismos de criação de contas (de passageiros e motoristas), automóveis, realização de viagens e consulta das mesmas, alteração do estado dos motoristas(disponíveis ou indisponíveis). A aplicação permite ainda a permanência de dados aquando o fecho da mesma e a recuperação de um estado previamente guardado.
 
-\newapge
+\newpage
 
 \section{Arquitetura de Classes}
 
@@ -72,8 +72,10 @@ Sendo esta subclasse de \texttt{Account} herda tudo dessa classe, acrescentando 
 \subsubsection{Client}
 Como a classe anterior, esta classe herda tudo da classe \texttt{Account}, especializando-a. Neste caso apenas adiciona a localizaçião do \texttt(Client) que representa um cliente na aplicação. Nesta classe, está presente dois métodos fundamentais para a realização de viagens:
 \begin{verbatim}
-public Driver requestTaxi(String plate, List<Account> l, Point2D dest) throws TaxiIndisponivelException;
-public Driver requestRide(List<Account> l, Point2D dest) throws TaxiIndisponivelException
+public Driver requestTaxi(String plate, List<Account> l, Point2D dest) 
+    throws TaxiIndisponivelException;
+public Driver requestRide(List<Account> l, Point2D dest) 
+    throws TaxiIndisponivelException;
 \end{verbatim}
 em que o primeiro pede um taxi especifico para realizar a viagem, e caso esteja indisponivel e o taxi possua lista de espera então faz uma reserva, caso contrário manda uma exceção; em relação ao segundo método, permite pedir viagens ao taxi mais próximo e caso não haja taxis disponiveis manda também uma exceção. 
 
