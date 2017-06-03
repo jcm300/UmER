@@ -1,6 +1,8 @@
 \documentclass[a4paper,10pt,portuguese]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[portuguese]{babel}
+\usepackage[section]{placeins}
+\usepackage{float}
 \usepackage{ragged2e}
 \usepackage{fancyvrb}
 \usepackage{graphicx}
@@ -18,6 +20,15 @@
 
 \begin{titlepage}
 \maketitle
+\begin{figure}[!htb]
+    \includegraphics[width=50mm]{jose.jpg}
+\end{figure}
+\begin{figure}[!htb]
+    \includegraphics[width=50mm]{mariana.jpg}
+\end{figure}
+\begin{figure}[!htb]
+    \includegraphics[width=50mm]{miguel.jpg}
+\end{figure}
 \end{titlepage}
  
 \tableofcontents
@@ -31,7 +42,7 @@
 
 \section{Arquitetura de Classes}
 
-\begin{figure}[ht!]
+\begin{figure}[!htb]
     \centering
         \includegraphics[width=120mm]{graph.jpg}
 \end{figure}
@@ -116,38 +127,46 @@ public double getDist(Point2D pos){
 
 \section{Aplicação e suas funcionalidades}
 A implementação do projeto proposto permite:
+
+
 \subsection{Criação de contas e registo de táxis}
-\begin{figure}[ht!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=120mm]{registarDriver.png}
 \end{figure}
 
+
+
 \subsection{Verificação de credenciais e realização de viagens}
-\begin{figure}[ht!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=120mm]{fazerViagem.png}
 \end{figure}
 
+
 \subsection{Requisitar um táxi em particular com base na matrícula}
-\begin{figure}[ht!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=120mm]{fazerViagemComMatricula.png}
 \end{figure}
 
+
 \subsection{Alteração do estado do motorista}
-\begin{figure}[ht!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=120mm]{mudarEstado.png}
 \end{figure}
 
+
 \subsection{Consulta do histórico de viagens}
-\begin{figure}[ht!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=120mm]{verViagens.png}
 \end{figure}
 
+
 \subsection{Consulta de rankings relativos a clientes/drivers}
-\begin{figure}[ht!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=120mm]{top5top10.png}
 \end{figure}
