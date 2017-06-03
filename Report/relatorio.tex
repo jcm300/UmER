@@ -1,4 +1,4 @@
-\documentclass[a4paper,10pt,portuguese]{report}
+\documentclass[a4paper,10pt,portuguese]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[portuguese]{babel}
 \usepackage{ragged2e}
@@ -15,24 +15,26 @@
 \date{\today}
 
 \begin{document}
- 
+
 \begin{titlepage}
 \maketitle
 \end{titlepage}
  
 \tableofcontents
- 
-\chapter{Introdução}
+
+\newpage
+
+\section{Introdução}
 \textbf{UmER} é uma aplicação para transporte de passageiros e que permite que um utilizador realize viagens em táxis da UmER. Esta(aplicação) providencia mecanismos de criação de contas (de passageiros e motoristas), automóveis, realização de viagens e consulta das mesmas, alteração do estado dos motoristas(disponíveis ou indisponíveis). A aplicação permite ainda a permanência de dados aquando o fecho da mesma e a recuperação de um estado previamente guardado.
 
-\chapter{Desenvolvimento}
+\newpage 
 
 \section{Arquitetura de Classes}
 
 \begin{figure}[ht!]
     \centering
         \includegraphics[width=120mm]{graph.jpg}
-    \caption{Principais Classes}
+%    \caption{Principais Classes}
 \end{figure}
 
 \subsection{App}
@@ -64,9 +66,18 @@ A criação de um utilizador apenas é permitida caso este ainda não esteja pre
 
 \subsection{Account}
 A classe \texttt{Account} é a superclasse de duas outras, sendo elas as classes \texttt{Driver} e \texttt{Client}. Como tal, esta classe possui todos os componentes comuns às duas subclasses, sendo eles: \texttt{email}, \texttt{name}, \texttt{password}, \texttt{homeAdress}, \texttt{birthday} e as viagens realizadas(\texttt{travels}).
+
 \subsubsection{Driver}
-Sendo esta subclasse de \texttt{Account} herda tudo dessa classe, acrescentando o \texttt{status} do condutor(a trabalhar ou não), o \texttt{rating}, os kilómetros percorridos(\texttt{kmsTraveled}), a pontualidade(\texttt{punctuality}), e o taxi que o \texttt{Driver} usa(\texttt{car}).
+Sendo esta subclasse de \texttt{Account} herda tudo dessa classe, acrescentando o \texttt{status} do condutor(a trabalhar ou não), o \texttt{rating}, os kilómetros percorridos(\texttt{kmsTraveled}), a pontualidade(\texttt{punctuality}), e o taxi que o \texttt{Driver} usa(\texttt{car}). Como o seu nome indica esta classe representa os condutores presentes na aplicação.
+
 \subsubsection{Client}
+Como a classe anterior, esta classe herda tudo da classe \texttt{Account}, especializando-a. Neste caso apenas adiciona a localizaçião do \texttt(Client) que representa um cliente na aplicação. Nesta classe, está presente dois métodos fundamentais para a realização de viagens:
+\begin{verbatim}
+public Driver requestTaxi(String plate, List<Account> l, Point2D dest) throws TaxiIndisponivelException;
+public Driver requestRide(List<Account> l, Point2D dest) throws TaxiIndisponivelException
+\end{verbatim}
+em que o primeiro pede um taxi especifico para realizar a viagem, e caso esteja indisponivel e o taxi possua lista de espera então faz uma reserva, caso contrário manda uma exceção; em relação ao segundo método, permite pedir viagens ao taxi mais próximo e caso não haja taxis disponiveis manda também uma exceção. 
+
 \subsection{Taxi}
 \label{Taxi}
 \label{Motorbike}
@@ -78,7 +89,9 @@ Sendo esta subclasse de \texttt{Account} herda tudo dessa classe, acrescentando 
 \section{Adição novos tipos de viaturas e motoristas na aplicação}
 Como já foi referido, os diferentes tipos de viaturas são subclasses da classe abstracta Taxi(\ref{Taxi}), como tal, a elaboração de novos tipos de táxi requere apenas a criação de uma nova subclasse da classe Taxi e a implementação dos métodos requeridos pela classe abstrata bem como a implementação de métodos relevantes ao tipo de táxi em questão, por exemplo, um táxi do tipo TucTuc poderia suportar filas de espera visto se tratar de um tipo de veículo peculiar, como a mota(\ref{Motorbike}).
 
-\chapter{Conclusão}
+\newpage
+
+\section{Conclusão}
 Devio a alguns contratempos acabamos por nao implementar as companhias/empresas de taxis nem suas funções subjacentes(p.e. indicar o total faturado por uma viatura, ou empresa de táxis, num determinado período), porém com a atual estrutura do projeto é viável de se concretizar.
 
 \end{document}
