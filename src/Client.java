@@ -133,7 +133,10 @@ public class Client extends Account {
             }else if(d.getCar() instanceof TaxiQueue){
                 iT=new InfoTravel();
                 t=d.getCar();
-                dist=this.location.getDist(t.getLocation()) + this.location.getDist(dest);
+                if(!((TaxiQueue)t).isAvailable()){
+                    auxT=d.getLastEnqueued();
+                    dist=this.location.getDist(auxT.getDest()) + this.location.getDist(dest);
+                }else dist=this.location.getDist(t.getLocation()) + this.location.getDist(dest);
                 pTime=dist/t.getAverageSpeed();
                 rTime=t.getEffectiveTime(dist);
                 auxT=new Travel(t.getPricePerKm()*dist,pTime,rTime,dist,curT, dest, this.location);
