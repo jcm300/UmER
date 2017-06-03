@@ -24,7 +24,7 @@ public class Travel implements Serializable{
 	}
 
 	public Travel(double bCost, double rTime, double pTime, double distance, LocalDate date, Point2D dest, Point2D src){
-        if((rTime-pTime)/pTime >= 0.25) this.cost = bCost*(1-(rTime-pTime)/pTime);
+        if((rTime-pTime)/pTime >= 0.25) this.cost=bCost*(1.01f-(rTime-pTime)/pTime);
         else this.cost=bCost;
 		this.rTime = rTime;
 		this.pTime = pTime;
