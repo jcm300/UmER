@@ -101,8 +101,17 @@ Esta classe possui três subclasses que diferem no tipo de táxi que representam
 	\item[\texttt{Lightweight}]
 \end{itemize}
 Os tipos de táxi que permitem fila de espera implementam a interface \texttt{TaxiQueue} que garante que determinadas operações de gestão das filas de espera se encontram disponíveis nas mesmas. Na implementação atual apenas a subclasse \texttt{Motorbike} permite filas de espera.
+
 \subsection{Travel}
+A classe \texttt{Travel} é referente à informação de cada viagem realizada isto é: custo da viagem, tempo previsto com base na velocidade média do táxi que realizou a viagem, tempo real com base na fiabilidade do táxi, distância percorrida, origem e destino da viagem, e a data em que a viagem foi realizada. A distância da viagem corresponde à soma da distância entre a localização do táxi (quando a viagem é requisitada) e a origem(da viagem) com a distância da origem ao destino(da viagem), sendo que o preço e o tempo (efetivo e previsto) são calculados a partir deste valor. A origem e destino da viagem são instâncias da classe \texttt{Point2D} fornecida nas aulas de POO e modificada de forma permitirem o cálculo da distância(direta) entre dois pontos.
+\begin{verbatim}
+public double getDist(Point2D pos){
+    return Math.sqrt(Math.pow(this.x-pos.getX(), 2.d)+Math.pow(this.y-pos.getY(), 2.d));
+}
+\end{verbatim}
+
 \subsection{InfoTravel}
+\texttt{InfoTravel} foi uma classe auxiliar desenvolvida com o intuito de guardar não só a viagem a ser realizada mas também o cliente que requisitou a viagem, sendo que esta classe foi usada na implementação de filas de espera para permitir que, quando o condutor estivesse disponível e as viagens que estavam em fila de espera fossem realizadas, fosse atualizada a informação dos clientes que requisitiram essas viagens.
 
 \section{Aplicação e suas funcionalidades}
 
