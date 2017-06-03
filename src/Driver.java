@@ -143,4 +143,8 @@ public class Driver extends Account {
 
         return ret;
     }
+
+    public void enqueTravel(InfoTravel t){
+    	this.car.addWaitingList(t);
+    }
 }

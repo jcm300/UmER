@@ -39,6 +39,11 @@ public class Client extends Account {
 		return new Client(this);
 	}
 
+    public void addTravel(Travel t){
+        super.addTravel(t);
+        this.location = new Point2D(t.getDest());
+    }
+
 	public boolean equals(Object o){
 		if(o==this) return true;
 		if((o==null) || (o.getClass()!=this.getClass())) return false;
@@ -65,7 +70,7 @@ public class Client extends Account {
     
 	// request a ride to the nearest taxi
 	public Driver requestRide(List<Account> l, Point2D dest) throws TaxiIndisponivelException{
-        Driver closest=null;
+        Driver closestDriver=null;
         Taxi cAux=null;
         Travel auxT=null;
 		LocalDate curT = LocalDate.now();
@@ -79,52 +84,62 @@ public class Client extends Account {
         for(Driver d : available){           //search for the nearest driver
             System.out.println("Searching"); // TODO: remove after debugging
             if((temp = d.getCurPosition().getDist(this.location)) < dist){ 
-                closest = d;
+                closestDriver = d;
                 dist = temp;
             }
         }
 
-        if(closest != null){
-            cAux=closest.getCar();
-            dist = dist + this.location.getDist(dest);
-            double pTime = dist/cAux.getAverageSpeed();
-            double rTime = cAux.getEffectiveTime(dist);
-            auxT = new Travel(cAux.getPricePerKm()*dist,pTime,rTime, dist,curT, dest, this.location);
+        if(closestDriver != null){
+            cAux=closestDriver.getCar();
+            dist=dist+this.location.getDist(dest);
+            double pTime=dist/cAux.getAverageSpeed();
+            double rTime=cAux.getEffectiveTime(dist);
+            auxT=new Travel(cAux.getPricePerKm()*dist,pTime,rTime, dist,curT, dest, this.location);
             this.addTravel(auxT);
-            closest.addTravel(auxT);
-            closest.setNewPosition(dest);
-            closest.addKmsTraveled(dist);
-            closest.setPunctuality((pTime-(rTime-pTime)%pTime)/pTime);
-            this.location = new Point2D(dest);
+            closestDriver.addTravel(auxT);
+            closestDriver.setNewPosition(dest);
+            closestDriver.addKmsTraveled(dist);
+            closestDriver.setPunctuality((pTime-(rTime-pTime)%pTime)/pTime);
+            this.location=new Point2D(dest);
         }else throw new TaxiIndisponivelException("Nao ha condutores disponiveis de momento.");
 
-        return closest;
+        return closestDriver;
 	}
 
 	// request a taxi for a ride
 	public Driver requestTaxi(String plate, List<Account> l, Point2D dest) throws TaxiIndisponivelException{
+        InfoTravel iT=null;
         Driver d=null;
+        Taxi t=null;
         Travel auxT=null;
         LocalDate curT = LocalDate.now();
-        double dist;
+        double dist, pTime, rTime;
 
-        for(Account a : l){
+        for(Account a : l)
             if(a.getClass().getSimpleName().equals("Driver") && ((Driver)a).getCar().getPlate().equals(plate)) d = (Driver)a;
-        }
 
         if(d!=null){
             if(d.getRStatus()){
-                Taxi t = d.getCar();
+                t = d.getCar();
                 dist = this.location.getDist(t.getLocation()) + this.location.getDist(dest);
-                double pTime = dist/t.getAverageSpeed();
-                double rTime = t.getEffectiveTime(dist);
+                pTime = dist/t.getAverageSpeed();
+                rTime = t.getEffectiveTime(dist);
                 auxT = new Travel(t.getPricePerKm()*dist,pTime,rTime,dist,curT, dest, this.location);
                 this.addTravel(auxT);
-                this.location = new Point2D(dest);
                 d.addTravel(auxT);
                 d.setNewPosition(dest);
                 d.addKmsTraveled(dist);
                 d.setPunctuality((pTime-(rTime-pTime)%pTime)/pTime);
+            }else if(d.getCar() instanceof TaxiQueue){
+                iT=new InfoTravel();
+                t=d.getCar();
+                dist=this.location.getDist(t.getLocation()) + this.location.getDist(dest);
+                pTime=dist/t.getAverageSpeed();
+                rTime=t.getEffectiveTime(dist);
+                auxT=new Travel(t.getPricePerKm()*dist,pTime,rTime,dist,curT, dest, this.location);
+                iT.setClient(this);
+                iT.setTravel(auxT); 
+                d.enqueTravel(iT);
             }else throw new TaxiIndisponivelException("Taxi unavailable.");
         }else throw new TaxiIndisponivelException("Taxi doesn't exist.");
         return d;
