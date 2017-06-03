@@ -1,0 +1,95 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdftex 2017.6.2)  3 JUN 2017 15:35
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**relatorio.tex
+(./relatorio.tex
+! Undefined control sequence.
+l.1 \documentclass
+                  [a4paper,12pt,portuguese]{report}
+? 
+! Undefined control sequence.
+l.2 \usepackage
+               [utf8]{inputenc}
+? 
+! Undefined control sequence.
+l.3 \usepackage
+               [portuguese]{babel}
+? 
+! Undefined control sequence.
+l.4 \usepackage
+               {ragged2e}
+? 
+! Undefined control sequence.
+l.5 \usepackage
+               {fancyvrb}
+? 
+! Undefined control sequence.
+l.6 \usepackage
+               {graphicx}
+? 
+! Undefined control sequence.
+l.8 \title
+          {Projeto do grupo 40 \\ Programação Orientada aos Objectos}
+? 
+! Argument of \\ has an extra }.
+<inserted text> 
+                \par 
+<to be read again> 
+                   }
+l.8 ...40 \\ Programação Orientada aos Objectos}
+                                                  
+? 
+Runaway argument?
+ Programação Orientada aos Objectos
+! Paragraph ended before \\ was complete.
+<to be read again> 
+                   \par 
+<to be read again> 
+                   }
+l.8 ...40 \\ Programação Orientada aos Objectos}
+                                                  
+? 
+! Undefined control sequence.
+l.9 \author
+           {Martins, José(a78821)\
+? 
+Missing character: There is no � in font cmr10!
+Missing character: There is no � in font cmr10!
+! Undefined control sequence.
+l.10         \and
+                 
+? 
+! Undefined control sequence.
+l.12         \and
+                 
+? 
+! Undefined control sequence.
+l.15 \date
+          {\today}
+? 
+! Undefined control sequence.
+l.15 \date{\today
+                 }
+? 
+! Undefined control sequence.
+l.17 \begin
+           {document}
+? 
+! Undefined control sequence.
+l.19 \begin
+           {titlepage}
+? 
+! Undefined control sequence.
+l.20 \maketitle
+               
+? 
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] )</usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
+Output written on relatorio.pdf (1 page, 17968 bytes).
+PDF statistics:
+ 12 PDF objects out of 1000 (max. 8388607)
+ 7 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+

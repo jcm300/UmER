@@ -82,7 +82,6 @@ public class Client extends Account {
                                 .collect(Collectors.toList());
 
         for(Driver d : available){           //search for the nearest driver
-            System.out.println("Searching"); // TODO: remove after debugging
             if((temp = d.getCurPosition().getDist(this.location)) < dist){ 
                 closestDriver = d;
                 dist = temp;
@@ -92,14 +91,14 @@ public class Client extends Account {
         if(closestDriver != null){
             cAux=closestDriver.getCar();
             dist=dist+this.location.getDist(dest);
-            double pTime=dist/cAux.getAverageSpeed();
-            double rTime=cAux.getEffectiveTime(dist);
-            auxT=new Travel(cAux.getPricePerKm()*dist,pTime,rTime, dist,curT, dest, this.location);
+            temp=1.0f*dist/cAux.getAverageSpeed();
+            temp2=1.0f*cAux.getEffectiveTime(dist);
+            auxT=new Travel(cAux.getPricePerKm()*dist,temp2,temp, dist,curT, dest, this.location);
             this.addTravel(auxT);
             closestDriver.addTravel(auxT);
             closestDriver.setNewPosition(dest);
             closestDriver.addKmsTraveled(dist);
-            closestDriver.setPunctuality((pTime-(rTime-pTime)%pTime)/pTime);
+            closestDriver.setPunctuality((temp-(temp2-temp)%temp)/temp);
             this.location=new Point2D(dest);
         }else throw new TaxiIndisponivelException("Nao ha condutores disponiveis de momento.");
 
@@ -124,7 +123,7 @@ public class Client extends Account {
                 dist = this.location.getDist(t.getLocation()) + this.location.getDist(dest);
                 pTime = dist/t.getAverageSpeed();
                 rTime = t.getEffectiveTime(dist);
-                auxT = new Travel(t.getPricePerKm()*dist,pTime,rTime,dist,curT, dest, this.location);
+                auxT = new Travel(t.getPricePerKm()*dist,rTime,pTime,dist,curT, dest, this.location);
                 this.addTravel(auxT);
                 d.addTravel(auxT);
                 d.setNewPosition(dest);
@@ -139,7 +138,7 @@ public class Client extends Account {
                 }else dist=this.location.getDist(t.getLocation()) + this.location.getDist(dest);
                 pTime=dist/t.getAverageSpeed();
                 rTime=t.getEffectiveTime(dist);
-                auxT=new Travel(t.getPricePerKm()*dist,pTime,rTime,dist,curT, dest, this.location);
+                auxT=new Travel(t.getPricePerKm()*dist,rTime,pTime,dist,curT, dest, this.location);
                 iT.setClient(this);
                 iT.setTravel(auxT); 
                 d.enqueTravel(iT);

@@ -63,11 +63,12 @@ public class MotorBike extends Taxi implements TaxiQueue{
 
     public ArrayList<Travel> dispatchQueue(){
         InfoTravel aux;
+        Travel t=null;
         ArrayList<Travel> ret = new ArrayList<Travel>();
 
         while(!this.waitingList.isEmpty()){
             aux = this.removeWaitingList();
-            Travel t = aux.getTravel();
+            t = aux.getTravel();
             aux.getClient().addTravel(t);
             ret.add(t);
         }

@@ -63,7 +63,7 @@ public class Point2D implements Serializable{
 	}
 
     public double getDist(Point2D pos){
-        return Math.sqrt(Math.pow(this.x-pos.getX(), 2)+Math.pow(this.y-pos.getY(), 2));
+        return Math.sqrt(Math.pow(this.x-pos.getX(), 2.d)+Math.pow(this.y-pos.getY(), 2.d));
     }
 
 	/* Check if the 2 points are equal */
