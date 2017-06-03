@@ -55,6 +55,12 @@ Esta classe é responsável pela interação com o utilizador recorrendo para is
 \subsection{StateManager}
 A classe \texttt{StateManager} contém o estado atual da aplicação, em particular, os utilizadores registados, quer sejam \texttt{Client's} ou \texttt{Driver's}, estes são guardados numa variável de instância da classe \texttt{Map}, que faz a correspondência entre o email de cada utilizador e a classe \texttt{Account} correspondente.
 A classe permite faculta ainda um conjunto de métodos para manipular a informação que guarda, permitindo a atualização da informação de um dado utilizador, a adição de novos utilizadores ou a verificação da existência de um dado utilizador com base num endereço de email.
+\begin{verbatim}
+public void addUser(Account nUser);
+public boolean userExists(String uEmail);
+public void updateUser(Account nInfo); 
+\end{verbatim}
+A criação de um utilizador apenas é permitida caso este ainda não esteja presente nos registos.
 
 \subsection{Account}
 A classe \texttt{Account} é a superclasse de duas outras, sendo elas as classes \texttt{Driver} e \texttt{Client}. Como tal, esta classe possui todos os componentes comuns às duas subclasses, sendo eles: \texttt{email}, \texttt{name}, \texttt{password}, \texttt{homeAdress}, \texttt{birthday} e as viagens realizadas(\texttt{travels}).
