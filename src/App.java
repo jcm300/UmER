@@ -207,11 +207,19 @@ public class App{
 
         if(this.curState.userExists(email)) throw new DuplicateRegistrationException(email);
 		
-		if(type){ 
-            System.out.print("Appear as available?(Y/N) ");
-            input.nextLine();
-            c=input.nextLine().charAt(0);
-            ret=new Driver(email,name,password,homeAdress,birthday,new ArrayList<Travel>(),c=='Y',0.d,0.d,0.d,this.getTaxiInfo());
+		if(type){
+            success=false;
+            while(!success){ 
+                try{
+                    System.out.print("Appear as available?(Y/N) ");
+                    input.nextLine();
+                    c=input.nextLine().charAt(0);
+                    ret=new Driver(email,name,password,homeAdress,birthday,new ArrayList<Travel>(),c=='Y',0.d,0.d,0.d,this.getTaxiInfo());
+                    success=true;
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }
         }
 		else ret = new Client(email,name,password,homeAdress,birthday,new ArrayList<Travel>(),new Point2D());
     
@@ -227,26 +235,31 @@ public class App{
         boolean success=false;
 
         while(!success){
-            System.out.println("What type of taxi do you own");
-            System.out.print("1-Motorbike\n2-Lightweight\n3-Van\nChoice: ");
-            taxiType=input.nextInt(); 
-            switch(taxiType){
-                case 1:
-                    tax = new MotorBike();
-                    success=true;
-                    break;
-                case 2:
-                    tax = new LightWeight();
-                    success=true;
-                    break;
-                case 3:
-                    tax = new Van();
-                    success=true;
-                    break;
-                default:
-                    System.out.println("Invalid option");
-                    success = false;
-                    break;
+            try{
+                System.out.println("What type of taxi do you own");
+                System.out.print("1-Motorbike\n2-Lightweight\n3-Van\nChoice: ");
+                taxiType=input.nextInt(); 
+                switch(taxiType){
+                    case 1:
+                        tax = new MotorBike();
+                        success=true;
+                        break;
+                    case 2:
+                        tax = new LightWeight();
+                        success=true;
+                        break;
+                    case 3:
+                        tax = new Van();
+                        success=true;
+                        break;
+                    default:
+                        System.out.println("Invalid option");
+                        success = false;
+                        break;
+                }
+            }catch(Exception e){
+                success=false;
+                System.out.println(e.getMessage());
             }
         }
         success=false;
