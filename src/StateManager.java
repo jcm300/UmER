@@ -37,7 +37,7 @@ public class StateManager implements Serializable{
     }
 
     public void addUser(Account nUser){
-        this.users.put(nUser.getName(), nUser);
+        this.users.put(nUser.getEmail(), nUser);
     }
 
     public List<Account> getUserList(){

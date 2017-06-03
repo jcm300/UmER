@@ -211,9 +211,9 @@ public class App{
             System.out.print("Appear as available?(Y/N) ");
             input.nextLine();
             c=input.nextLine().charAt(0);
-            ret=new Driver(name,email,password,homeAdress,birthday,new ArrayList<Travel>(),c=='Y',0.d,0.d,0.d,this.getTaxiInfo());
+            ret=new Driver(email,name,password,homeAdress,birthday,new ArrayList<Travel>(),c=='Y',0.d,0.d,0.d,this.getTaxiInfo());
         }
-		else ret = new Client(name,email,password,homeAdress,birthday,new ArrayList<Travel>(),new Point2D());
+		else ret = new Client(email,name,password,homeAdress,birthday,new ArrayList<Travel>(),new Point2D());
     
 		return ret; 
 	}

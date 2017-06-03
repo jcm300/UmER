@@ -19,11 +19,11 @@ public class InfoTravel{
 
     //gets & sets
     public Client getClient(){
-        return this.cli.clone();
+        return this.cli;
     }
 
     public Travel getTravel(){
-        return this.tl.clone();
+        return this.tl;
     }
 
     public void setClient(Client nC){
