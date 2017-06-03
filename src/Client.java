@@ -140,7 +140,7 @@ public class Client extends Account {
                 iT.setClient(this);
                 iT.setTravel(auxT); 
                 d.enqueTravel(iT);
-            }else throw new TaxiIndisponivelException("Taxi unavailable.");
+            }else throw new TaxiIndisponivelException("Taxi unavailable and doesn't support queue.");
         }else throw new TaxiIndisponivelException("Taxi doesn't exist.");
         return d;
 	}

@@ -377,7 +377,8 @@ public class App{
                 plate = in.nextLine();
                 res=aux.requestTaxi(plate, this.curState.getUserList(), tmp);
             }
-            System.out.println(res.getLastTravel().toString());
+            if(!res.getStatus()) System.out.println(res.getLastEnqueued().toString());
+            else System.out.println(res.getLastTravel().toString());
             System.out.print("Avaliaçao do condutor (0-100): ");
             rat = in.nextDouble();
             res.setNewRating(rat);
