@@ -145,6 +145,10 @@ public class Driver extends Account {
     }
 
     public void enqueTravel(InfoTravel t){
-    	this.car.addWaitingList(t);
+    	((TaxiQueue)this.car).addWaitingList(t);
+    }
+
+    public Travel getLastEnqueued(){
+        return ((TaxiQueue)this.car).getWaitingList().getLast().getTravel();
     }
 }
