@@ -32,6 +32,7 @@
 - [x] Charge a certain amount based on the difference between predicted/real time of a ride 
 - [ ] Fix bug that rounds every trip effective/real time to 0
 - [ ] Generate initial config to allow testing on presentation
+- [ ] Review code modularity
 - [ ] Finish report
 
 ## Next
