@@ -111,7 +111,8 @@ public double getDist(Point2D pos){
 \end{verbatim}
 
 \subsection{InfoTravel}
-\texttt{InfoTravel} foi uma classe auxiliar desenvolvida com o intuito de guardar não só a viagem a ser realizada mas também o cliente que requisitou a viagem, sendo que esta classe foi usada na implementação de filas de espera para permitir que, quando o condutor estivesse disponível e as viagens que estavam em fila de espera fossem realizadas, fosse atualizada a informação dos clientes que requisitiram essas viagens.
+\label{InfoTravel}
+\texttt{InfoTravel} foi uma classe auxiliar desenvolvida com o intuito de guardar não só a viagem a ser realizada mas também o cliente que requisitou a viagem, sendo que esta classe foi usada na implementação de filas de espera para permitir que, quando o condutor estivesse disponível e as viagens que estavam em fila de espera fossem realizadas, fosse atualizada a informação dos clientes que requisitaram essas viagens.
 
 \section{Aplicação e suas funcionalidades}
 
@@ -121,6 +122,6 @@ Como já foi referido, os diferentes tipos de viaturas são subclasses da classe
 \newpage
 
 \section{Conclusão}
-Devio a alguns contratempos acabamos por nao implementar as companhias/empresas de taxis nem suas funções subjacentes(p.e. indicar o total faturado por uma viatura, ou empresa de táxis, num determinado período), porém com a atual estrutura do projeto é viável de se concretizar.
+Os requisitos iniciais referiam a possibilidade da criação de companhias/empresas de taxis, no entanto, devido às caraterísticas da implementação atual, acabamos por não implementar esta funcionalidade nem as suas funções subjacentes(p.e. indicar o total faturado por uma viatura, ou empresa de táxis, num determinado período). A implementação de classes como \texttt{InfoTravel}(\ref{InfoTravel}) não respeitam na totalidade os príncipios da modularidade/encapsulamento do paradigma de programação orientada de objetos no entanto esta decisão foi tomada visto que se fosse feito de outra forma a implementação seria de complexidade bastante superior e visto que o acesso a estes métodos e mínimo o impato no encapsulamento é negligenciável.
 
 \end{document}
