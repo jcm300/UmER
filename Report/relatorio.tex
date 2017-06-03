@@ -1,4 +1,4 @@
-\documentclass[a4paper,10pt,portuguese]{report}
+\documentclass[a4paper,10pt,portuguese]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[portuguese]{babel}
 \usepackage{ragged2e}
@@ -21,18 +21,17 @@
 \end{titlepage}
  
 \tableofcontents
- 
-\chapter{Introdução}
-\textbf{UmER} é uma aplicação para transporte de passageiros e que permite que um utilizador realize viagens em táxis da UmER. Esta(aplicação) providencia mecanismos de criação de contas (de passageiros e motoristas), automóveis, realização de viagens e consulta das mesmas, alteração do estado dos motoristas(disponíveis ou indisponíveis). A aplicação permite ainda a permanência de dados aquando o fecho da mesma e a recuperação de um estado previamente guardado.
+\newpage
 
-\chapter{Desenvolvimento}
+\section{Introdução}
+\textbf{UmER} é uma aplicação para transporte de passageiros e que permite que um utilizador realize viagens em táxis da UmER. Esta(aplicação) providencia mecanismos de criação de contas (de passageiros e motoristas), automóveis, realização de viagens e consulta das mesmas, alteração do estado dos motoristas(disponíveis ou indisponíveis). A aplicação permite ainda a permanência de dados aquando o fecho da mesma e a recuperação de um estado previamente guardado.
+\newapge
 
 \section{Arquitetura de Classes}
 
 \begin{figure}[ht!]
     \centering
-        \includegraphics[width=120mm]{graph.jpg}
-    \caption{Principais Classes}
+    \includegraphics[width=120mm]{graph.jpg}
 \end{figure}
 
 \subsection{App}
@@ -69,16 +68,36 @@ Sendo esta subclasse de \texttt{Account} herda tudo dessa classe, acrescentando 
 \subsubsection{Client}
 \subsection{Taxi}
 \label{Taxi}
-\label{Motorbike}
+A classe \texttt{Taxi} é uma superclasse abstrata que guarda informações relativas aos veículos, nomeadamente a sua matrícula, a velocidade média, o preço cobrado por km, a localização atual do veículo e a fiablidade do mesmo. Esta última caraterística é gerada aleatoriamente cada vez que é requisitada uma viagem ao veículo, sendo depois usada como fator multiplicativo no cálculo do tempo real da viagem:
+\begin{verbatim}
+public double getEffectiveTime(double dist){
+    this.genReliability();
+    return dist/(this.averageSpeed*this.reliability);
+}
+    
+// Randomly generates the reliability of a taxi before a ride
+private void genReliability(){
+    Random gen = new Random();
+    this.reliability = gen.nextDouble()+0.01f;
+}
+\end{verbatim}
+Esta classe possui três subclasses que diferem no tipo de táxi que representam, algo que influência se o táxi permite a existência de filas de espera ou não.
+\begin{itemize}
+	\item[\texttt{Motorbike\label{Motorbike}}]
+	\item[\texttt{Van}]
+	\item[\texttt{Lightweight}]
+\end{itemize}
+Os tipos de táxi que permitem fila de espera implementam a interface \texttt{TaxiQueue} que garante que determinadas operações de gestão das filas de espera se encontram disponíveis nas mesmas. Na implementação atual apenas a subclasse \texttt{Motorbike} permite filas de espera.
 \subsection{Travel}
 \subsection{InfoTravel}
 
 \section{Aplicação e suas funcionalidades}
 
 \section{Adição novos tipos de viaturas e motoristas na aplicação}
-Como já foi referido, os diferentes tipos de viaturas são subclasses da classe abstracta Taxi(\ref{Taxi}), como tal, a elaboração de novos tipos de táxi requere apenas a criação de uma nova subclasse da classe Taxi e a implementação dos métodos requeridos pela classe abstrata bem como a implementação de métodos relevantes ao tipo de táxi em questão, por exemplo, um táxi do tipo TucTuc poderia suportar filas de espera visto se tratar de um tipo de veículo peculiar, como a mota(\ref{Motorbike}).
+Como já foi referido, os diferentes tipos de viaturas são subclasses da classe abstrata Taxi(\ref{Taxi}), como tal, a elaboração de novos tipos de táxi requere apenas a criação de uma nova subclasse da classe Taxi e a implementação dos métodos requeridos pela classe abstrata bem como a implementação de métodos relevantes ao tipo de táxi em questão, por exemplo, um táxi do tipo TucTuc poderia suportar filas de espera visto se tratar de um tipo de veículo peculiar, como a mota(\ref{Motorbike}).
+\newpage
 
-\chapter{Conclusão}
+\section{Conclusão}
 Devio a alguns contratempos acabamos por nao implementar as companhias/empresas de taxis nem suas funções subjacentes(p.e. indicar o total faturado por uma viatura, ou empresa de táxis, num determinado período), porém com a atual estrutura do projeto é viável de se concretizar.
 
 \end{document}
