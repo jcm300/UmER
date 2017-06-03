@@ -94,7 +94,7 @@ public class Driver extends Account {
     }
 
     public void dispatchQueue(){
-        if(!this.status && this.getCar() instanceof TaxiQueue){
+        if(this.status && this.getCar() instanceof TaxiQueue){
             ArrayList<Travel> aux = ((TaxiQueue)this.getCar()).dispatchQueue();
             for(Travel t : aux)
                 this.addTravel(t);

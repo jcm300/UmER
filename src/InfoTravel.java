@@ -1,4 +1,6 @@
-public class InfoTravel{
+import java.io.Serializable;
+
+public class InfoTravel implements Serializable{
     private Client cli;
     private Travel tl;
 
