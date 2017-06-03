@@ -3,12 +3,12 @@ import java.util.ArrayDeque;
 public class MotorBike extends Taxi implements TaxiQueue{
 	
 	//instace variables
-	private ArrayDeque<Travel> waitingList;
+	private ArrayDeque<InfoTravel> waitingList;
 
 	//Constructors
 	public MotorBike(){
 		super();
-		this.waitingList = new ArrayDeque<Travel>();
+		this.waitingList = new ArrayDeque<InfoTravel>();
 	}	
 	
 	public MotorBike(MotorBike m){
@@ -16,22 +16,22 @@ public class MotorBike extends Taxi implements TaxiQueue{
 		this.waitingList = m.getWaitingList();
 	}
 
-	public MotorBike(String plate, double avS, double ppkm, double rel, Point2D loc, ArrayDeque<Travel> tw){
+	public MotorBike(String plate, double avS, double ppkm, double rel, Point2D loc, ArrayDeque<InfoTravel> tw){
 		super(plate, avS, ppkm, rel, loc);
 		this.setWaitingList(tw);
 	}
 
 	//gets & sets
-	public ArrayDeque<Travel> getWaitingList(){
-		ArrayDeque<Travel> r = new ArrayDeque<Travel>();
-		for(Travel t: this.waitingList)
+	public ArrayDeque<InfoTravel> getWaitingList(){
+		ArrayDeque<InfoTravel> r = new ArrayDeque<InfoTravel>();
+		for(InfoTravel t: this.waitingList)
 			r.add(t.clone());
 		return r;
 	}
 
-	public void setWaitingList(ArrayDeque<Travel> ad){
-		this.waitingList = new ArrayDeque<Travel>();
-                for(Travel t: ad)
+	public void setWaitingList(ArrayDeque<InfoTravel> ad){
+		this.waitingList = new ArrayDeque<InfoTravel>();
+                for(InfoTravel t: ad)
                 	this.waitingList.add(t.clone());
 	}
 
@@ -40,15 +40,15 @@ public class MotorBike extends Taxi implements TaxiQueue{
 		return new MotorBike(this);
 	}
 
-	public void addWaitingList(Travel t){
+	public void addWaitingList(InfoTravel t){
 		this.waitingList.add(t.clone());
 	}
 
-	public Travel removeWaitingList(){
+	public InfoTravel removeWaitingList(){
 		return this.waitingList.remove().clone();
 	}
 
-	public boolean containsWaitingList(Travel t){
+	public boolean containsWaitingList(InfoTravel t){
 		return this.waitingList.contains(t);
 	}
 
