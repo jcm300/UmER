@@ -91,8 +91,8 @@ public class Client extends Account {
         if(closestDriver != null){
             cAux=closestDriver.getCar();
             dist=dist+this.location.getDist(dest);
-            temp=1.0f*dist/cAux.getAverageSpeed();
-            temp2=1.0f*cAux.getEffectiveTime(dist);
+            temp=dist/cAux.getAverageSpeed();
+            temp2=cAux.getEffectiveTime(dist);
             auxT=new Travel(cAux.getPricePerKm()*dist,temp2,temp, dist,curT, dest, this.location);
             this.addTravel(auxT);
             closestDriver.addTravel(auxT);
