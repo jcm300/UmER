@@ -119,7 +119,6 @@ public class App{
     public boolean userActions(){
         boolean login=true;
 
-        System.out.println(this.curUser.toString());
         this.appMenu.cliMenu();
         switch(this.appMenu.getOpt()){
                 case 1:
@@ -146,7 +145,6 @@ public class App{
     public boolean driverActions(){
         boolean login=true;
         
-        System.out.println(this.curUser.toString());
         this.appMenu.dMenu();
         switch(this.appMenu.getOpt()){
                 case 1:
