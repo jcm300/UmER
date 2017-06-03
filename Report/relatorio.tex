@@ -116,11 +116,42 @@ public double getDist(Point2D pos){
 
 \section{Aplicação e suas funcionalidades}
 A implementação do projeto proposto permite:
-\begin{itemize}
+\subsection{Criação de contas e registo de táxis}
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=120mm]{registarDriver.png}
+\end{figure}
 
+\subsection{Verificação de credenciais e realização de viagens}
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=120mm]{fazerViagem.png}
+\end{figure}
 
+\subsection{Requisitar um táxi em particular com base na matrícula}
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=120mm]{fazerViagemComMatricula.png}
+\end{figure}
 
-\end{itemize} a criação de contas e realização de viagens
+\subsection{Alteração do estado do motorista}
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=120mm]{mudarEstado.png}
+\end{figure}
+
+\subsection{Consulta do histórico de viagens}
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=120mm]{verViagens.png}
+\end{figure}
+
+\subsection{Consulta de rankings relativos a clientes/drivers}
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=120mm]{top5top10.png}
+\end{figure}
+
 
 \section{Adição novos tipos de viaturas e motoristas na aplicação}
 Como já foi referido, os diferentes tipos de viaturas são subclasses da classe abstrata Taxi(\ref{Taxi}), como tal, a elaboração de novos tipos de táxi requere apenas a criação de uma nova subclasse da classe Taxi e a implementação dos métodos requeridos pela classe abstrata bem como a implementação de métodos relevantes ao tipo de táxi em questão, por exemplo, um táxi do tipo TucTuc poderia suportar filas de espera visto se tratar de um tipo de veículo peculiar, como a mota(\ref{Motorbike}).
